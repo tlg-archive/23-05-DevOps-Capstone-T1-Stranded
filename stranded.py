@@ -7,6 +7,7 @@
 
 def main(): pass
 
-
+with open("./data/description", "r") as plot:
+    plot = plot.read()
 if __name__ == '__main__':
     pass
