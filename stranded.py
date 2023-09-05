@@ -16,7 +16,7 @@ def main(stdscr):
     height, width = stdscr.getmaxyx()
     with open(os.path.abspath('./data/title.txt'), 'r', encoding='utf-8') as title_file:
         title_lines = title_file.readlines()
-    with open("./data/description", "r") as plot:
+    with open("./data/description.txt", "r") as plot:
         plot = plot.read().splitlines()
         plot_splice = []
         splice_len = 50
