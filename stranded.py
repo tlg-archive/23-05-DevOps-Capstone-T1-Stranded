@@ -58,6 +58,8 @@ def main(stdscr):
         # Check for Enter key (key code 10) to clear the input text
         if key == 10:
             stdscr.addstr(height - 2 , 0, ' '.join(parser.parse(input_text)))
+            if 'quit' == parser.parse(input_text)[0]:
+                break
             input_text = ''
         
         # Check for Backspace key (key code 127) and non-empty input_text to delete characters
