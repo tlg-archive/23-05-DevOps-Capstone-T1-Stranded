@@ -19,8 +19,8 @@ class Parser:
         with open(path.abspath('./data/selectors.yaml')) as selectors_file:
             selectors = yaml.safe_load(selectors_file)
             
-        self.selector_list: list[str]
-        self.selector_synonyms: dict[str, str]
+        self.selector_list: list[str] = []
+        self.selector_synonyms: dict[str, str] = {}
        
         for selector in list(selectors.keys()):
             self.selector_list.append(selector)
@@ -30,13 +30,13 @@ class Parser:
         with open(path.abspath('./data/reservedkeywords.yaml')) as keywords_file:
             keywords = yaml.safe_load(keywords_file)
             
-        self.reserved_list: list[str]
-        self.reserved_synonyms: dict[str, str]
+        self.reserved_list: list[str] = []
+        self.reserved_synonyms: dict[str, str] = {}
        
-        for keywords in list(keywords.keys()):
+        for keyword in list(keywords.keys()):
             self.reserved_list.append(keywords)
-            for synonym in keywords[keywords]:
-                self.reserved_synonyms[synonym] = keywords
+            for synonym in keywords[keyword]:
+                self.reserved_synonyms[synonym] = keyword
  
 
     def process_token(self, token: str) -> str:
@@ -63,11 +63,13 @@ class Parser:
             processed = self.process_token(token)
             if processed:
                 if processed in self.selector_list:
-                    if len(command) > 0 and command[0] not in self.selector_list:
+                    if len(command) < 1:
+                        continue
+                    elif command[-1] not in self.selector_list and command[0] not in self.selector_list:
                         command.append(processed)
                 else:
                     command.append(processed)
 
-        if command[0] not in self.action_list:
-            return []
+        #if command[0] not in self.action_list or command[0] not in self.reserved_list:
+        #    return []
         return command
