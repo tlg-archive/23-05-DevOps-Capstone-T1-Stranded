@@ -39,6 +39,13 @@ def main(stdscr):
             #stdscr.addstr(i + len(title_lines), (width - len(line)) // 2 , string.strip())
         stdscr.refresh()
         stdscr.getch()
+	
+
+		
+	
+	
+
+
 
 if __name__ == '__main__':
     curses.wrapper(main)
