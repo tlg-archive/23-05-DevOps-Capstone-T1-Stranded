@@ -36,6 +36,7 @@ def main(stdscr):
     input_window_row = height - 1
     input_window = curses.newwin(1, width, input_window_row, 0)
 
+    game_state_started = False
 
     while True:
         # Clear the windows
@@ -43,22 +44,27 @@ def main(stdscr):
         
         input_window.addstr(0, 0, f">{input_text}")
 
+        if not game_state_started:        
+            for index, line in enumerate(title_lines):
+                stdscr.addstr(index, (width - len(line)) // 2, f'{line}')
 
-        for index, line in enumerate(title_lines):
-            stdscr.addstr(index, (width - len(line)) // 2, f'{line}')
-
-        for i, string_list in enumerate(plot_splice):
-            for j, string in enumerate(string_list):
-                stdscr.addstr(i + len(title_lines) + j, (width - len(string)) // 2, string)
-
-
+            for i, string_list in enumerate(plot_splice):
+                for j, string in enumerate(string_list):
+                    stdscr.addstr(i + len(title_lines) + j, (width - len(string)) // 2, string)
+            stdscr.addstr(10,0, "Enter start to play")     
+        else:
+            pass
         # Get the key pressed by the user
         key = input_window.getch()
+    
 
         # Check for Enter key (key code 10) to clear the input text
         if key == 10:
             stdscr.addstr(height - 2 , 0, ' '.join(parser.parse(input_text)))
-            if 'quit' == parser.parse(input_text)[0]:
+            if "start" == parser.parse(input_text)[0]:
+                game_state_started = True
+                stdscr.clear()
+            elif 'quit' == parser.parse(input_text)[0]:
                 break
             input_text = ''
         
