@@ -1,0 +1,23 @@
+Command Examples:
+"move north"
+"look at the book"
+
+Command Key Words:
+look: [search, examine, describe]
+move: [go, walk, run]
+use: [activate, interact, touch]
+take: [grab, steal, loot]
+drop: [leave, give, dicard]
+
+Command Selector Words:
+the: [that, their, a]
+my: [this, owned]
+from: [on, inside, ontop, in]
+to: [at, towards, through]
+
+Reserved Key Words:
+inventory: [bag, backpack, pocket]
+me: [i, player, myself]
+help: [assist, aid, support]
+start: [begin, init, initiate, execute]
+quit: [exit, end, terminate]

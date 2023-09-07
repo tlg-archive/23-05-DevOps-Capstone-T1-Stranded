@@ -1,0 +1,20 @@
+look:
+  - search
+  - examine
+  - describe
+move:
+  - go
+  - walk
+  - run
+use:
+  - activate
+  - interact
+  - touch
+take:
+  - grab
+  - steal
+  - loot
+drop:
+  - leave
+  - give
+  - dicard
