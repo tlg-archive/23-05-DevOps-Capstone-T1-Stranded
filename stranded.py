@@ -66,7 +66,14 @@ def main(stdscr):
                 stdscr.clear()
             elif 'quit' == parser.parse(input_text)[0]:
                 break
+            elif "help" == parser.parse(input_text)[0]:
+                with open("./data/help.txt", "r") as help:
+                    help = help.read()
+                    stdscr.addstr(1,0, f'{help}')
+                    #for i, text in enumerate(help):
+                        
             input_text = ''
+
         
         # Check for Backspace key (key code 127) and non-empty input_text to delete characters
         elif key == 127 and input_text:
