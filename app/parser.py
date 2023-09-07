@@ -5,7 +5,7 @@ import yaml
 
 class Parser:
     def __init__(self) -> None:
-        with open(path.abspath('./data/actions.yaml')) as actions_file:
+        with open(path.abspath(f"{'/'.join(path.abspath(__file__).split('/')[:-1])}/../data/actions.yaml")) as actions_file:
             actions = yaml.safe_load(actions_file)
 
         self.action_list: list[str] = []
@@ -16,7 +16,7 @@ class Parser:
             for synonym in actions[action]:
                 self.action_synonyms[synonym] = action
 
-        with open(path.abspath('./data/selectors.yaml')) as selectors_file:
+        with open(path.abspath(f"{'/'.join(path.abspath(__file__).split('/')[:-1])}/../data/selectors.yaml")) as selectors_file:
             selectors = yaml.safe_load(selectors_file)
             
         self.selector_list: list[str] = []
@@ -27,7 +27,7 @@ class Parser:
             for synonym in selectors[selector]:
                 self.selector_synonyms[synonym] = selector
         
-        with open(path.abspath('./data/reservedkeywords.yaml')) as keywords_file:
+        with open(path.abspath(f"{'/'.join(path.abspath(__file__).split('/')[:-1])}/../data/reservedkeywords.yaml")) as keywords_file:
             keywords = yaml.safe_load(keywords_file)
             
         self.reserved_list: list[str] = []

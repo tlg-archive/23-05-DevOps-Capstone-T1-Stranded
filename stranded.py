@@ -10,9 +10,10 @@ from app import parser as Parser
 def main(stdscr):
     # Set up the screen
     curses.curs_set(1)
-    desired_height = 30
-    desired_width = 175
+    desired_height = 80
+    desired_width = 200
 
+    os.system(f"osascript -e 'tell application \"Terminal\" to set size of front window to {{ {desired_width*8}, {desired_height*10} }}'")
     # Resize the terminal window
     curses.resizeterm(desired_height, desired_width)
     stdscr.clear()
@@ -22,9 +23,9 @@ def main(stdscr):
 
     # Get the screen dimensions
     height, width = stdscr.getmaxyx()
-    with open(os.path.abspath('./data/title.txt'), 'r', encoding='utf-8') as title_file:
+    with open(os.path.abspath(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/title.txt"), 'r', encoding='utf-8') as title_file:
         title_lines = title_file.readlines()
-    with open("./data/description.txt", "r") as plot:
+    with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/description.txt", "r") as plot:
         plot = plot.read().splitlines()
         plot_splice = []
         splice_len = 50
@@ -60,18 +61,18 @@ def main(stdscr):
 
         # Check for Enter key (key code 10) to clear the input text
         if key == 10:
-            stdscr.addstr(height - 2 , 0, ' '.join(parser.parse(input_text)))
-            if "start" == parser.parse(input_text)[0]:
-                game_state_started = True
-                stdscr.clear()
-            elif 'quit' == parser.parse(input_text)[0]:
-                break
-            elif "help" == parser.parse(input_text)[0]:
-                with open("./data/help.txt", "r") as help:
-                    help = help.read()
-                    stdscr.addstr(1,0, f'{help}')
-                    #for i, text in enumerate(help):
-                        
+            if input_text:
+                stdscr.addstr(height - 2 , 0, ' '.join(parser.parse(input_text)))
+                if "start" == parser.parse(input_text)[0]:
+                    game_state_started = True
+                    stdscr.clear()
+                elif 'quit' == parser.parse(input_text)[0]:
+                    break
+                elif "help" == parser.parse(input_text)[0]:
+                    with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/help.txt", "r") as help:
+                        help = help.read()
+                        stdscr.addstr(1,0, f'{help}')
+                        #for i, text in enumerate(help):
             input_text = ''
 
         
