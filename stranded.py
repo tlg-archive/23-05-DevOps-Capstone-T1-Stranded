@@ -9,7 +9,9 @@ import platform
 import yaml
 from app.parser import Parser
 from app.location import location as Location
+from app.item import item as Item
 from app.game_object import game_object
+from app.action_processor import Action_Processor
 
 
 def load_data() -> dict[str, any]:
@@ -31,15 +33,29 @@ def load_data() -> dict[str, any]:
     with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/locations.yaml", "r") as locations:
         data['locations'] = yaml.safe_load(locations)
 
+    with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/items.yaml", "r") as items:
+        data['items'] = yaml.safe_load(items)
+
 
     return data
 
 def load_game_objects(data: dict[str, any]):
     objects = {}
+
     objects['locations'] = {}
     for location in data['locations']:
-        location_obj = Location(location['id'], location['name'], location['description'])
+        entities = []
+        if 'entities' in location.keys():
+            for entity in location['entities']:
+                entities.append((entity['kind'], entity['id']))
+        location_obj = Location(location['id'], location['name'], location['description'], entities)
         objects['locations'][location_obj.id] = location_obj
+        
+    objects['items'] = {}
+    for item in data['items']:
+        item_obj = Item(item['id'], item['name'], item['description'])
+        objects['items'][item_obj.id] = item_obj
+
     return objects 
         
 def resize_terminal(desired_height: int, desired_width: int):
@@ -77,7 +93,22 @@ def help(stdscr, data: str):
 def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, game_object]) -> dict[str, any]:
     id = game_state["current_location"]
     location = game_objs["locations"][id]
-    stdscr.addstr(1,0, f'{location.description}')
+    text = f"{location.description}\n"
+    command = game_state.get('user_command', '')
+    processor = Action_Processor()    
+    if location.entities:
+        text = f'\nAround you you can see:'
+        for kind, id in location.entities:
+           entity = game_objs[f'{kind}s'][id]
+           text = f"{text}\n\t{entity.name}"
+    
+    if command:
+        action = processor.process(command[0])
+        if action:
+            result = action(location, game_objs, *command[1:])
+            text = f'{text}\n\n {result}'
+
+    stdscr.addstr(1,0, f'{text}')
     game_state["location_name"] = location.name
     return game_state
 
@@ -103,9 +134,9 @@ def main(stdscr):
     input_window = curses.newwin(1, width, input_window_row, 0)
 
     scenes = {
-        'title':title,
-        'opening':opening,
-        'help':help,
+        'title': title,
+        'opening': opening,
+        'help': help,
         "playing": playing
             }
 
@@ -123,6 +154,8 @@ def main(stdscr):
             scenes[game_state["current_scene"]](stdscr, data[game_state["current_scene"]])
         
         input_window.addstr(0, 0, f"{game_state['location_name']}>{input_text}")
+        if game_state.get('user_command', ''):
+            stdscr.addstr(height - 2 , 0, ' '.join(game_state['user_command']))
         stdscr.refresh()
 
         # Get the key pressed by the user
@@ -137,7 +170,6 @@ def main(stdscr):
                 if game_state["current_scene"] == "opening":
                     game_state["current_scene"] = "playing" 
                 if input_text:
-                    stdscr.addstr(height - 2 , 0, ' '.join(parser.parse(input_text)))
                     if "start" == parser.parse(input_text)[0]:
                         if game_state["current_scene"] == 'title':
                             game_state["current_scene"] = 'opening'
@@ -146,6 +178,8 @@ def main(stdscr):
                     elif "help" == parser.parse(input_text)[0]:
                         game_state["previous_scene"] = game_state["current_scene"]
                         game_state["current_scene"] = 'help'                  
+                    else:
+                       game_state['user_command'] = parser.parse(input_text) 
                 input_text = ''
 
         

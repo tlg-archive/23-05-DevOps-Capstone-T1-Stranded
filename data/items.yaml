@@ -1,0 +1,9 @@
+# id, location, description,
+ 
+- id: 1
+  name: compas
+  description: A rugged survival tool used to navagate since ancient times
+
+- id: 2
+  name: flare_gun
+  description: A flare gun, the design is the same as when it was first invented, just made out of stronger material to withstand the stronger payload its shells have.
