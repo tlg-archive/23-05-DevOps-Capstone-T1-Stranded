@@ -6,7 +6,7 @@
 import curses
 import os
 import platform
-import yaml
+import json
 from app.parser import Parser
 from app.location import location as Location
 from app.item import item as Item
@@ -30,11 +30,11 @@ def load_data() -> dict[str, any]:
     with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/help.txt", "r") as help:
         data['help'] = help.read()
 
-    with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/locations.yaml", "r") as locations:
-        data['locations'] = yaml.safe_load(locations)
+    with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/locations.json", "r") as locations:
+        data['locations'] = json.load(locations)
 
-    with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/items.yaml", "r") as items:
-        data['items'] = yaml.safe_load(items)
+    with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/items.json", "r") as items:
+        data['items'] = json.load(items)
 
 
     return data
