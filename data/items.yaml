@@ -1,8 +1,8 @@
 # id, location, description,
  
 - id: 1
-  name: compas
-  description: A rugged survival tool used to navagate since ancient times
+  name: compass
+  description: A rugged survival tool used to navigate since ancient times
 
 - id: 2
   name: flare_gun
