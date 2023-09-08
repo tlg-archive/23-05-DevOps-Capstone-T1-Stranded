@@ -45,9 +45,11 @@ class Parser:
         elif token in list(self.action_synonyms.keys()):
             return self.action_synonyms[token]
         elif token in self.selector_list:
-            return token
+            return None
+            # return token
         elif token in list(self.selector_synonyms.keys()):
-            return self.selector_synonyms[token]
+            return None
+            #return self.selector_synonyms[token]
         elif token in self.reserved_list:
             return token
         elif token in list(self.reserved_synonyms.keys()):
