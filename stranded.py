@@ -6,7 +6,11 @@
 import curses
 import os
 import platform
+import yaml
 from app.parser import Parser
+from app.location import location as Location
+from app.game_object import game_object
+
 
 def load_data() -> dict[str, any]:
     data = {}
@@ -24,8 +28,20 @@ def load_data() -> dict[str, any]:
     with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/help.txt", "r") as help:
         data['help'] = help.read()
 
+    with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/locations.yaml", "r") as locations:
+        data['locations'] = yaml.safe_load(locations)
+
+
     return data
 
+def load_game_objects(data: dict[str, any]):
+    objects = {}
+    objects['locations'] = {}
+    for location in data['locations']:
+        location_obj = Location(location['id'], location['name'], location['description'])
+        objects['locations'][location_obj.id] = location_obj
+    return objects 
+        
 def resize_terminal(desired_height: int, desired_width: int):
     # Resize the terminal window
     system_platform = platform.system()
@@ -58,6 +74,12 @@ def opening(stdscr, data: list[list[str]]):
 def help(stdscr, data: str):
     stdscr.addstr(1,0, f'{data}')
 
+def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, game_object]) -> dict[str, any]:
+    id = game_state["current_location"]
+    location = game_objs["locations"][id]
+    stdscr.addstr(1,0, f'{location.description}')
+    game_state["location_name"] = location.name
+    return game_state
 
 def main(stdscr):
     # Set up the screen
@@ -74,6 +96,7 @@ def main(stdscr):
     parser = Parser()
 
     data = load_data()
+    game_objects = load_game_objects(data)
     input_text = ""    
     height, width = stdscr.getmaxyx()
     input_window_row = height - 1
@@ -82,13 +105,24 @@ def main(stdscr):
     scenes = {
         'title':title,
         'opening':opening,
-        'help':help
+        'help':help,
+        "playing": playing
             }
 
-    current_scene = 'title'
+    game_state = {}
+
+    game_state["current_scene"] = "title" 
+    game_state["current_location"] = 1
+    game_state["location_name"] = ''
 
     while True:
-        scenes[current_scene](stdscr, data[current_scene])
+        if game_state["current_scene"] == "playing":
+            game_state= scenes[game_state["current_scene"]](stdscr, game_state, game_objects)
+
+        else:
+            scenes[game_state["current_scene"]](stdscr, data[game_state["current_scene"]])
+        
+        input_window.addstr(0, 0, f"{game_state['location_name']}>{input_text}")
         stdscr.refresh()
 
         # Get the key pressed by the user
@@ -97,19 +131,21 @@ def main(stdscr):
         if key:
             # Check for Enter key (key code 10) to clear the input text
             if key == 10:
-                if current_scene == 'help':
-                    current_scene = previus_scene
-                    previus_scene = 'help'
+                if game_state["current_scene"] == 'help':
+                    game_state["current_scene"] = game_state["previous_scene"]
+                    game_state["previous_scene"] = 'help'
+                if game_state["current_scene"] == "opening":
+                    game_state["current_scene"] = "playing" 
                 if input_text:
                     stdscr.addstr(height - 2 , 0, ' '.join(parser.parse(input_text)))
                     if "start" == parser.parse(input_text)[0]:
-                        if current_scene == 'title':
-                            current_scene = 'opening'
+                        if game_state["current_scene"] == 'title':
+                            game_state["current_scene"] = 'opening'
                     elif 'quit' == parser.parse(input_text)[0]:
                         break
                     elif "help" == parser.parse(input_text)[0]:
-                        previus_scene = current_scene
-                        current_scene = 'help'                  
+                        game_state["previous_scene"] = game_state["current_scene"]
+                        game_state["current_scene"] = 'help'                  
                 input_text = ''
 
         
@@ -121,7 +157,6 @@ def main(stdscr):
             elif 32 <= key <= 126:
                 input_text += chr(key)
 
-        input_window.addstr(0, 0, f">{input_text}")
 
         stdscr.refresh()
         stdscr.clear()

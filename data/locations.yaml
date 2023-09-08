@@ -1,0 +1,9 @@
+# id, location, description,
+ 
+- id: 1
+  name: escape pod
+  description: this is your pod
+
+- id: 2
+  name: beach
+  description: "its a beach"
