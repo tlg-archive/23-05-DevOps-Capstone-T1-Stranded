@@ -3,7 +3,7 @@
   name: escape pod
   description: this is your pod
   entities:
-    - kind: item
+    - kind: container
       id: 1
     - kind: item
       id: 2

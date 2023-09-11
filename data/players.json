@@ -1,0 +1,9 @@
+[
+    {
+        "id": 0,
+        "name": "player",
+        "state": "alive",
+        "description": "A no nonsense space trucker providing for their family.",
+        "inventory": null
+    }
+]
