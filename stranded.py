@@ -30,13 +30,12 @@ def load_data() -> dict[str, any]:
     with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/help.txt", "r") as help:
         data['help'] = help.read()
 
-    with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/locations.json", "r") as locations:
-        data['locations'] = json.load(locations)
+    object_types = ['locations', 'items', 'transitions']
 
-    with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/items.json", "r") as items:
-        data['items'] = json.load(items)
-
-
+    for object_type in object_types:
+        with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/{object_type}.json", "r") as loading:
+            data[object_type] = json.load(loading)
+    
     return data
 
 def load_game_objects(data: dict[str, any]):
@@ -53,7 +52,7 @@ def load_game_objects(data: dict[str, any]):
         
     objects['items'] = {}
     for item in data['items']:
-        item_obj = Item(item['id'], item['name'], item['description'])
+        item_obj = Item(item['id'], item['name'], item['description'], item["transition"], state = None)
         objects['items'][item_obj.id] = item_obj
 
     return objects 
