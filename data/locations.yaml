@@ -1,5 +1,4 @@
 # id, location, description,
- 
 - id: 1
   name: escape pod
   description: this is your pod
@@ -8,7 +7,11 @@
       id: 1
     - kind: item
       id: 2
-
+    - kind: transition
+      id: 1
 - id: 2
   name: beach
   description: "its a beach"
+  entities:
+    - kind: transition
+      id: 2

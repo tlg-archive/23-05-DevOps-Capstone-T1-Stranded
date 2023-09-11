@@ -12,6 +12,7 @@ from app.location import location as Location
 from app.item import item as Item
 from app.game_object import game_object
 from app.action_processor import Action_Processor
+from app.transition import Transition
 
 
 def load_data() -> dict[str, any]:
@@ -30,13 +31,12 @@ def load_data() -> dict[str, any]:
     with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/help.txt", "r") as help:
         data['help'] = help.read()
 
-    with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/locations.json", "r") as locations:
-        data['locations'] = json.load(locations)
+    object_types = ['locations', 'items', 'transitions']
 
-    with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/items.json", "r") as items:
-        data['items'] = json.load(items)
-
-
+    for object_type in object_types:
+        with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/{object_type}.json", "r") as loading:
+            data[object_type] = json.load(loading)
+    
     return data
 
 def load_game_objects(data: dict[str, any]):
@@ -53,10 +53,16 @@ def load_game_objects(data: dict[str, any]):
         
     objects['items'] = {}
     for item in data['items']:
-        item_obj = Item(item['id'], item['name'], item['description'])
+        item_obj = Item(item['id'], item['name'], item['description'], None)
         objects['items'][item_obj.id] = item_obj
 
-    return objects 
+    objects['transitions'] = {}
+    for transition in data['transitions']:
+        target = (transition['target']['kind'], transition['target']['id'])
+        transition_obj = Transition(transition['id'], transition['name'], transition['description'], None, target)
+        objects['transitions'][transition_obj.id] = transition_obj
+
+    return objects
         
 def resize_terminal(desired_height: int, desired_width: int):
     # Resize the terminal window
@@ -90,23 +96,36 @@ def opening(stdscr, data: list[list[str]]):
 def help(stdscr, data: str):
     stdscr.addstr(1,0, f'{data}')
 
+def generate_location_text(location: Location, game_objs: dict[str, game_object]) -> str:
+    text = f"{location.description}\n"
+    if location.entities:
+        text = f'{text}\nAround you you can see:'
+        for kind, id in location.entities:
+           entity = game_objs[f'{kind}s'][id]
+           text = f"{text}\n\t{entity.name}" 
+    return text
+
 def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, game_object]) -> dict[str, any]:
     id = game_state["current_location"]
     location = game_objs["locations"][id]
-    text = f"{location.description}\n"
+    text = generate_location_text(location, game_objs)
     command = game_state.get('user_command', '')
     processor = Action_Processor()    
-    if location.entities:
-        text = f'\nAround you you can see:'
-        for kind, id in location.entities:
-           entity = game_objs[f'{kind}s'][id]
-           text = f"{text}\n\t{entity.name}"
     
     if command:
         action = processor.process(command[0])
         if action:
             result = action(location, game_objs, *command[1:])
-            text = f'{text}\n\n {result}'
+            if isinstance(result, str):
+                text = f'{text}\n\n {result}'
+            elif isinstance(result, tuple):
+                kind, target_id = result
+                if kind == 'location':
+                    game_state['current_location'] = target_id
+                    location = game_objs["locations"][target_id] 
+                    text = generate_location_text(location, game_objs)
+
+                    
 
     stdscr.addstr(1,0, f'{text}')
     game_state["location_name"] = location.name
@@ -148,12 +167,13 @@ def main(stdscr):
 
     while True:
         if game_state["current_scene"] == "playing":
-            game_state= scenes[game_state["current_scene"]](stdscr, game_state, game_objects)
+            game_state = scenes[game_state["current_scene"]](stdscr, game_state, game_objects)
 
         else:
             scenes[game_state["current_scene"]](stdscr, data[game_state["current_scene"]])
-        
-        input_window.addstr(0, 0, f"{game_state['location_name']}>{input_text}")
+        if not input_text:
+            input_text = '' 
+        input_window.addstr(0, 0, f"{game_state.get('location_name', '')}>{input_text}")
         if game_state.get('user_command', ''):
             stdscr.addstr(height - 2 , 0, ' '.join(game_state['user_command']))
         stdscr.refresh()

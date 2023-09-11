@@ -1,0 +1,14 @@
+- id: 1
+  name: exit_hatch
+  description: The exit hatch of the pod
+  state:
+  target: 
+    kind: location
+    id: 2
+- id: 2
+  name: pod_hatch
+  description: The enter hatch of the pod
+  state:
+  target: 
+    kind: location
+    id: 1
