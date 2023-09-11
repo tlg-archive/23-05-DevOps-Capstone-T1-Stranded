@@ -9,6 +9,8 @@
       id: 2
     - kind: transition
       id: 1
+    - kind: npc
+      id: 1
 - id: 2
   name: beach
   description: "its a beach"
