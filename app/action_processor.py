@@ -27,8 +27,8 @@ class Action_Processor:
             else: 
                 return f"You can't move to the {transitions}, try using the help command."
     
-    def wrong(self):
-        return "command not found please use the help command to see valid commands and examples"
+    def wrong(self, *args):
+            return "command not found please use the help command to see valid commands and examples"
     
     def process(self, command: str) -> callable:
         if command == 'look':
