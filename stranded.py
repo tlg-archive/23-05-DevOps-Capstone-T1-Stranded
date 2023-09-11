@@ -66,7 +66,9 @@ def load_game_objects(data: dict[str, any]):
         
     objects['items'] = {}
     for item in data['items']:
+
         item_obj = Item(item['id'], item['name'], item['description'], None)
+
         objects['items'][item_obj.id] = item_obj
 
     objects['transitions'] = {}
@@ -130,7 +132,7 @@ def help(stdscr, data: str):
 def generate_location_text(location: Location, game_objs: dict[str, game_object]) -> str:
     text = f"{location.description}\n"
     if location.entities:
-        text = f'{text}\nAround you you can see:'
+        text = f'{text}\nAround you, you can see:'
         for kind, id in location.entities:
            entity = game_objs[f'{kind}s'][id]
            text = f"{text}\n\t{entity.name}" 
