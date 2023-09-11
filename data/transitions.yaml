@@ -1,10 +1,22 @@
 - id: 1
+<<<<<<< HEAD
   description: The exit hatch of the pod
+=======
+  name: exit_hatch
+  description: The exit hatch of the pod
+  state:
+>>>>>>> 512d614a96574da0d408736bc7457b14753eeec6
   target: 
     kind: location
     id: 2
 - id: 2
+<<<<<<< HEAD
   description: The enter hatch of the pod
+=======
+  name: pod_hatch
+  description: The enter hatch of the pod
+  state:
+>>>>>>> 512d614a96574da0d408736bc7457b14753eeec6
   target: 
     kind: location
     id: 1
