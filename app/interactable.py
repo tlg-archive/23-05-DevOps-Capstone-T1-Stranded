@@ -1,5 +1,5 @@
 #imports
-from game_object import game_object
+from app.entity import entity
 
 
-class interactable(game_object): pass
+class interactable(entity):pass

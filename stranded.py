@@ -106,11 +106,15 @@ def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, game_object
         action = processor.process(command[0])
         if action:
             result = action(location, game_objs, *command[1:])
-            text = f'{text}\n\n {result}'
-
-    stdscr.addstr(1,0, f'{text}')
-    game_state["location_name"] = location.name
-    return game_state
+            if isinstance(result, str):
+                text = f'{text}\n\n {result}'
+            elif isinstance(result, tuple):
+                kind, id = result
+                if kind == 'location':
+                    game_state['current_location'] = id
+        stdscr.addstr(1,0, f'{text}')
+        game_state["location_name"] = location.name
+        return game_state
 
 def main(stdscr):
     # Set up the screen
