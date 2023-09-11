@@ -1,0 +1,8 @@
+- id: 1
+  name: boar
+  description: It was covered in dried blood, eyes cold and lifeless
+  state: unaware
+  dialogue: beep boop 
+  inventory:
+    - id: 3
+      kind: item
