@@ -53,11 +53,9 @@ def load_game_objects(data: dict[str, any]):
         
     objects['items'] = {}
     for item in data['items']:
-<<<<<<< HEAD
-        item_obj = Item(item['id'], item['name'], item['description'], item["transition"], state = None)
-=======
+
         item_obj = Item(item['id'], item['name'], item['description'], None)
->>>>>>> 512d614a96574da0d408736bc7457b14753eeec6
+
         objects['items'][item_obj.id] = item_obj
 
     objects['transitions'] = {}
@@ -103,7 +101,7 @@ def help(stdscr, data: str):
 def generate_location_text(location: Location, game_objs: dict[str, game_object]) -> str:
     text = f"{location.description}\n"
     if location.entities:
-        text = f'{text}\nAround you you can see:'
+        text = f'{text}\nAround you, you can see:'
         for kind, id in location.entities:
            entity = game_objs[f'{kind}s'][id]
            text = f"{text}\n\t{entity.name}" 
@@ -123,14 +121,6 @@ def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, game_object
             if isinstance(result, str):
                 text = f'{text}\n\n {result}'
             elif isinstance(result, tuple):
-<<<<<<< HEAD
-                kind, id = result
-                if kind == 'location':
-                    game_state['current_location'] = id
-        stdscr.addstr(1,0, f'{text}')
-        game_state["location_name"] = location.name
-        return game_state
-=======
                 kind, target_id = result
                 if kind == 'location':
                     game_state['current_location'] = target_id
@@ -142,7 +132,6 @@ def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, game_object
     stdscr.addstr(1,0, f'{text}')
     game_state["location_name"] = location.name
     return game_state
->>>>>>> 512d614a96574da0d408736bc7457b14753eeec6
 
 def main(stdscr):
     # Set up the screen
