@@ -16,7 +16,7 @@ class Action_Processor:
             if entities:
                 return entities[0].description
             else:
-                return f"You can't seem to find any {looking_for}s here."
+                return f"You can't seem to find any {looking_for}s here, try using the help command."
 
     def move(self, search_location: location, game_objects: dict[str, game_object], *args) -> str:
         if args:
@@ -25,11 +25,17 @@ class Action_Processor:
             if transitions:
                 return transitions[0].target
             else: 
-                return f"You can't move to the {transitions}."
+                return f"You can't move to the {transitions}, try using the help command."
+    
+    def wrong(self):
+        return "command not found please use the help command to see valid commands and examples"
     
     def process(self, command: str) -> callable:
         if command == 'look':
             return self.look
         if command == "move":
             return self.move
+        else:
+            return self.wrong
+        
     
