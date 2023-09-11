@@ -13,6 +13,8 @@ from app.item import item as Item
 from app.game_object import game_object
 from app.action_processor import Action_Processor
 from app.transition import Transition
+from app.player import player as Player
+from app.container import container as Container
 
 
 def load_data() -> dict[str, any]:
@@ -31,7 +33,7 @@ def load_data() -> dict[str, any]:
     with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/help.txt", "r") as help:
         data['help'] = help.read()
 
-    object_types = ['locations', 'items', 'transitions']
+    object_types = ['locations', 'items', 'transitions', 'players', 'containers']
 
     for object_type in object_types:
         with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/{object_type}.json", "r") as loading:
@@ -61,6 +63,24 @@ def load_game_objects(data: dict[str, any]):
         target = (transition['target']['kind'], transition['target']['id'])
         transition_obj = Transition(transition['id'], transition['name'], transition['description'], None, target)
         objects['transitions'][transition_obj.id] = transition_obj
+
+    objects['players'] = {}
+    for player in data['players']:
+        inventory = []
+        if player.get('inventory', []):
+            for item in player['inventory']:
+                inventory.append((item['kind'], item['id']))
+        player_obj = Player(player['id'], player['name'], player['description'], player['state'], inventory)
+        objects['players'][player_obj.id] = player_obj
+
+    objects['containers'] = {}
+    for container in data['containers']:
+        inventory = []
+        if container.get('inventory', []):
+            for item in container['inventory']:
+                inventory.append((item['kind'], item['id']))
+        container_obj = Container(container['id'], container['name'], container['description'], container['state'], inventory)
+        objects['containers'][container_obj.id] = container_obj
 
     return objects
         
