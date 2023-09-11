@@ -7,6 +7,7 @@ import curses
 import os
 import platform
 import json
+from app.npc import npc as Npc
 from app.parser import Parser
 from app.location import location as Location
 from app.item import item as Item
@@ -31,7 +32,7 @@ def load_data() -> dict[str, any]:
     with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/help.txt", "r") as help:
         data['help'] = help.read()
 
-    object_types = ['locations', 'items', 'transitions']
+    object_types = ['locations', 'items', 'transitions', 'npcs']
 
     for object_type in object_types:
         with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/{object_type}.json", "r") as loading:
@@ -41,6 +42,16 @@ def load_data() -> dict[str, any]:
 
 def load_game_objects(data: dict[str, any]):
     objects = {}
+
+    
+    objects['npcs'] = {}
+    for npc in data['npcs']:
+        items = []
+        if "inventory" in npc.keys():
+            for item in npc['inventory']: 
+                items.append((item['kind'], item['id']))
+        npc_obj = Npc(npc['id'], npc['name'], npc['description'], npc['state'], npc['dialogue'], items )
+        objects['npcs'][npc_obj.id] = npc_obj
 
     objects['locations'] = {}
     for location in data['locations']:

@@ -7,3 +7,7 @@
 - id: 2
   name: flare_gun
   description: A flare gun, the design is the same as when it was first invented, just made out of stronger material to withstand the stronger payload its shells have.
+
+- id: 3
+  name: power_core
+  description: Yanked out of the robots you've disabled. 

@@ -2,12 +2,14 @@
 - id: 1
   name: escape pod
   description: this is your pod
-  entities:
+  entities: 
     - kind: item
       id: 1
     - kind: item
       id: 2
     - kind: transition
+      id: 1
+    - kind: npc
       id: 1
 - id: 2
   name: beach
