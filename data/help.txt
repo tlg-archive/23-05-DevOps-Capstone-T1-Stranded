@@ -1,24 +1,23 @@
 Command Examples:
-"move match"
+"move to exit_hatch"
 "look at the book"
 "get the flare"
 
 Command Key Words:
-look: [search, examine, describe] - gives you a description of an item
-move: [go, walk, run] - how to navigate the world
-use: [activate, interact, touch] - use items that can help you
-take: [grab, steal, loot] - get an item from world adds it to inventory
-drop: [leave, give, dicard] - put an item back in the environment
-
-Command Selector Words:
-the: [that, their, a]
-my: [this, owned]
-from: [on, inside, ontop, in]
-to: [at, towards, through]
+look - gives you a description of an item
+    usage: look {target}
+move - how to navigate the world
+    usage: move {target}
+use - use items that can help you
+    usage: use {item} optinal[{ target2 }]
+take - get an item from world adds it to inventory
+    usage: take {item} optional[{ container }]
+drop - put an item back in the environment
+    usage: drop {item} optional[{ container }]
 
 Reserved Key Words:
-inventory: [bag, backpack, pocket] - opens inventory
-me: [i, player, myself] - refers to you
-help: [assist, aid, support] - your here
-start: [begin, init, initiate, execute] - starts game
-quit: [exit, end, terminate] - quits game
+inventory - opens inventory
+me - refers to you
+help - your here
+start - starts game
+quit - quits game
