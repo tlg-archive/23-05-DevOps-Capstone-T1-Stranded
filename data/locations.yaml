@@ -1,19 +1,19 @@
-# id, location, description,
-- id: 1
+# obj_id, location, description,
+- obj_id: 1
   name: escape pod
   description: this is your pod
   entities:
     - kind: container
-      id: 1
+      obj_id: 1
     - kind: item
-      id: 2
+      obj_id: 2
     - kind: transition
-      id: 1
+      obj_id: 1
     - kind: npc
-      id: 1
-- id: 2
+      obj_id: 1
+- obj_id: 2
   name: beach
   description: "its a beach"
   entities:
     - kind: transition
-      id: 2
+      obj_id: 2

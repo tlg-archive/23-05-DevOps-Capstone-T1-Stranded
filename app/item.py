@@ -1,5 +1,6 @@
 #imports
-from app.entity import entity
+from app.entity import Entity
 
 
-class item(entity): pass
+class Item(Entity):
+    pass
