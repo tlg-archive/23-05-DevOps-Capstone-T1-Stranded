@@ -1,8 +1,9 @@
 #imports
-from app.game_object import game_object
+from app.game_object import GameObject
 
 
-class location(game_object): 
-    def __init__(self, id: str, name: str, description: str, entities: list[tuple[str, int]]):
-        super().__init__(id, name, description)
+class Location(GameObject):
+    def __init__(self, obj_id: str, name: str, description: str, entities: list[tuple[str, int]]):
+        super().__init__(obj_id, name, description)
         self.entities = entities
+        

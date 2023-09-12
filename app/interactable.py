@@ -1,5 +1,7 @@
 #imports
-from app.entity import entity
+
+from app.entity import Entity
 
 
-class interactable(entity):pass
+class Interactable(Entity):
+    pass

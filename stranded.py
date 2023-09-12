@@ -1,102 +1,142 @@
 #! /usr/bin/env python3
 # James L. Rogers | github.com/DarkWinged
 
-
 #imports
 import curses
 import os
 import platform
 import json
-from app.npc import npc as Npc
+from app.npc import Npc
 from app.parser import Parser
-from app.location import location as Location
-from app.item import item as Item
-from app.game_object import game_object
+from app.location import Location
+from app.item import Item
+from app.game_object import GameObject
 from app.action_processor import Action_Processor
 from app.transition import Transition
-from app.player import player as Player
-from app.container import container as Container
+from app.player import Player
+from app.container import Container
 
 
 def load_data() -> dict[str, any]:
     data = {}
-    with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/title.txt", 'r') as title_file:
+    with open(
+        f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/title.txt", 
+        'r',
+        encoding="utf-8"
+        ) as title_file:
         data['title'] = title_file.readlines()
-    
-    with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/description.txt", "r") as plot:
+
+    with open(
+        f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/description.txt",
+        "r",
+        encoding="utf-8"
+        ) as plot:
         plot = plot.read().splitlines()
     plot_splice = []
     splice_len = 50
     for i in range(0, len(plot), splice_len):
-        plot_splice.append(plot[i:i+splice_len])    
+        plot_splice.append(plot[i:i+splice_len])
     data['opening'] = plot_splice
 
-    with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/help.txt", "r") as help:
-        data['help'] = help.read()
+    with open(
+              f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/help.txt",
+              "r",
+              encoding="utf-8"
+              ) as help_file:
+        data['help'] = help_file.read()
 
     object_types = ['locations', 'items', 'transitions', 'players', 'containers', 'npcs']
 
     for object_type in object_types:
-        with open(f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/{object_type}.json", "r") as loading:
+        with open(
+            f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/{object_type}.json",
+            "r",
+            encoding="utf-8"
+            ) as loading:
             data[object_type] = json.load(loading)
-    
+
     return data
 
 def load_game_objects(data: dict[str, any]):
     objects = {}
 
-    
+
     objects['npcs'] = {}
     for npc in data['npcs']:
         items = []
         if "inventory" in npc.keys():
-            for item in npc['inventory']: 
-                items.append((item['kind'], item['id']))
-        npc_obj = Npc(npc['id'], npc['name'], npc['description'], npc['state'], npc['dialogue'], items )
-        objects['npcs'][npc_obj.id] = npc_obj
+            for item in npc['inventory']:
+                items.append((item['kind'], item['obj_id']))
+        npc_obj = Npc(npc['obj_id'],
+                      npc['name'],
+                      npc['description'],
+                      npc['state'],
+                      npc['dialogue'],
+                      items
+                      )
+        objects['npcs'][npc_obj.obj_id] = npc_obj
 
     objects['locations'] = {}
     for location in data['locations']:
         entities = []
         if 'entities' in location.keys():
             for entity in location['entities']:
-                entities.append((entity['kind'], entity['id']))
-        location_obj = Location(location['id'], location['name'], location['description'], entities)
-        objects['locations'][location_obj.id] = location_obj
-        
+                entities.append((entity['kind'], entity['obj_id']))
+        location_obj = Location(location['obj_id'],
+                                location['name'],
+                                location['description'],
+                                entities
+                                )
+        objects['locations'][location_obj.obj_id] = location_obj
+
     objects['items'] = {}
     for item in data['items']:
 
-        item_obj = Item(item['id'], item['name'], item['description'], None)
+        item_obj = Item(item['obj_id'], item['name'], item['description'], None)
 
-        objects['items'][item_obj.id] = item_obj
+        objects['items'][item_obj.obj_id] = item_obj
 
     objects['transitions'] = {}
     for transition in data['transitions']:
-        target = (transition['target']['kind'], transition['target']['id'])
-        transition_obj = Transition(transition['id'], transition['name'], transition['description'], None, target)
-        objects['transitions'][transition_obj.id] = transition_obj
+        target = (transition['target']['kind'], transition['target']['obj_id'])
+        transition_obj = Transition(transition['obj_id'],
+                                    transition['name'],
+                                    transition['description'],
+                                    None,
+                                    target
+                                    )
+        objects['transitions'][transition_obj.obj_id] = transition_obj
 
     objects['players'] = {}
     for player in data['players']:
         inventory = []
         if player.get('inventory', []):
             for item in player['inventory']:
-                inventory.append((item['kind'], item['id']))
-        player_obj = Player(player['id'], player['name'], player['description'], player['state'], inventory)
-        objects['players'][player_obj.id] = player_obj
+                inventory.append((item['kind'], item['obj_id']))
+        player_obj = Player(player['obj_id'],
+                            player['name'],
+                            player['description'],
+                            player['state'],
+                            inventory
+                            )
+        objects['players'][player_obj.obj_id] = player_obj
 
     objects['containers'] = {}
     for container in data['containers']:
         inventory = []
         if container.get('inventory', []):
             for item in container['inventory']:
-                inventory.append((item['kind'], item['id']))
-        container_obj = Container(container['id'], container['name'], container['description'], container['state'], inventory)
-        objects['containers'][container_obj.id] = container_obj
+                inventory.append((item['kind'], item['obj_id']))
+        container_obj = Container(container['obj_id'],
+                                  container['name'],
+                                  container['description'],
+                                  container['state'],
+                                  inventory
+                                  )
+        objects['containers'][container_obj.obj_id] = container_obj
 
     return objects
-        
+
 def resize_terminal(desired_height: int, desired_width: int):
     # Resize the terminal window
     system_platform = platform.system()
@@ -117,34 +157,34 @@ def title(stdscr, data: list[str]):
         stdscr.addstr(index, (width - len(line)) // 2, f'{line}')
 
     message = "Enter start to play"
-    stdscr.addstr(10, (width - len(message)) // 2, message)     
+    stdscr.addstr(10, (width - len(message)) // 2, message)   
 
-def opening(stdscr, data: list[list[str]]): 
+def opening(stdscr, data: list[list[str]]):
     height, width = stdscr.getmaxyx()
 
     for index, string_list in enumerate(data):
         for string_index, string in enumerate(string_list):
             stdscr.addstr(5 + index + string_index, (width - len(string)) // 2, string)
 
-def help(stdscr, data: str):
+def help_func(stdscr, data: str):
     stdscr.addstr(1,0, f'{data}')
 
-def generate_location_text(location: Location, game_objs: dict[str, game_object]) -> str:
+def generate_location_text(location: Location, game_objs: dict[str, GameObject]) -> str:
     text = f"{location.description}\n"
     if location.entities:
         text = f'{text}\nAround you, you can see:'
-        for kind, id in location.entities:
-           entity = game_objs[f'{kind}s'][id]
-           text = f"{text}\n\t{entity.name}" 
+        for kind, obj_id in location.entities:
+            entity = game_objs[f'{kind}s'][obj_id]
+            text = f"{text}\n\t{entity.name}"
     return text
 
-def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, game_object]) -> dict[str, any]:
-    id = game_state["current_location"]
-    location = game_objs["locations"][id]
+def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, GameObject]) -> dict[str, any]:
+    obj_id = game_state["current_location"]
+    location = game_objs["locations"][obj_id]
     text = generate_location_text(location, game_objs)
     command = game_state.get('user_command', '')
-    processor = Action_Processor()    
-    
+    processor = Action_Processor()
+
     if command:
         action = processor.process(command[0])
         if action:
@@ -152,13 +192,13 @@ def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, game_object
             if isinstance(result, str):
                 text = f'{text}\n\n {result}'
             elif isinstance(result, tuple):
-                kind, target_id = result
+                kind, target_obj_id = result
                 if kind == 'location':
-                    game_state['current_location'] = target_id
-                    location = game_objs["locations"][target_id] 
+                    game_state['current_location'] = target_obj_id
+                    location = game_objs["locations"][target_obj_id]
                     text = generate_location_text(location, game_objs)
 
-                    
+
 
     stdscr.addstr(1,0, f'{text}')
     game_state["location_name"] = location.name
@@ -169,7 +209,7 @@ def main(stdscr):
     curses.curs_set(1)
     desired_height = 80
     desired_width = 200
-    
+
     resize_terminal(desired_height, desired_width)
 
     stdscr.clear()
@@ -180,7 +220,7 @@ def main(stdscr):
 
     data = load_data()
     game_objects = load_game_objects(data)
-    input_text = ""    
+    input_text = ""
     height, width = stdscr.getmaxyx()
     input_window_row = height - 1
     input_window = curses.newwin(1, width, input_window_row, 0)
@@ -188,13 +228,13 @@ def main(stdscr):
     scenes = {
         'title': title,
         'opening': opening,
-        'help': help,
+        'help': help_func,
         "playing": playing
             }
 
     game_state = {}
 
-    game_state["current_scene"] = "title" 
+    game_state["current_scene"] = "title"
     game_state["current_location"] = 1
     game_state["location_name"] = ''
 
@@ -213,7 +253,7 @@ def main(stdscr):
 
         # Get the key pressed by the user
         key = input_window.getch()
-    
+
         if key:
             # Check for Enter key (key code 10) to clear the input text
             if key == 10:
@@ -221,7 +261,7 @@ def main(stdscr):
                     game_state["current_scene"] = game_state["previous_scene"]
                     game_state["previous_scene"] = 'help'
                 if game_state["current_scene"] == "opening":
-                    game_state["current_scene"] = "playing" 
+                    game_state["current_scene"] = "playing"
                 if input_text:
                     if "start" == parser.parse(input_text)[0]:
                         if game_state["current_scene"] == 'title':
@@ -230,16 +270,16 @@ def main(stdscr):
                         break
                     elif "help" == parser.parse(input_text)[0]:
                         game_state["previous_scene"] = game_state["current_scene"]
-                        game_state["current_scene"] = 'help'                  
+                        game_state["current_scene"] = 'help'
                     else:
-                       game_state['user_command'] = parser.parse(input_text) 
+                        game_state['user_command'] = parser.parse(input_text)
                 input_text = ''
 
-        
+
             # Check for Backspace key (key code 127) and non-empty input_text to delete characters
             elif key == 127 and input_text:
                 input_text = input_text[:-1]
-        
+
             # Accept printable ASCII characters (from space to tilde) and append to input_text
             elif 32 <= key <= 126:
                 input_text += chr(key)

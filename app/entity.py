@@ -1,7 +1,7 @@
 #imports
-from app.game_object import game_object
+from app.game_object import GameObject
 
-class entity(game_object): 
-    def __init__(self, id: str, name: str, description: str, state: bool):
-        super().__init__(id, name, description)
+class Entity(GameObject):
+    def __init__(self, obj_id: str, name: str, description: str, state: bool):
+        super().__init__(obj_id, name, description)
         self.state = state

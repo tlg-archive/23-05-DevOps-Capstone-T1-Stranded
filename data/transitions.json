@@ -1,22 +1,22 @@
 [
     {
-        "id": 1,
+        "obj_id": 1,
         "name": "exit_hatch",
         "description": "The exit hatch of the pod",
         "state": null,
         "target": {
             "kind": "location",
-            "id": 2
+            "obj_id": 2
         }
     },
     {
-        "id": 2,
+        "obj_id": 2,
         "name": "pod_hatch",
         "description": "The enter hatch of the pod",
         "state": null,
         "target": {
             "kind": "location",
-            "id": 1
+            "obj_id": 1
         }
     }
 ]
