@@ -5,7 +5,7 @@ from app.location import Location
 from app.container import Container
 
 
-class Action_Processor:
+class ActionProcessor:
     def __init__(self):
         pass
 
