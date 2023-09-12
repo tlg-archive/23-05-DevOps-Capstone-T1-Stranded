@@ -1,0 +1,15 @@
+[
+    {
+        "obj_id": 1,
+        "name": "boar",
+        "description": "It was covered in dried blood, eyes cold and lifeless",
+        "state": "unaware",
+        "dialogue": "beep boop",
+        "inventory": [
+            {
+                "obj_id": 3,
+                "kind": "item"
+            }
+        ]
+    }
+]

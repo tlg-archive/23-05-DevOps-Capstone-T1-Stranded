@@ -1,23 +1,34 @@
 Command Examples:
-"move north"
+"move to exit_hatch"
 "look at the book"
+"get the flare"
 
 Command Key Words:
-look: [search, examine, describe]
-move: [go, walk, run]
-use: [activate, interact, touch]
-take: [grab, steal, loot]
-drop: [leave, give, dicard]
-
-Command Selector Words:
-the: [that, their, a]
-my: [this, owned]
-from: [on, inside, ontop, in]
-to: [at, towards, through]
+look - gives you a description of an item
+    usage: look { target }
+    synonyms: search, examine, describe
+move - how to navigate the world
+    usage: move { target }
+    synonyms: go, walk, run
+use - use items that can help you
+    usage: use { item } optinal[{ target }]
+    synonyms: activate, interact, touch
+take - get an item from world or container and adds it to inventory
+    usage: take { item } optional[{ container }]
+    synonyms: grab, steal, loot
+drop - put an item into the environment or in a container
+    usage: drop  item } optional[{ container }]
+    synonyms: leave, give, dicard
 
 Reserved Key Words:
-inventory: [bag, backpack, pocket]
-me: [i, player, myself]
-help: [assist, aid, support]
-start: [begin, init, initiate, execute]
-quit: [exit, end, terminate]
+inventory - opens inventory or looks at an item in your inventory
+    usage: inventory optinal[{ item }]
+    synonyms: ag, backpack, pocket
+me - refers to you
+    synonyms: i, player, myself
+help - your here
+    synonyms: assist, aid, support
+start - starts game
+    synonyms: begin, init, initiate, execute
+quit - quits game
+    synonyms: exit, end, terminate

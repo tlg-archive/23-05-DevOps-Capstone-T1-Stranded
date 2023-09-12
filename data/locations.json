@@ -1,0 +1,36 @@
+[
+    {
+        "obj_id": 1,
+        "name": "escape pod",
+        "description": "this is your pod",
+        "entities": [
+            {
+                "kind": "container",
+                "obj_id": 1
+            },
+            {
+                "kind": "item",
+                "obj_id": 2
+            },
+            {
+                "kind": "transition",
+                "obj_id": 1
+            },
+            {
+                "kind": "npc",
+                "obj_id": 1
+            }
+        ]
+    },
+    {
+        "obj_id": 2,
+        "name": "beach",
+        "description": "its a beach",
+        "entities": [
+            {
+                "kind": "transition",
+                "obj_id": 2
+            }
+        ]
+    }
+]

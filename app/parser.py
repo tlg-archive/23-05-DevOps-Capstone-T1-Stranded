@@ -1,12 +1,14 @@
-
 #imports
 from os import path
-import yaml
+import json
 
 class Parser:
     def __init__(self) -> None:
-        with open(path.abspath(f"{'/'.join(path.abspath(__file__).split('/')[:-1])}/../data/actions.yaml")) as actions_file:
-            actions = yaml.safe_load(actions_file)
+        with open(
+            path.abspath(f"{'/'.join(path.abspath(__file__).split('/')[:-1])}/../data/actions.json"),
+            encoding="utf-8"
+            ) as actions_file:
+            actions = json.load(actions_file)
 
         self.action_list: list[str] = []
         self.action_synonyms: dict[str, str] = {}
@@ -16,41 +18,48 @@ class Parser:
             for synonym in actions[action]:
                 self.action_synonyms[synonym] = action
 
-        with open(path.abspath(f"{'/'.join(path.abspath(__file__).split('/')[:-1])}/../data/selectors.yaml")) as selectors_file:
-            selectors = yaml.safe_load(selectors_file)
-            
+        with open(
+            path.abspath(f"{'/'.join(path.abspath(__file__).split('/')[:-1])}/../data/selectors.json"),
+            encoding="utf-8"
+            ) as selectors_file:
+            selectors = json.load(selectors_file)
+
         self.selector_list: list[str] = []
         self.selector_synonyms: dict[str, str] = {}
-       
+
         for selector in list(selectors.keys()):
             self.selector_list.append(selector)
             for synonym in selectors[selector]:
                 self.selector_synonyms[synonym] = selector
-        
-        with open(path.abspath(f"{'/'.join(path.abspath(__file__).split('/')[:-1])}/../data/reservedkeywords.yaml")) as keywords_file:
-            keywords = yaml.safe_load(keywords_file)
-            
+
+        with open(
+            path.abspath(f"{'/'.join(path.abspath(__file__).split('/')[:-1])}/../data/reservedkeywords.json"),
+            encoding="utf-8"
+            ) as keywords_file:
+            keywords = json.load(keywords_file)
+
         self.reserved_list: list[str] = []
         self.reserved_synonyms: dict[str, str] = {}
-       
+
         for keyword in list(keywords.keys()):
             self.reserved_list.append(keywords)
             for synonym in keywords[keyword]:
                 self.reserved_synonyms[synonym] = keyword
- 
 
     def process_token(self, token: str) -> str:
         if token in self.action_list:
             return token
-        elif token in list(self.action_synonyms.keys()):
+        if token in list(self.action_synonyms.keys()):
             return self.action_synonyms[token]
-        elif token in self.selector_list:
+        if token in self.selector_list:
+            return None
+            # return token
+        if token in list(self.selector_synonyms.keys()):
+            return None
+            #return self.selector_synonyms[token]
+        if token in self.reserved_list:
             return token
-        elif token in list(self.selector_synonyms.keys()):
-            return self.selector_synonyms[token]
-        elif token in self.reserved_list:
-            return token
-        elif token in list(self.reserved_synonyms.keys()):
+        if token in list(self.reserved_synonyms.keys()):
             return self.reserved_synonyms[token]
         return token
 
@@ -69,7 +78,4 @@ class Parser:
                         command.append(processed)
                 else:
                     command.append(processed)
-
-        #if command[0] not in self.action_list or command[0] not in self.reserved_list:
-        #    return []
         return command

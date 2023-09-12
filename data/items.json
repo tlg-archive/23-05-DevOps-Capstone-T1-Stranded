@@ -1,0 +1,20 @@
+[
+    {
+        "obj_id": 1,
+        "name": "compass",
+        "state": "active",
+        "description": "A rugged survival tool used to navigate since ancient times"
+    },
+    {
+        "obj_id": 2,
+        "name": "flare_gun",
+        "state": "active",
+        "description": "A flare gun, the design is the same as when it was first invented, just made out of stronger material to withstand the stronger payload its shells have."
+    },
+    {
+        "obj_id": 3,
+        "name": "power_core",
+        "state": "active",
+        "description": "Yanked out of the robots you've disabled."
+    }
+]

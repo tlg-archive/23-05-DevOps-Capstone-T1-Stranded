@@ -8,7 +8,7 @@ a = Analysis(
     ['stranded.py'],
     pathex=['./app', './data'],
     binaries=[],
-    datas=[('./data/*.yaml' , './' 'data'), ('./data/*.txt' , './' 'data')],
+    datas=[('./data/*.json' , './' 'data'), ('./data/*.txt' , './' 'data')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
