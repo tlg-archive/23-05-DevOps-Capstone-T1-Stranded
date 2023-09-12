@@ -11,7 +11,7 @@ from app.parser import Parser
 from app.location import Location
 from app.item import Item
 from app.game_object import GameObject
-from app.action_processor import Action_Processor
+from app.action_processor import ActionProcessor
 from app.transition import Transition
 from app.player import Player
 from app.container import Container
@@ -157,7 +157,7 @@ def title(stdscr, data: list[str]):
         stdscr.addstr(index, (width - len(line)) // 2, f'{line}')
 
     message = "Enter start to play"
-    stdscr.addstr(10, (width - len(message)) // 2, message)   
+    stdscr.addstr(10, (width - len(message)) // 2, message)
 
 def opening(stdscr, data: list[list[str]]):
     height, width = stdscr.getmaxyx()
@@ -183,7 +183,7 @@ def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, GameObject]
     location = game_objs["locations"][obj_id]
     text = generate_location_text(location, game_objs)
     command = game_state.get('user_command', '')
-    processor = Action_Processor()
+    processor = ActionProcessor()
 
     if command:
         action = processor.process(command[0])
