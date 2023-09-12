@@ -181,15 +181,16 @@ def generate_location_text(location: Location, game_objs: dict[str, GameObject])
 def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, GameObject]) -> dict[str, any]:
     obj_id = game_state["current_location"]
     location = game_objs["locations"][obj_id]
-    text = generate_location_text(location, game_objs)
+    text = generate_location_text(location, game_objs) 
     command = game_state.get('user_command', '')
     processor = ActionProcessor()
 
-    if command:
+    if command and command != '':
         action = processor.process(command[0])
         if action:
             result = action(location, game_objs, *command[1:])
             if isinstance(result, str):
+                text = generate_location_text(location, game_objs)
                 text = f'{text}\n\n {result}'
             elif isinstance(result, tuple):
                 kind, target_obj_id = result
@@ -197,7 +198,9 @@ def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, GameObject]
                     game_state['current_location'] = target_obj_id
                     location = game_objs["locations"][target_obj_id]
                     text = generate_location_text(location, game_objs)
-
+            game_state['previous_text'] = text
+    if not command:
+        text = game_state.get('previous_text', text)
 
 
     stdscr.addstr(1,0, f'{text}')
@@ -245,7 +248,7 @@ def main(stdscr):
         else:
             scenes[game_state["current_scene"]](stdscr, data[game_state["current_scene"]])
         if not input_text:
-            input_text = '' 
+            input_text = ''
         input_window.addstr(0, 0, f"{game_state.get('location_name', '')}>{input_text}")
         if game_state.get('user_command', ''):
             stdscr.addstr(height - 2 , 0, ' '.join(game_state['user_command']))
@@ -253,8 +256,8 @@ def main(stdscr):
 
         # Get the key pressed by the user
         key = input_window.getch()
-
         if key:
+            game_state['user_command'] = None
             # Check for Enter key (key code 10) to clear the input text
             if key == 10:
                 if game_state["current_scene"] == 'help':

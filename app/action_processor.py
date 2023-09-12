@@ -3,6 +3,9 @@
 from app.game_object import GameObject
 from app.location import Location
 from app.container import Container
+from app.npc import Npc
+from app.transition import Transition
+from app.player import Player
 
 
 class ActionProcessor:
@@ -40,10 +43,10 @@ class ActionProcessor:
             if transitions:
                 return transitions[0].target
             return f"You can't move to the {transitions}, try using the help command."
-    
+
     def wrong(self, *args):
         return "command not found please use the help command to see valid commands and examples"
-    
+
     def take(self, search_location: Location, game_objects: dict[str, GameObject], *args) -> str:
         if args:
             if len(args) == 1:
@@ -53,6 +56,8 @@ class ActionProcessor:
                     for kind, obj_id
                     in search_location.entities
                     if game_objects[f'{kind}s'][obj_id].name == looking_for
+                    and not isinstance(game_objects[f'{kind}s'][obj_id], Transition)
+                    and not isinstance(game_objects[f'{kind}s'][obj_id], Npc)
                 ]
                 player = game_objects['players'][0]
                 if items:
@@ -62,7 +67,7 @@ class ActionProcessor:
                     )
                     kind, obj_id = item
                     return f"You pickup the {game_objects[f'{kind}s'][obj_id].name}."
-                return f"You can't seem to find a {looking_for} here."
+                return f"You can't pick up the {looking_for}."
             if len(args) == 2:
                 looking_for = args[0]
                 container = args[1]
@@ -82,6 +87,8 @@ class ActionProcessor:
                         for kind, obj_id
                         in container.inventory
                         if game_objects[f'{kind}s'][obj_id].name == looking_for
+                        and not isinstance(game_objects[f'{kind}s'][obj_id], Location)
+                        and not isinstance(game_objects[f'{kind}s'][obj_id], Npc)
                     ]
                     if items:
                         item = items[0]
@@ -89,9 +96,9 @@ class ActionProcessor:
                             container.inventory.pop(container.inventory.index(item))
                         )
                         kind, obj_id = item
-                        return f"You take the {game_objects[f'{kind}s'][obj_id].name} from insobj_ide the {container.name}."
+                        return f"You take the {game_objects[f'{kind}s'][obj_id].name} from inside the {container.name}."
 
-                    return f"You there is not a {looking_for} in the {container.name}"
+                    return f"You can't take the {looking_for} from the {container.name}"
                 return f"You can't seem to find a {container} here."
 
 
@@ -144,6 +151,71 @@ class ActionProcessor:
                     return f"You don't have a {looking_for}."
                 return f"You can't seem to find a {container} here."
 
+    def inventory(self, search_location: Location, game_objects: dict[str, GameObject], *args):
+        player: Player = game_objects['players'][0]
+        if len(args) == 1:
+            looking_for = args[0]
+            player = game_objects['players'][0]
+            items = [
+                (kind, obj_id)
+                for kind, obj_id
+                in player.inventory
+                if game_objects[f'{kind}s'][obj_id].name == looking_for
+            ]
+            if items:
+                item = items[0]
+                kind, obj_id = item
+                item_obj = game_objects[f'{kind}s'][obj_id]
+                text = f"{item_obj.name}: {item_obj.description}"
+                if kind == 'container':
+                    items = [
+                        (kind, obj_id)
+                        for kind, obj_id
+                        in item_obj.inventory
+                    ]
+                    if items:
+                        text = f'{text}\n\tinventory:'
+                        for item in items:
+                            kind, obj_id = item
+                            text = f"{text}\n\t\t{game_objects[f'{kind}s'][obj_id].name}" 
+                return text
+            return f"You don't have a {looking_for}."
+        if len(args) == 2:
+            looking_for = args[0]
+            player = game_objects['players'][0]
+            containers = [
+                (kind, obj_id)
+                for kind, obj_id
+                in player.inventory
+                if game_objects[f'{kind}s'][obj_id].name == args[1]
+                and isinstance(game_objects[f'{kind}s'][obj_id], Container)
+            ]
+            if containers:
+                container = containers[0]
+                items = [
+                    (kind, obj_id)
+                    for kind, obj_id
+                    in player.inventory
+                    if game_objects[f'{kind}s'][obj_id].name == looking_for
+                ]
+                if items:
+                    item = items[0]
+                    kind, obj_id = item
+                    return f"{game_objects[f'{kind}s'][obj_id].name}: {game_objects[f'{kind}s'][obj_id].description}"
+            return f"You don't have a {looking_for}."
+
+        items = [
+            (kind, obj_id)
+            for kind, obj_id
+            in player.inventory
+        ]
+        if items:
+            text = '\ninventory:'
+            for item in items:
+                kind, obj_id = item
+                text = f"{text}\n\t{game_objects[f'{kind}s'][obj_id].name}"
+            return text
+        return "Your inventory is empty."
 
     def process(self, command: str) -> callable:
         if command == 'look':
@@ -154,4 +226,6 @@ class ActionProcessor:
             return self.take
         if command == 'drop':
             return self.drop
+        if command == 'inventory':
+            return self.inventory
         return self.wrong

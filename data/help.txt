@@ -5,23 +5,24 @@ Command Examples:
 
 Command Key Words:
 look - gives you a description of an item
-    usage: look {target}
+    usage: look { target }
     synonyms: search, examine, describe
 move - how to navigate the world
-    usage: move {target}
+    usage: move { target }
     synonyms: go, walk, run
 use - use items that can help you
-    usage: use {item} optinal[{ target }]
+    usage: use { item } optinal[{ target }]
     synonyms: activate, interact, touch
-take - get an item from world adds it to inventory
-    usage: take {item} optional[{ container }]
+take - get an item from world or container and adds it to inventory
+    usage: take { item } optional[{ container }]
     synonyms: grab, steal, loot
-drop - put an item back in the environment
-    usage: drop {item} optional[{ container }]
+drop - put an item into the environment or in a container
+    usage: drop  item } optional[{ container }]
     synonyms: leave, give, dicard
 
 Reserved Key Words:
-inventory - opens inventory
+inventory - opens inventory or looks at an item in your inventory
+    usage: inventory optinal[{ item }]
     synonyms: ag, backpack, pocket
 me - refers to you
     synonyms: i, player, myself
