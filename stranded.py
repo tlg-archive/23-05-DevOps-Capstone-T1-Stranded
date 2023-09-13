@@ -44,6 +44,13 @@ def load_data() -> dict[str, any]:
               encoding="utf-8"
               ) as help_file:
         data['help'] = help_file.read()
+    
+    with open(
+              f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/map.txt",
+              "r",
+              encoding="utf-8"
+              ) as map_file:
+        data['map'] = map_file.read()
 
     object_types = ['locations', 'items', 'transitions', 'players', 'containers', 'npcs']
 
@@ -169,6 +176,9 @@ def opening(stdscr, data: list[list[str]]):
 def help_func(stdscr, data: str):
     stdscr.addstr(1,0, f'{data}')
 
+def map_func(stdscr, data: str):
+    stdscr.addstr(1,0, f'{data}')
+
 def generate_location_text(location: Location, game_objs: dict[str, GameObject]) -> str:
     text = f"{location.description}\n"
     if location.entities:
@@ -232,6 +242,7 @@ def main(stdscr):
         'title': title,
         'opening': opening,
         'help': help_func,
+        "map" : map_func,
         "playing": playing
             }
 
@@ -263,6 +274,9 @@ def main(stdscr):
                 if game_state["current_scene"] == 'help':
                     game_state["current_scene"] = game_state["previous_scene"]
                     game_state["previous_scene"] = 'help'
+                if game_state["current_scene"] == 'map':
+                    game_state["current_scene"] = game_state["previous_scene"]
+                    game_state["previous_scene"] = 'map'
                 if game_state["current_scene"] == "opening":
                     game_state["current_scene"] = "playing"
                 if input_text:
@@ -274,6 +288,9 @@ def main(stdscr):
                     elif "help" == parser.parse(input_text)[0]:
                         game_state["previous_scene"] = game_state["current_scene"]
                         game_state["current_scene"] = 'help'
+                    elif "map" == parser.parse(input_text)[0]:
+                        game_state["previous_scene"] = game_state["current_scene"]
+                        game_state["current_scene"] = 'map'
                     else:
                         game_state['user_command'] = parser.parse(input_text)
                 input_text = ''

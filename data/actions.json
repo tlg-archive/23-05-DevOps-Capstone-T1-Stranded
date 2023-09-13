@@ -15,6 +15,7 @@
         "touch"
     ],
     "take": [
+        "get",
         "grab",
         "steal",
         "loot"
