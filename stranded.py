@@ -95,15 +95,18 @@ def load_game_objects(data: dict[str, any]):
         item_obj = Item(item['obj_id'], item['name'], item['description'], None)
 
         objects['items'][item_obj.obj_id] = item_obj
-
     objects['transitions'] = {}
     for transition in data['transitions']:
         target = (transition['target']['kind'], transition['target']['obj_id'])
         transition_obj = Transition(transition['obj_id'],
                                     transition['name'],
                                     transition['description'],
-                                    None,
-                                    target
+                                    transition['state'],
+                                    transition['state_descriptions'],
+                                    transition['state_transitions'],
+                                    transition['state_list'],
+                                    target,
+                                    transition['blocking_states']
                                     )
         objects['transitions'][transition_obj.obj_id] = transition_obj
 

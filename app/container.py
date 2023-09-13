@@ -1,8 +1,8 @@
 #imports
-from app.interactable import Interactable
+from app.entity import Entity
 
 
-class Container(Interactable):
+class Container(Entity):
     def __init__(self,
                  obj_id: str,
                  name: str,
