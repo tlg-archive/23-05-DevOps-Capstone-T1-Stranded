@@ -1,7 +1,7 @@
 [
     {
         "obj_id": 1,
-        "name": "survivalkit",
+        "name": "survivalKit",
         "state": "open",
         "description": "A small box of essential survival supplies welded to the underside of the pilot's seat.",
         "inventory": [

@@ -1,7 +1,7 @@
-from app.interactable import Interactable
+from app.intractable import Intractable
 
 
-class Transition(Interactable):
+class Transition(Intractable):
     def __init__(self,
                  obj_id: str,
                  name: str,
@@ -10,10 +10,20 @@ class Transition(Interactable):
                  state_descriptions: dict[str,str],
                  state_transitions: dict[str,str],
                  state_list: list[str],
+                 key_info: dict[str, tuple[str, int] or str],
                  target: tuple[str, int],
                  blocking_states: list[str]
                  ):
-        super().__init__(obj_id, name, description, state, state_descriptions, state_transitions, state_list)
+        super().__init__(
+            obj_id,
+            name,
+            description,
+            state,
+            state_descriptions,
+            state_transitions,
+            state_list,
+            key_info
+        )
         self.target = target
         if not blocking_states:
             blocking_states = []

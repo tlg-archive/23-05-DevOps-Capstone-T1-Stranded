@@ -60,7 +60,6 @@ def load_data() -> dict[str, any]:
 def load_game_objects(data: dict[str, any]):
     objects = {}
 
-
     objects['npcs'] = {}
     for npc in data['npcs']:
         items = []
@@ -98,6 +97,9 @@ def load_game_objects(data: dict[str, any]):
     objects['transitions'] = {}
     for transition in data['transitions']:
         target = (transition['target']['kind'], transition['target']['obj_id'])
+        key_info = transition.get('key_info', {})
+        if key_info:
+            key_info['key'] = (key_info['key']['kind'], key_info['key']['obj_id'])
         transition_obj = Transition(transition['obj_id'],
                                     transition['name'],
                                     transition['description'],
@@ -105,6 +107,7 @@ def load_game_objects(data: dict[str, any]):
                                     transition['state_descriptions'],
                                     transition['state_transitions'],
                                     transition['state_list'],
+                                    key_info,
                                     target,
                                     transition['blocking_states']
                                     )
@@ -269,16 +272,23 @@ def main(stdscr):
                 if game_state["current_scene"] == "opening":
                     game_state["current_scene"] = "playing"
                 if input_text:
-                    if "start" == parser.parse(input_text)[0]:
-                        if game_state["current_scene"] == 'title':
-                            game_state["current_scene"] = 'opening'
-                    elif 'quit' == parser.parse(input_text)[0]:
-                        break
-                    elif "help" == parser.parse(input_text)[0]:
-                        game_state["previous_scene"] = game_state["current_scene"]
-                        game_state["current_scene"] = 'help'
-                    else:
-                        game_state['user_command'] = parser.parse(input_text)
+                    parsed_text = parser.parse(input_text)
+                    if parsed_text:
+                        if "start" == parsed_text[0]:
+                            if game_state["current_scene"] == 'title':
+                                game_state["current_scene"] = 'opening'
+                        elif 'quit' == parsed_text[0]:
+                            break
+                        elif "help" == parsed_text[0]:
+                            game_state["previous_scene"] = game_state["current_scene"]
+                            game_state["current_scene"] = 'help'
+                        elif 'goto' == parsed_text[0] and game_state["current_scene"] == "playing":
+                            if len(parsed_text) > 1 and parsed_text[1].isdigit():
+                                target_location = int(parsed_text[1])
+                                if target_location in game_objects['locations'].keys():
+                                    game_state["current_location"] = target_location
+                        else:
+                            game_state['user_command'] = parsed_text
                 input_text = ''
 
 

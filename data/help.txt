@@ -10,19 +10,19 @@ look - gives you a description of an item
 move - how to navigate the world
     usage: move { target }
     synonyms: go, walk, run
-use - use items that can help you
-    usage: use { item } optinal[{ target }]
+use - interact objects and use them on each other
+    usage: use { item } optional[{ target }]
     synonyms: activate, interact, touch
 take - get an item from world or container and adds it to inventory
     usage: take { item } optional[{ container }]
     synonyms: grab, steal, loot
 drop - put an item into the environment or in a container
     usage: drop  item } optional[{ container }]
-    synonyms: leave, give, dicard
+    synonyms: leave, give, discard
 
 Reserved Key Words:
 inventory - opens inventory or looks at an item in your inventory
-    usage: inventory optinal[{ item }]
+    usage: inventory optional[{ item }]
     synonyms: ag, backpack, pocket
 me - refers to you
     synonyms: i, player, myself
