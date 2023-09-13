@@ -156,7 +156,7 @@ def title(stdscr, data: list[str]):
     for index, line in enumerate(data):
         stdscr.addstr(index, (width - len(line)) // 2, f'{line}')
 
-    message = "Enter start to play"
+    message = "Type START to play"
     stdscr.addstr(10, (width - len(message)) // 2, message)
 
 def opening(stdscr, data: list[list[str]]):
