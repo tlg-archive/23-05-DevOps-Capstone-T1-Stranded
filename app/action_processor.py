@@ -1,6 +1,7 @@
 #imports
 
 from app.game_object import GameObject
+from app.interactable import Interactable
 from app.location import Location
 from app.container import Container
 from app.npc import Npc
@@ -31,17 +32,21 @@ class ActionProcessor:
                 return entities[0].description
             return f"You can't seem to find any {looking_for}s here, try using the help command."
 
-    def move(self, search_location: Location, game_objects: dict[str, GameObject], *args) -> str:
+    def move(self, search_location: Location, game_objects: dict[str, GameObject], *args) -> str or callable:
         if args:
             moving = args[0]
-            transitions = [
+            transitions: list[Transition] = [
                 game_objects[f'{kind}s'][obj_id]
                 for kind, obj_id
                 in search_location.entities
                 if game_objects[f'{kind}s'][obj_id].name == moving
+                and isinstance(game_objects[f'{kind}s'][obj_id], Transition)
             ]
             if transitions:
-                return transitions[0].target
+                transition: Transition = transitions[0] 
+                if not transition.blocked:
+                    return transition.target
+                return f"You can't go that way because the {transition.name} is {transition.state}"
             return f"You can't move to the {transitions}, try using the help command."
 
     def wrong(self, *args):
@@ -100,7 +105,6 @@ class ActionProcessor:
 
                     return f"You can't take the {looking_for} from the {container.name}"
                 return f"You can't seem to find a {container} here."
-
 
     def drop(self, search_location: Location, game_objects: dict[str, GameObject], *args) -> str:
         if args:
@@ -177,7 +181,7 @@ class ActionProcessor:
                         text = f'{text}\n\tinventory:'
                         for item in items:
                             kind, obj_id = item
-                            text = f"{text}\n\t\t{game_objects[f'{kind}s'][obj_id].name}" 
+                            text = f"{text}\n\t\t{game_objects[f'{kind}s'][obj_id].name}"
                 return text
             return f"You don't have a {looking_for}."
         if len(args) == 2:
@@ -195,7 +199,7 @@ class ActionProcessor:
                 items = [
                     (kind, obj_id)
                     for kind, obj_id
-                    in player.inventory
+                    in container.inventory
                     if game_objects[f'{kind}s'][obj_id].name == looking_for
                 ]
                 if items:
@@ -217,6 +221,24 @@ class ActionProcessor:
             return text
         return "Your inventory is empty."
 
+    def use(self, search_location: Location, game_objects: dict[str, GameObject], *args) -> str:
+        if len(args) == 1:
+            target = args[0]
+            interactables: list[Interactable] = [
+                (kind, obj_id)
+                for kind, obj_id
+                in search_location.entities
+                if game_objects[f'{kind}s'][obj_id].name == target
+                and isinstance(game_objects[f'{kind}s'][obj_id], Interactable)
+            ]
+            if interactables:
+                kind, obj_id = interactables[0]
+                interactable: Interactable = game_objects[f'{kind}s'][obj_id]
+                return interactable.cycle()
+        #if len(args) == 2: pass
+        if len(args) < 1:
+            return 'Invalid usage of command [use]. requires at least one argument. please use the help command for more information'
+
     def process(self, command: str) -> callable:
         if command == 'look':
             return self.look
@@ -228,4 +250,6 @@ class ActionProcessor:
             return self.drop
         if command == 'inventory':
             return self.inventory
+        if command == 'use':
+            return self.use
         return self.wrong
