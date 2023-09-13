@@ -1,5 +1,5 @@
 - obj_id: 1
-  name: survival_kit
+  name: survivalkit
   state: open
   description: A small box of essential survival supplies welded to the underside of the pilot's seat.
   inventory:
