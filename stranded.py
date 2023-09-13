@@ -1,4 +1,4 @@
-#! /usr/bin/env python3
+#! /usr/bin/env python3.9.6
 # James L. Rogers | github.com/DarkWinged
 
 #imports
