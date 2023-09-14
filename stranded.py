@@ -6,6 +6,7 @@ import curses
 import os
 import platform
 import json
+import pygame
 from app.npc import Npc
 from app.parser import Parser
 from app.location import Location
@@ -212,7 +213,7 @@ def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, GameObject]
     processor = ActionProcessor()
 
     if command and command != '':
-        result = processor.process(command[0],location, game_objs, *command[1:])
+        result = processor.process(command[0],location, game_objs, game_state, *command[1:])
         if isinstance(result, str):
             text = generate_location_text(location, game_objs)
             text = f'{text}\n\n {result}'
@@ -265,6 +266,22 @@ def main(stdscr):
     game_state["current_scene"] = "title"
     game_state["current_location"] = 1
     game_state["location_name"] = ''
+    
+    pygame.mixer.init()
+    game_state["music_mixer"] = pygame.mixer
+    # Load music file
+    #Music: Echoes of Time v2 by Kevin MacLeod
+    #Free download: https://filmmusic.io/song/3698-echoes-of-time-v2
+    #Licensed under CC BY 4.0: https://filmmusic.io/standard-license
+    game_state['songs'] = f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/echoes-of-time-v2-by-kevin-macleod-from-filmmusic-io.mp3"
+    game_state['music_mixer'].music.load(game_state['songs'])
+    game_state['music_volume'] = 0.5
+    game_state['music_mixer'].music.set_volume(0.5)
+    game_state['music_playing'] = False
+    # Inside the main function, before entering the game loop
+    if not game_state['music_playing']:
+        game_state['music_mixer'].music.play(-1)  # Play the music indefinitely (-1)
+        game_state['music_playing'] = True
 
     while True:
         if game_state["current_scene"] == "playing":
@@ -317,7 +334,10 @@ def main(stdscr):
                                 game_state['god_mode'] = True
                             else:
                                 game_state['god_mode'] = False
-
+                        elif "music" == parsed_text[0] and game_state["current_scene"] != "playing":
+                            processor = ActionProcessor()
+                            result = processor.process(parsed_text[0],None, None, game_state, *parsed_text[1:])
+                            stdscr.addstr(height - 4,0, f'{result}')
                         else:
                             game_state['user_command'] = parsed_text
                 input_text = ''
