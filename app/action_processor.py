@@ -1,5 +1,5 @@
 #imports
-
+import pygame
 from app.game_object import GameObject
 from app.intractable import Intractable
 from app.location import Location
@@ -33,6 +33,25 @@ class ActionProcessor:
                 return entities[0].description
             return f"You can't seem to find any {looking_for}s here, try using the help command."
         
+    def music(self, game_state, *args):
+        if args:
+            if "pause" == args[0]:  # Spacebar to play/pause music
+                if game_state['music_playing']:
+                    game_state["music_mixer"].music.pause()
+                    return 'music is paused'
+            elif "play" == args[0]:  # Spacebar to play/pause music
+                if game_state['music_playing']:
+                    game_state["music_mixer"].music.unpause()
+                    return 'music is playing'
+            elif "up" == args[0]:  # Up arrow to increase music volume
+                game_state['music_volume'] = min(1.0, game_state['music_volume'] + .5)
+                game_state["music_mixer"].music.set_volume(game_state['music_volume'])
+            
+            elif "down" == args[0]:  # Down arrow to decrease music volume
+                game_state['music_volume'] = max(0.0, game_state['music_volume'] - .5)
+                game_state["music_mixer"].music.set_volume(game_state['music_volume'])
+                return f"volume: {game_state['music_volume']}"
+    
     def talk(self, search_location: Location, game_objects: dict[str, GameObject], *args) -> str:
         if args:
             talking = args[0]
@@ -43,11 +62,22 @@ class ActionProcessor:
                 if game_objects[f'{kind}s'][obj_id].name == talking 
                 and isinstance(game_objects[f'{kind}s'][obj_id], Journal)
             ]
-            
+            npcs = [
+                game_objects[f'{kind}s'][obj_id]
+                for kind, obj_id
+                in search_location.entities
+                if game_objects[f'{kind}s'][obj_id].name == talking 
+                and isinstance(game_objects[f'{kind}s'][obj_id], Npc)
+            ]
             if journals:
                 journal = journals[0]
                 text = f'IMPORTTANT:\n\t{journal.story}\n\n Journal log:\n\t{journal.dialogue}'
                 return text
+            elif npcs:
+                npc = npcs[0]
+                text = f'{npc.dialogue}'
+                return text
+
             return f"You can't seem to find any {talking}s here, try using the help command."    
         return "Please specify who or what you want to talk to, type help to learn more about talking you native language."
 
@@ -290,7 +320,7 @@ class ActionProcessor:
         if len(args) < 1:
             return 'Invalid usage of command [use]. requires at least one argument. please use the help command for more information'
 
-    def process(self, command: str, search_location: Location, game_objects: dict[str, GameObject], *args) -> callable:
+    def process(self, command: str, search_location: Location, game_objects: dict[str, GameObject], game_state: dict[str, any], *args) -> callable:
         if command == 'look':
             return self.look(search_location, game_objects, *args)
         if command == "move":
@@ -305,5 +335,7 @@ class ActionProcessor:
             return self.use(search_location, game_objects, *args)
         if command == 'talk':
             return self.talk(search_location, game_objects, *args)
+        if command == 'music':
+            return self.music(game_state, *args)
         return self.wrong()
     

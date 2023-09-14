@@ -1,4 +1,5 @@
 from app.container import Container
+import random
 
 
 class Npc(Container):
@@ -8,8 +9,12 @@ class Npc(Container):
                  description: str,
                  state: bool,
                  inventory: list[tuple[str, int]],
-                 dialogue: str
+                 dialogue: list[str]
                  ):
         super().__init__(obj_id, name, description, state, inventory)
-        self.dialogue = dialogue
+        self._dialogue = dialogue
+        
+    @property
+    def dialogue(self) -> str:
+        return random.choice(self._dialogue)
         

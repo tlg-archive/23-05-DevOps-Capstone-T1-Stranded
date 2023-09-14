@@ -13,7 +13,7 @@
     - locked
   target: 
     kind: location
-    obj_id: 2
+    obj_id: 1
   blocking_states:
     - locked
 
@@ -29,8 +29,9 @@
     - open
   target: 
     kind: location
-    obj_id: 1
+    obj_id: 2
   blocking_states:
+    - dangerous
 
 - obj_id: 3
   name: trail
@@ -67,9 +68,210 @@
     dangerous: Without a way of navigating you will likely get lost.
     safe: Now that you have a compass navigating the jungle will be much safer.
   state_list:
-    - dangerous
+    - safe
   target: 
     kind: location
     obj_id: 2
   blocking_states:
-    - dangerous 
+    - dangerous
+
+- obj_id: 5
+  name: ForestPath
+  description: A vague trail leads to a clearing, as you follow, on one side you of the path you can make out railing, its damaged.
+  state: safe
+  state_descriptions:
+    dangerous: Remember your grandfathers words, caution is careful, careful keeps you alive.
+    safe: In better circumstances you would take the time to look at the scenery.
+  state_transitions:
+    dangerous: A feeling of overwhelming fear strikes you. 
+    safe: You breathe a sigh of relief as you move forward.
+  state_list:
+    - safe
+  target: 
+    kind: location
+    obj_id: 4
+  blocking_states:
+    - dangerous
+
+- obj_id: 6
+  name: ForestPath
+  description: The forest swallows you once more.
+  state: safe
+  state_descriptions:
+    dangerous: You body is tense, your on edge.
+    safe: Your mind wanders idly.
+  state_transitions:
+    dangerous: Im in danger.
+    safe: Little by little i'll make it through this dense flora.
+  state_list:
+    - safe
+  target: 
+    kind: location
+    obj_id: 3
+  blocking_states:
+    - dangerous
+
+- obj_id: 7
+  name: Highway
+  description: You walk a long derelict road.
+  state: safe
+  state_descriptions:
+    dangerous: I heard something walk over glass, im not alone.
+    safe: Despite the scenery, I dont feel any danger.
+  state_transitions:
+    dangerous: Its near, what do I do?!
+    safe: Its okay, im alive, im still alive.
+  state_list:
+    - safe
+  target: 
+    kind: location
+    obj_id: 5
+  blocking_states:
+    - dangerous
+- obj_id: 8
+  name: Highway
+  description: The walk feels longer then it did before.
+  state: safe
+  state_descriptions:
+    dangerous: I have to be careful, one wrong move and im a goner.
+    safe: The quiet is unsettling, but I still feel at ease.
+  state_transitions:
+    dangerous: I'm not alone, somethings here, I have a bad feeling. 
+    safe: Little by little i'll make it through this dense flora.
+  state_list:
+    - safe
+  target: 
+    kind: location
+    obj_id: 4
+  blocking_states:
+    - dangerous
+
+- obj_id: 9
+  name: SecurityRoute
+  description: The road is marked by multiple security checkpoints.
+  state: safe
+  state_descriptions: 
+    dangerous: ooga booga
+    safe: woomba oomba
+  state_transitions:
+    dangerous: ah
+    safe: blah
+  state_list:
+    - safe
+  target: 
+    kind: location
+    obj_id: 6
+  blocking_states:
+    -dangerous
+
+- obj_id: 10
+  name: SecurityRoute
+  description: The only sound I hear is my feet on the pavement as I move around dead barricades.
+  state: safe
+  state_descriptions:
+    dangerous: I have to be careful, one wrong move and im a goner.
+    safe: The quiet is unsettling, but I still feel at ease.
+  state_transitions:
+    dangerous: I'm not alone, somethings here, I have a bad feeling. 
+    safe: Little by little i'll make it through this dense flora.
+  state_list:
+    - safe
+  target: 
+    kind: location
+    obj_id: 4
+  blocking_states:
+    - dangerous
+
+- obj_id: 11
+  name: ResidentialPath
+  description: The path is lined by gardens, now unkempt and wild.
+  state: safe
+  state_descriptions:
+    dangerous: Without a way of navigating you will likely get lost.
+    safe: Now that you have a compass navigating the jungle will be much safer.
+  state_transitions:
+    dangerous: Without a way of navigating you will likely get lost.
+    safe: Now that you have a compass navigating the jungle will be much safer.
+  state_list:
+    - safe
+  target: 
+    kind: location
+    obj_id: 8
+  blocking_states:
+    - dangerous
+
+- obj_id: 12
+  name: ResidentialPath
+  description: The smell of a variety of plants assaults you on your way.
+  state: safe
+  state_descriptions:
+    dangerous: I have to be careful, one wrong move and im a goner.
+    safe: The quiet is unsettling, but I still feel at ease.
+  state_transitions:
+    dangerous: I'm not alone, somethings here, I have a bad feeling. 
+    safe: Little by little i'll make it through this dense flora.
+  state_list:
+    - safe
+  target: 
+    kind: location
+    obj_id: 4
+  blocking_states:
+    - dangerous
+
+- obj_id: 13
+  name: SubmergedTunnel
+  description: You move past wreckage.
+  state: safe
+  state_descriptions:
+    dangerous: Without a way of navigating you will likely get lost.
+    safe: Now that you have a compass navigating the jungle will be much safer.
+  state_transitions:
+    dangerous: Without a way of navigating you will likely get lost.
+    safe: Now that you have a compass navigating the jungle will be much safer.
+  state_list:
+    - safe
+  target: 
+    kind: location
+    obj_id: 6
+  blocking_states:
+    - dangerous
+
+- obj_id: 14
+  name: ReactorPasage
+  description: The sound is muffled as you make your way through tight corridors.
+  state: safe
+  state_descriptions:
+    dangerous: I have to be careful, one wrong move and im a goner.
+    safe: The quiet is unsettling, but I still feel at ease.
+  state_transitions:
+    dangerous: I'm not alone, somethings here, I have a bad feeling. 
+    safe: Little by little i'll make it through this dense flora.
+  state_list:
+    - safe
+  target: 
+    kind: location
+    obj_id: 7
+  blocking_states:
+    - dangerous
+
+- obj_id: 15
+  name: TheExpanse
+  description: little light reaches these depths, you move slowly towards the beach, your not coming back.
+  state: safe
+  state_descriptions:
+    dangerous: Without a way of navigating you will likely get lost.
+    safe: Now that you have a compass navigating the jungle will be much safer.
+  state_transitions:
+    dangerous: Without a way of navigating you will likely get lost.
+    safe: Now that you have a compass navigating the jungle will be much safer.
+  state_list:
+    - safe
+  target: 
+    kind: location
+    obj_id: 2
+  blocking_states:
+    - dangerous
+
+ 
+
+  
