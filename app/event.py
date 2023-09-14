@@ -53,7 +53,8 @@ class Trigger:
         conditions: dict = trigger_data['conditions']
         
         # Convert 'item' and 'no_item' conditions
-        conditions['inventory'] = {key: [(item['kind'], item['obj_id']) for item in value] for key, value in conditions['inventory'].items()}
+        if 'inventory' in conditions.keys():
+            conditions['inventory'] = {key: [(item['kind'], item['obj_id']) for item in value] for key, value in conditions['inventory'].items()}
         
         self.object: tuple[str, int] = trigger_object
         self.conditions: dict = conditions
