@@ -18,3 +18,8 @@ drop:
   - leave
   - give
   - discard
+talk:
+  - speak
+  - read
+  - yell
+  
