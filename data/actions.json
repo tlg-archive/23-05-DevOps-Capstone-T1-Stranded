@@ -15,7 +15,6 @@
         "touch"
     ],
     "take": [
-        "get",
         "grab",
         "steal",
         "loot"
@@ -24,5 +23,10 @@
         "leave",
         "give",
         "discard"
+    ],
+    "talk": [
+        "speak",
+        "read",
+        "yell"
     ]
 }

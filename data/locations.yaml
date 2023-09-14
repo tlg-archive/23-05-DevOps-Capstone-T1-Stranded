@@ -11,6 +11,8 @@
       obj_id: 1
     - kind: npc
       obj_id: 1
+    - kind: journal
+      obj_id: 1
 - obj_id: 2
   name: beach
   description: "its a beach"
