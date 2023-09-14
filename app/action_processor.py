@@ -62,11 +62,22 @@ class ActionProcessor:
                 if game_objects[f'{kind}s'][obj_id].name == talking 
                 and isinstance(game_objects[f'{kind}s'][obj_id], Journal)
             ]
-            
+            npcs = [
+                game_objects[f'{kind}s'][obj_id]
+                for kind, obj_id
+                in search_location.entities
+                if game_objects[f'{kind}s'][obj_id].name == talking 
+                and isinstance(game_objects[f'{kind}s'][obj_id], Npc)
+            ]
             if journals:
                 journal = journals[0]
                 text = f'IMPORTTANT:\n\t{journal.story}\n\n Journal log:\n\t{journal.dialogue}'
                 return text
+            elif npcs:
+                npc = npcs[0]
+                text = f'{npc.dialogue}'
+                return text
+
             return f"You can't seem to find any {talking}s here, try using the help command."    
         return "Please specify who or what you want to talk to, type help to learn more about talking you native language."
 

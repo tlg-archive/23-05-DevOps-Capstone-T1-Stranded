@@ -74,14 +74,16 @@ def load_game_objects(data: dict[str, any]):
         if "inventory" in npc.keys():
             for item in npc['inventory']:
                 items.append((item['kind'], item['obj_id']))
-        npc_obj = Npc(npc['obj_id'],
-                      npc['name'],
-                      npc['description'],
-                      npc['state'],
-                      items,
-                      npc['dialogue']
-                      )
-        objects['npcs'][npc_obj.obj_id] = npc_obj
+        if "dialogue" in npc.keys():
+            for npc in data["npcs"]: 
+                npc_obj = Npc(npc['obj_id'],
+                            npc['name'],
+                            npc['description'],
+                            npc['state'],
+                            items,
+                            npc['dialogue']
+                            )
+                objects['npcs'][npc_obj.obj_id] = npc_obj
 
     objects['locations'] = {}
     for location in data['locations']:

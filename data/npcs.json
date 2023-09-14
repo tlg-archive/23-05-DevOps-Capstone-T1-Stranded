@@ -4,7 +4,11 @@
         "name": "boar",
         "description": "It was covered in dried blood, eyes cold and lifeless",
         "state": "unaware",
-        "dialogue": "beep boop",
+        "dialogue": [
+            "beep boop",
+            "deep doop",
+            "peep poop"
+        ],
         "inventory": [
             {
                 "obj_id": 3,
