@@ -24,5 +24,8 @@
         "exit",
         "end",
         "terminate"
+    ],
+    "goto": [
+        "teleport"
     ]
 }
