@@ -6,7 +6,7 @@ from app.container import Container
 from app.npc import Npc
 from app.transition import Transition
 from app.player import Player
-
+from app.journal import Journal
 
 class ActionProcessor:
     def __init__(self):
@@ -30,6 +30,24 @@ class ActionProcessor:
                     return text
                 return entities[0].description
             return f"You can't seem to find any {looking_for}s here, try using the help command."
+        
+    def talk(self, search_location: Location, game_objects: dict[str, GameObject], *args) -> str:
+        if args:
+            talking = args[0]
+            journals = [
+                game_objects[f'{kind}s'][obj_id]
+                for kind, obj_id
+                in search_location.entities
+                if game_objects[f'{kind}s'][obj_id].name == talking 
+                and isinstance(game_objects[f'{kind}s'][obj_id], Journal)
+            ]
+            
+            if journals:
+                journal = journals[0]
+                text = f'IMPORTTANT:\n\t{journal.story}\n\n Journal log:\n\t{journal.dialogue}'
+                return text
+            return f"You can't seem to find any {talking}s here, try using the help command."    
+        return "Please specify who or what you want to talk to, type help to learn more about talking you native language."
 
     def move(self, search_location: Location, game_objects: dict[str, GameObject], *args) -> str:
         if args:
@@ -228,4 +246,7 @@ class ActionProcessor:
             return self.drop
         if command == 'inventory':
             return self.inventory
+        if command == 'talk':
+            return self.talk
         return self.wrong
+    

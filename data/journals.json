@@ -1,0 +1,13 @@
+[
+    {
+        "obj_id": 1,
+        "name": "journal1",
+        "description": "small tablet that has important info",
+        "story": "intense budget breaking cute scene",
+        "dialogue": [
+            "dialogue 1",
+            "dialogue 2",
+            "dialogue 3"
+        ]
+    }
+]

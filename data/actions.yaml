@@ -18,3 +18,8 @@ drop:
   - leave
   - give
   - dicard
+talk:
+  - speak
+  - read
+  - yell
+  
