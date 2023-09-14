@@ -304,6 +304,6 @@ class ActionProcessor:
         if command == 'use':
             return self.use(search_location, game_objects, *args)
         if command == 'talk':
-            return self.talk
+            return self.talk(search_location, game_objects, *args)
         return self.wrong()
     
