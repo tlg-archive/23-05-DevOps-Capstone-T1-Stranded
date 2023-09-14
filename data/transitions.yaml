@@ -59,7 +59,7 @@
 - obj_id: 4
   name: trail
   description: A winding trail that leads west back to the beach.
-  state: dangerous
+  state: safe
   state_descriptions:
     dangerous: Without a way of navigating you will likely get lost.
     safe: Now that you have a compass navigating the jungle will be much safer.
