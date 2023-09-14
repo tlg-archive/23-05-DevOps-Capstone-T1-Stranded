@@ -2,21 +2,102 @@
     {
         "obj_id": 1,
         "name": "hatch",
-        "description": "The exit hatch of the pod",
-        "state": null,
+        "description": "The exit hatch of the pod.",
+        "state": "locked",
+        "state_descriptions": {
+            "locked": "The hatch is sealed tightly by a locking mechanism. There is a red handwheel labeled release built into the hatch.",
+            "unlocked": "The locking mechanism has been disengaged and the is now open revealing a sandy beach."
+        },
+        "state_transitions": {
+            "locked": "With a slight twist of the handwheel you reengage the locking mechanism. The hatch slowly closes and seals with a sharp hiss.",
+            "unlocked": "With some effort you twist the handwheel disengaging the lock. There is a sharp hiss as the hatch begins to open."
+        },
+        "state_list": [
+            "unlocked",
+            "locked"
+        ],
         "target": {
             "kind": "location",
             "obj_id": 2
-        }
+        },
+        "blocking_states": [
+            "locked"
+        ]
     },
     {
         "obj_id": 2,
         "name": "hatch",
-        "description": "The enter hatch of the pod",
-        "state": null,
+        "description": "The hatch of the pod.",
+        "state": "open",
+        "state_descriptions": {
+            "open": "The hatch hangs open forming a boarding ramp for the escape pod."
+        },
+        "state_transitions": {
+            "open": "Safety mechanisms prevent the hatch from closing without an occupant in the pod."
+        },
+        "state_list": [
+            "open"
+        ],
         "target": {
             "kind": "location",
             "obj_id": 1
-        }
+        },
+        "blocking_states": null
+    },
+    {
+        "obj_id": 3,
+        "name": "trail",
+        "description": "A winding trail that leads into the jungle.",
+        "state": "dangerous",
+        "state_descriptions": {
+            "dangerous": "Without a way of navigating you will likely get lost.",
+            "safe": "Now that you have a compass you orient yourself east. Now navigating the jungle will be much safer."
+        },
+        "state_transitions": {
+            "dangerous": "Without a way of navigating you will likely get lost.",
+            "safe": "Now that you have a compass you orient yourself east. Now navigating the jungle will be much safer."
+        },
+        "state_list": [
+            "dangerous"
+        ],
+        "key_info": {
+            "key": {
+                "kind": "item",
+                "obj_id": 1
+            },
+            "message": "Using the compass you get you bearings.",
+            "state": "safe"
+        },
+        "target": {
+            "kind": "location",
+            "obj_id": 3
+        },
+        "blocking_states": [
+            "dangerous"
+        ]
+    },
+    {
+        "obj_id": 4,
+        "name": "trail",
+        "description": "A winding trail that leads west back to the beach.",
+        "state": "safe",
+        "state_descriptions": {
+            "dangerous": "Without a way of navigating you will likely get lost.",
+            "safe": "Now that you have a compass navigating the jungle will be much safer."
+        },
+        "state_transitions": {
+            "dangerous": "Without a way of navigating you will likely get lost.",
+            "safe": "Now that you have a compass navigating the jungle will be much safer."
+        },
+        "state_list": [
+            "dangerous"
+        ],
+        "target": {
+            "kind": "location",
+            "obj_id": 2
+        },
+        "blocking_states": [
+            "dangerous"
+        ]
     }
 ]

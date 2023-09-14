@@ -17,7 +17,7 @@ take:
 drop:
   - leave
   - give
-  - dicard
+  - discard
 talk:
   - speak
   - read
