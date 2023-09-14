@@ -1,7 +1,7 @@
 #imports
 
 from app.game_object import GameObject
-from app.interactable import Interactable
+from app.intractable import Intractable
 from app.location import Location
 from app.container import Container
 from app.npc import Npc
@@ -224,18 +224,50 @@ class ActionProcessor:
     def use(self, search_location: Location, game_objects: dict[str, GameObject], *args) -> str:
         if len(args) == 1:
             target = args[0]
-            interactables: list[Interactable] = [
-                (kind, obj_id)
+            intractables: list[Intractable] = [
+                game_objects[f'{kind}s'][obj_id]
                 for kind, obj_id
                 in search_location.entities
                 if game_objects[f'{kind}s'][obj_id].name == target
-                and isinstance(game_objects[f'{kind}s'][obj_id], Interactable)
+                and isinstance(game_objects[f'{kind}s'][obj_id], Intractable)
             ]
-            if interactables:
-                kind, obj_id = interactables[0]
-                interactable: Interactable = game_objects[f'{kind}s'][obj_id]
-                return interactable.cycle()
-        #if len(args) == 2: pass
+            if intractables:
+                intractable: Intractable = intractables[0]
+                return intractable.cycle()
+            return f"You can't use the {target} right now."
+        if len(args) == 2:
+            key_name = args[0]
+            target_name = args[1]
+
+            keys = [
+                (kind, obj_id)
+                for kind, obj_id
+                in search_location.entities
+                if game_objects[f'{kind}s'][obj_id].name == key_name
+            ]
+            if not keys:
+                player = game_objects['players'][0]
+                keys = [
+                    (kind, obj_id)
+                    for kind, obj_id
+                    in player.inventory
+                    if game_objects[f'{kind}s'][obj_id].name == key_name
+                ]
+            if not keys:
+                return f"You don't have a {key_name} and there isn't one near you either."
+            targets = [
+                game_objects[f'{kind}s'][obj_id] 
+                for kind, obj_id
+                in search_location.entities
+                if game_objects[f'{kind}s'][obj_id].name == target_name
+                and isinstance(game_objects[f'{kind}s'][obj_id], Intractable)
+            ]
+            if targets:
+                key = keys[0]
+                target: Intractable = targets[0]
+                return target.unlock(key, key_name)
+            return f"There isn't a {target_name} here."
+
         if len(args) < 1:
             return 'Invalid usage of command [use]. requires at least one argument. please use the help command for more information'
 

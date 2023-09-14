@@ -17,4 +17,4 @@ take:
 drop:
   - leave
   - give
-  - dicard
+  - discard

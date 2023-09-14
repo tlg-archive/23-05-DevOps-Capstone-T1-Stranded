@@ -1,6 +1,6 @@
 - obj_id: 0
   name: player
-  state: safe
-  description: A no nonsense space trucker providing for their family.
+  state: alive
+  description: A no nonsense space trucker proving for their family.
   inventory:
   
