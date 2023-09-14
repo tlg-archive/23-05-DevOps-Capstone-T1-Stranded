@@ -1,0 +1,56 @@
+# example event
+- obj_id: 0
+  name: "Event 1"
+  description: "Description of Event 1"
+  state: inactive
+  triggers:
+    - object:
+        kind: "npc"  # Define the kind of object to listen to (e.g., npc, location, item)
+        obj_id: 1  # ID of the object to listen to
+      conditions:
+        current_location:
+          is: 1
+          is_not: 2
+        state:
+          is: 'state'
+          is_not: 'not_state'
+        inventory:
+          item: #trigger event when all the following items are in the trigger_object's inventory
+            - kind: "item"  
+              obj_id: 2
+          no_item: #trigger event when none the following items are in the trigger_object's inventory
+            - kind: "item"
+              obj_id: 3
+  affected_objects:
+    - kind: "npc"  # Define the kind of objects to affect (e.g., npc, item, location)
+      obj_id: 2  # ID of the object to affect
+  change: 
+    state: 'new_state'
+    inventory:
+      add:
+        - kind: 'item'
+          obj_id: 4
+      remove:
+        - kind: 'item'
+          obj_id: 5
+
+- obj_id: 1
+  name: "Player Has a Compass"
+  description: "This event triggers when the player has a specific item in their inventory."
+  state: active
+  triggers:
+    - object:
+        kind: "player"
+        obj_id: 0
+      conditions:
+        inventory:
+          item:
+            - kind: "item"
+              obj_id: 1
+  affected_objects:
+    - kind: "transition"
+      obj_id: 3
+    - kind: "transition"
+      obj_id: 4
+  change:
+    state: "safe"
