@@ -306,7 +306,7 @@ def main(stdscr):
                             game_state["previous_scene"] = game_state["current_scene"]
                             game_state["current_scene"] = 'map'
                         elif 'poweroverwhelming' == parsed_text[0] and game_state["current_scene"] == "playing":
-                            if game_state.get('god_mode', False):
+                            if not game_state.get('god_mode', False):
                                 game_state['god_mode'] = True
                             else:
                                 game_state['god_mode'] = False
