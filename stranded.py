@@ -15,7 +15,7 @@ from app.action_processor import ActionProcessor
 from app.transition import Transition
 from app.player import Player
 from app.container import Container
-
+from app.journal import Journal
 
 def load_data() -> dict[str, any]:
     data = {}
@@ -52,7 +52,7 @@ def load_data() -> dict[str, any]:
               ) as map_file:
         data['map'] = map_file.read()
 
-    object_types = ['locations', 'items', 'transitions', 'players', 'containers', 'npcs']
+    object_types = ['locations', 'items', 'transitions', 'players', 'containers', 'npcs', "journals"]
 
     for object_type in object_types:
         with open(
@@ -94,6 +94,16 @@ def load_game_objects(data: dict[str, any]):
                                 entities
                                 )
         objects['locations'][location_obj.obj_id] = location_obj
+    
+    objects['journals'] = {}
+    for journal in data['journals']:
+        journal_obj = Journal(journal['obj_id'],
+                        journal['name'],
+                        journal['description'],
+                        journal['dialogue'],
+                        journal['story']
+                        )
+        objects['journals'][journal_obj.obj_id] = journal_obj
 
     objects['items'] = {}
     for item in data['items']:
