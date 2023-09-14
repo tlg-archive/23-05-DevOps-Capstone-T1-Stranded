@@ -156,7 +156,7 @@ class ActionProcessor:
                     return f"You don't have a {looking_for}."
                 return f"You can't seem to find a {container} here."
 
-    def inventory(self, search_location: Location, game_objects: dict[str, GameObject], *args):
+    def inventory(self, game_objects: dict[str, GameObject], *args):
         player: Player = game_objects['players'][0]
         if len(args) == 1:
             looking_for = args[0]
@@ -282,7 +282,7 @@ class ActionProcessor:
         if command == 'drop':
             return self.drop(search_location, game_objects, *args)
         if command == 'inventory':
-            return self.inventory(search_location, game_objects, *args)
+            return self.inventory(game_objects, *args)
         if command == 'use':
             return self.use(search_location, game_objects, *args)
         return self.wrong()
