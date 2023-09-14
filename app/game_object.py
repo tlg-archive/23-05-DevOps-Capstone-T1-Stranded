@@ -7,4 +7,8 @@ class GameObject:
     
     @property
     def description(self) -> str:
-        return self._description
+        description = self._description.split(sep= '\\n')
+        text = ''
+        for line in description:
+            text = f"{text}{line}\n"
+        return text
