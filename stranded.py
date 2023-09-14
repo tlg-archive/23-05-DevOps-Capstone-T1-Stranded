@@ -269,10 +269,6 @@ def main(stdscr):
     
     pygame.mixer.init()
     game_state["music_mixer"] = pygame.mixer
-    # Load music file
-    #Music: Echoes of Time v2 by Kevin MacLeod
-    #Free download: https://filmmusic.io/song/3698-echoes-of-time-v2
-    #Licensed under CC BY 4.0: https://filmmusic.io/standard-license
     game_state['songs'] = f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/echoes-of-time-v2-by-kevin-macleod-from-filmmusic-io.mp3"
     game_state['music_mixer'].music.load(game_state['songs'])
     game_state['music_volume'] = 0.5
