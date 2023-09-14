@@ -77,8 +77,8 @@ def load_game_objects(data: dict[str, any]):
                       npc['name'],
                       npc['description'],
                       npc['state'],
-                      npc['dialogue'],
-                      items
+                      items,
+                      npc['dialogue']
                       )
         objects['npcs'][npc_obj.obj_id] = npc_obj
 
@@ -186,7 +186,10 @@ def map_func(stdscr, data: str):
     stdscr.addstr(1,0, f'{data}')
 
 def generate_location_text(location: Location, game_objs: dict[str, GameObject]) -> str:
-    text = f"{location.description}\n"
+    description = location.description.split(sep= '\\n')
+    text = ''
+    for line in description:
+        text = f"{text}{line}\n"
     if location.entities:
         text = f'{text}\nAround you, you can see:'
         for kind, obj_id in location.entities:
@@ -197,24 +200,22 @@ def generate_location_text(location: Location, game_objs: dict[str, GameObject])
 def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, GameObject]) -> dict[str, any]:
     obj_id = game_state["current_location"]
     location = game_objs["locations"][obj_id]
-    text = generate_location_text(location, game_objs) 
+    text = generate_location_text(location, game_objs)
     command = game_state.get('user_command', '')
     processor = ActionProcessor()
 
     if command and command != '':
-        action = processor.process(command[0])
-        if action:
-            result = action(location, game_objs, *command[1:])
-            if isinstance(result, str):
+        result = processor.process(command[0],location, game_objs, *command[1:])
+        if isinstance(result, str):
+            text = generate_location_text(location, game_objs)
+            text = f'{text}\n\n {result}'
+        elif isinstance(result, tuple):
+            kind, target_obj_id = result
+            if kind == 'location':
+                game_state['current_location'] = target_obj_id
+                location = game_objs["locations"][target_obj_id]
                 text = generate_location_text(location, game_objs)
-                text = f'{text}\n\n {result}'
-            elif isinstance(result, tuple):
-                kind, target_obj_id = result
-                if kind == 'location':
-                    game_state['current_location'] = target_obj_id
-                    location = game_objs["locations"][target_obj_id]
-                    text = generate_location_text(location, game_objs)
-            game_state['previous_text'] = text
+        game_state['previous_text'] = text
     if not command:
         text = game_state.get('previous_text', text)
 
@@ -297,15 +298,20 @@ def main(stdscr):
                         elif "help" == parsed_text[0]:
                             game_state["previous_scene"] = game_state["current_scene"]
                             game_state["current_scene"] = 'help'
-                        elif 'goto' == parsed_text[0] and game_state["current_scene"] == "playing":
+                        elif 'goto' == parsed_text[0] and game_state["current_scene"] == "playing" and game_state.get('god_mode', False):
                             if len(parsed_text) > 1 and parsed_text[1].isdigit():
                                 target_location = int(parsed_text[1])
                                 if target_location in game_objects['locations'].keys():
                                     game_state["current_location"] = target_location
-                        
                         elif "map" == parsed_text[0]:
                             game_state["previous_scene"] = game_state["current_scene"]
                             game_state["current_scene"] = 'map'
+                        elif 'poweroverwhelming' == parsed_text[0] and game_state["current_scene"] == "playing":
+                            if game_state.get('god_mode', False):
+                                game_state['god_mode'] = True
+                            else:
+                                game_state['god_mode'] = False
+
                         else:
                             game_state['user_command'] = parsed_text
                 input_text = ''

@@ -25,10 +25,11 @@ class ActionProcessor:
             if entities:
                 if isinstance(entities[0], Container):
                     container = entities[0]
-                    text = f'{container.description}\n\tinventory:'
-                    for kind, obj_id in container.inventory:
-                        text = f'{text}\n\t\t{game_objects[f"{kind}s"][obj_id].name}'
-                    return text
+                    if container.inventory:
+                        text = f'{container.description}\n\tinventory:'
+                        for kind, obj_id in container.inventory:
+                            text = f'{text}\n\t\t{game_objects[f"{kind}s"][obj_id].name}'
+                        return text
                 return entities[0].description
             return f"You can't seem to find any {looking_for}s here, try using the help command."
 
@@ -49,7 +50,7 @@ class ActionProcessor:
                 return f"You can't go that way because the {transition.name} is {transition.state}"
             return f"You can't move to the {transitions}, try using the help command."
 
-    def wrong(self, *args):
+    def wrong(self):
         return "command not found please use the help command to see valid commands and examples"
 
     def take(self, search_location: Location, game_objects: dict[str, GameObject], *args) -> str:
@@ -155,7 +156,7 @@ class ActionProcessor:
                     return f"You don't have a {looking_for}."
                 return f"You can't seem to find a {container} here."
 
-    def inventory(self, search_location: Location, game_objects: dict[str, GameObject], *args):
+    def inventory(self, game_objects: dict[str, GameObject], *args):
         player: Player = game_objects['players'][0]
         if len(args) == 1:
             looking_for = args[0]
@@ -185,13 +186,13 @@ class ActionProcessor:
                 return text
             return f"You don't have a {looking_for}."
         if len(args) == 2:
-            looking_for = args[0]
+            looking_for = args[1]
             player = game_objects['players'][0]
             containers = [
-                (kind, obj_id)
+                game_objects[f'{kind}s'][obj_id]
                 for kind, obj_id
                 in player.inventory
-                if game_objects[f'{kind}s'][obj_id].name == args[1]
+                if game_objects[f'{kind}s'][obj_id].name == args[0]
                 and isinstance(game_objects[f'{kind}s'][obj_id], Container)
             ]
             if containers:
@@ -271,17 +272,17 @@ class ActionProcessor:
         if len(args) < 1:
             return 'Invalid usage of command [use]. requires at least one argument. please use the help command for more information'
 
-    def process(self, command: str) -> callable:
+    def process(self, command: str, search_location: Location, game_objects: dict[str, GameObject], *args) -> callable:
         if command == 'look':
-            return self.look
+            return self.look(search_location, game_objects, *args)
         if command == "move":
-            return self.move
+            return self.move(search_location, game_objects, *args)
         if command == 'take':
-            return self.take
+            return self.take(search_location, game_objects, *args)
         if command == 'drop':
-            return self.drop
+            return self.drop(search_location, game_objects, *args)
         if command == 'inventory':
-            return self.inventory
+            return self.inventory(game_objects, *args)
         if command == 'use':
-            return self.use
-        return self.wrong
+            return self.use(search_location, game_objects, *args)
+        return self.wrong()
