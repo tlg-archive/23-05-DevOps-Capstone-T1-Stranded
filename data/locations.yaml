@@ -80,7 +80,7 @@
   - kind: journal
     obj_id: 3
   - kind: item
-    obj_id: 111
+    obj_id: 501
  
 - obj_id: 6
   name: Cargo Bay
@@ -119,4 +119,4 @@
   - kind: transition
     obj_id: 11
   - kind: item
-    obj_id: 222
+    obj_id: 701
