@@ -18,7 +18,7 @@
         ],
         "target": {
             "kind": "location",
-            "obj_id": 1
+            "obj_id": 2
         },
         "blocking_states": [
             "locked"
