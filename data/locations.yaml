@@ -10,8 +10,7 @@
     obj_id: 2
   - kind: transition
     obj_id: 1
-  - kind: journal
-    obj_id: 1
+  
    
   
 - obj_id: 2
@@ -28,6 +27,8 @@
     obj_id: 2
   - kind: transition
     obj_id: 3
+  - kind: journal
+    obj_id: 1
   
 - obj_id: 3
   name: Jungle
@@ -60,6 +61,8 @@
     obj_id: 7
   - kind: transition
     obj_id: 8
+  - kind: journal
+    obj_id: 2
   
 - obj_id: 5
   name: Arquebus Planetary Spaceport
@@ -74,6 +77,8 @@
   entities:
   - kind: transition
     obj_id: 9
+  - kind: journal
+    obj_id: 1
  
 - obj_id: 6
   name: Cargo Bay

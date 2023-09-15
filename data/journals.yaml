@@ -44,7 +44,7 @@
 - obj_id: 3
   name: journal3
   description: small tablet that has important info
-  story:
+  story:  "assessing the damage.\n\tDespite its sorry state, hope flickered as I noted that we primarily need to load a new generator.\n\tWith these fixes, we could load the ship onto the railgun and escape"
   dialogue:
    - "Entry 1/3
     \n\tIn our small space colony, we had grown dependent on robots for expansion and maintenance. 
@@ -56,5 +56,8 @@
     \n\tAfter the shelter's attack, the rumored evacuation ship was our last hope for salvation. 
     \n\tAs the crowd surged towards the shuttle bay, hopes were high, but dread settled in when we reached the locked entrance door. 
     \n\tPanic and anger rippled through the group as the realization sank in that our supposed lifeline had been locked away by those wanting to use it for themselves, leaving us trapped in a nightmare with no way out"
-   - "Entry 3/3\n\t"
+   - "Entry 3/3
+    \n\tStanding in the shuttle bay, my trembling hand locked the entrance door, sealing off the desperate crowd outside.
+    \n\tGuilt clawed at me, but fear drove me to prioritize my own survival, justifying it by thinking they would add to the already damaged ship. 
+    \n\tThe cries and banging from the other side of the door will forever haunted me"
 

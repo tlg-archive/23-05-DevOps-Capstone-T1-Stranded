@@ -15,10 +15,6 @@
             {
                 "kind": "transition",
                 "obj_id": 1
-            },
-            {
-                "kind": "journal",
-                "obj_id": 1
             }
         ]
     },
@@ -38,6 +34,10 @@
             {
                 "kind": "transition",
                 "obj_id": 3
+            },
+            {
+                "kind": "journal",
+                "obj_id": 1
             }
         ]
     },
@@ -72,6 +72,10 @@
             {
                 "kind": "transition",
                 "obj_id": 8
+            },
+            {
+                "kind": "journal",
+                "obj_id": 2
             }
         ]
     },
@@ -83,6 +87,10 @@
             {
                 "kind": "transition",
                 "obj_id": 9
+            },
+            {
+                "kind": "journal",
+                "obj_id": 1
             }
         ]
     },
