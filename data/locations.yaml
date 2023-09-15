@@ -78,7 +78,7 @@
   - kind: transition
     obj_id: 9
   - kind: journal
-    obj_id: 1
+    obj_id: 3
  
 - obj_id: 6
   name: Cargo Bay
