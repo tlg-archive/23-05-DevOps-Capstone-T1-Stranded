@@ -16,5 +16,17 @@
         "name": "powerCore",
         "state": "active",
         "description": "Yanked out of the robots you've disabled."
+    },
+    {
+        "obj_id": 111,
+        "name": "spaceSuit",
+        "state": "active",
+        "description": "A space suit, it seems to have been modified, reinforced with composite synthetic materials to withstand the pressure exerted on the human body by the ocean."
+    },
+    {
+        "obj_id": 222,
+        "name": "generator",
+        "state": "active",
+        "description": "\u201cThis is an Ursa Generator. Built to last, compact, and able to generate enough energy to get you off planet and through the expanse.\u201d"
     }
 ]
