@@ -23,7 +23,7 @@
       obj_id: 3
 - obj_id: 3
   name: jungle
-  description: The lush jungle canopy was a welcome shield from the relentless onslaught of the suns' scorching rays. \n  The air is filled with \nthe harmonious calls of tropical birds, their melodies as alien as they are enchanting.
+  description: Beneath the lush jungle canopy, a welcome shield from the relentless onslaught of the suns' scorching rays, you find solace. The air is filled with the harmonious calls of tropical birds, their melodies as alien as they are enchanting.
   entities:
     - kind: transition
       obj_id: 4
