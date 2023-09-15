@@ -8,10 +8,12 @@ class Npc(Container):
                  name: str,
                  description: str,
                  state: bool,
-                 inventory: list[tuple[str, int]],
+                 inventory: list[dict[str, str or int]],
                  dialogue: list[str]
                  ):
         super().__init__(obj_id, name, description, state, inventory)
+        if not dialogue:
+            dialogue = []
         self._dialogue = dialogue
         
     @property
