@@ -1,19 +1,19 @@
 # obj_id, location, description,
  
-- obj_id: 1
+- obj_id: 101
   name: compass
   state: active
   description: A rugged survival tool used to navigate since ancient times
 
-- obj_id: 2
+- obj_id: 102
   name: flareGun
-  state: active
+  state: loaded
   description: A flare gun, the design is the same as when it was first invented, just made out of stronger material to withstand the stronger payload its shells have.
 
-- obj_id: 3
-  name: powerCore
+- obj_id: 201
+  name: empGrenade
   state: active
-  description: Yanked out of the robots you've disabled. 
+  description: A small improvised electro magnetic pulse device that you found embedded in a robotic boar.
 
 - obj_id: 501
   name: spaceSuit
