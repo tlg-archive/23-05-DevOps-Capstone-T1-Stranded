@@ -1,6 +1,4 @@
-from app.container import Container
 from app.entity import Entity
-from app.game_object import GameObject
 
 class Event(Entity):
     def __init__(
@@ -33,7 +31,11 @@ class Event(Entity):
             self.triggers.append(trigger)
 
         # Convert affected object dictionaries into tuples
-        self.affected_objects: list[tuple[str, int]] = [(obj['kind'], obj['obj_id']) for obj in affected_objects]
+        self.affected_objects: list[tuple[str, int]] = [
+            (obj['kind'], obj['obj_id'])
+            for obj
+            in affected_objects
+        ]
 
         # Convert change dictionary into Change object
         self.change: Change = Change(
@@ -51,17 +53,13 @@ class Trigger:
         """
         trigger_object: tuple[str, int] = (trigger_data['object']['kind'], trigger_data['object']['obj_id'])
         conditions: dict = trigger_data['conditions']
-        
+
         # Convert 'item' and 'no_item' conditions
         if 'inventory' in conditions.keys():
             conditions['inventory'] = {key: [(item['kind'], item['obj_id']) for item in value] for key, value in conditions['inventory'].items()}
-        
+
         self.object: tuple[str, int] = trigger_object
         self.conditions: dict = conditions
-
-
-
-
 
 class Change:
     def __init__(self, state: str = None, inventory: dict = None) -> None:
