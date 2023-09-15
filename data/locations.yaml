@@ -11,6 +11,7 @@
   - kind: transition
     obj_id: 1
   - kind: journal
+    obj_id: 1
    
   
 - obj_id: 2

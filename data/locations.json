@@ -17,7 +17,8 @@
                 "obj_id": 1
             },
             {
-                "kind": "journal"
+                "kind": "journal",
+                "obj_id": 1
             }
         ]
     },
