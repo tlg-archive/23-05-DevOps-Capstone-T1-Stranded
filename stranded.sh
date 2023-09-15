@@ -18,5 +18,8 @@ if [ "$installed_python_version" != "$desired_python_version" ]; then
     exit 1
 fi
 
+# Install Python packages from requirements.txt
+python3 -m pip install -r requirements.txt
+
 # Run stranded.py with Python 3
 python3 stranded.py
