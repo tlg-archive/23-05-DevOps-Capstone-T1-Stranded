@@ -1,5 +1,5 @@
 - obj_id: 1
-  name: hatch
+  name: Hatch
   description: The exit hatch of the pod.
   state: locked
   state_descriptions:
@@ -34,7 +34,7 @@
     - dangerous
 
 - obj_id: 3
-  name: trail
+  name: Trail
   description: A winding trail that leads into the jungle.
   state: dangerous
   state_descriptions:
@@ -49,7 +49,7 @@
         key:
           kind: item
           obj_id: 1
-        message: Using the compass you get you bearings.
+        message: Using the compass you get your bearings.
         state: safe
   target: 
     kind: location
@@ -58,7 +58,7 @@
     - dangerous 
 
 - obj_id: 4
-  name: trail
+  name: Trail
   description: A winding trail that leads west back to the beach.
   state: safe
   state_descriptions:
@@ -76,15 +76,13 @@
     - dangerous
 
 - obj_id: 5
-  name: ForestPath
-  description: A vague trail leads to a clearing, as you follow, on one side you of the path you can make out railing, its damaged.
+  name: JungleTrail
+  description: You walk deeper into the Jungles thick foliage, large trees flank your sides seeming to guide you onto a path. In certain places their are openings leading in other directions of the forest.
   state: safe
   state_descriptions:
-    dangerous: Remember your grandfathers words, caution is careful, careful keeps you alive.
-    safe: In better circumstances you would take the time to look at the scenery.
+    safe: Despite the rough landing, you find yourself feeling a bit more at ease.
   state_transitions:
-    dangerous: A feeling of overwhelming fear strikes you. 
-    safe: You breathe a sigh of relief as you move forward.
+    safe: ""
   state_list:
     - safe
   target: 
@@ -94,15 +92,13 @@
     - dangerous
 
 - obj_id: 6
-  name: ForestPath
-  description: The forest swallows you once more.
+  name: JungleTrail
+  description: From this side the jungle seems less dense, the colony clearly visible as you look back before moving forward. Soon the jungle envelops you once more with its beauty and birdcalls.
   state: safe
   state_descriptions:
-    dangerous: You body is tense, your on edge.
-    safe: Your mind wanders idly.
+    safe: Despite the silence, you dont feel on edge.
   state_transitions:
-    dangerous: Im in danger.
-    safe: Little by little i'll make it through this dense flora.
+    safe: ""
   state_list:
     - safe
   target: 
@@ -113,14 +109,14 @@
 
 - obj_id: 7
   name: Highway
-  description: You walk a long derelict road.
+  description: You pass by derelict vehicles, all of them bearing the marks of some kind of attack. The occupants inside are the same, or at least whats left them. You note some of them are marked by deep gashes, others remind of you of impacts on par with what youve seen space debris due to ships.
   state: safe
   state_descriptions:
-    dangerous: I heard something walk over glass, im not alone.
-    safe: Despite the scenery, I dont feel any danger.
+    dangerous: ""
+    safe: ""
   state_transitions:
-    dangerous: Its near, what do I do?!
-    safe: Its okay, im alive, im still alive.
+    dangerous: ""
+    safe: ""
   state_list:
     - safe
   target: 
@@ -128,149 +124,84 @@
     obj_id: 5
   blocking_states:
     - dangerous
-- obj_id: 8
-  name: Highway
-  description: The walk feels longer then it did before.
-  state: safe
-  state_descriptions:
-    dangerous: I have to be careful, one wrong move and im a goner.
-    safe: The quiet is unsettling, but I still feel at ease.
-  state_transitions:
-    dangerous: I'm not alone, somethings here, I have a bad feeling. 
-    safe: Little by little i'll make it through this dense flora.
-  state_list:
-    - safe
-  target: 
-    kind: location
-    obj_id: 4
-  blocking_states:
-    - dangerous
 
 - obj_id: 9
-  name: SecurityRoute
-  description: The road is marked by multiple security checkpoints.
+  name: Highway
+  description: You walk at a brisk pace as you pass your eyes over the vehicles briefly. You try not to think of what caused these damages, instead training your eyes for anything amiss.
   state: safe
-  state_descriptions: 
-    dangerous: ooga booga
-    safe: woomba oomba
+  state_descriptions:
+    dangerous: ""
+    safe: ""
   state_transitions:
-    dangerous: ah
-    safe: blah
+    dangerous: ""
+    safe: ""
   state_list:
     - safe
   target: 
     kind: location
+    obj_id: 4
+  blocking_states:
+    - dangerous
+
+- obj_id: 8
+  name: SubmergedTunnel
+  description: You see a tunnel leading into the depths, hlaf submerged vehicles jut from the waters edge.
+  state: flooded
+  state_descriptions:
+    flooded: Without a source of oxygen I wont survive going down there.
+    safe: Now that I have an oxygen supply I'll have no trouble making it through.
+  state_transitions:
+    flooded: ""
+    safe: ""
+    - flooded
+  target: 
+    kind: location
     obj_id: 6
   blocking_states:
-    -dangerous
+    - flooded
 
 - obj_id: 10
-  name: SecurityRoute
-  description: The only sound I hear is my feet on the pavement as I move around dead barricades.
-  state: safe
-  state_descriptions:
-    dangerous: I have to be careful, one wrong move and im a goner.
-    safe: The quiet is unsettling, but I still feel at ease.
-  state_transitions:
-    dangerous: I'm not alone, somethings here, I have a bad feeling. 
-    safe: Little by little i'll make it through this dense flora.
-  state_list:
-    - safe
-  target: 
-    kind: location
-    obj_id: 4
-  blocking_states:
-    - dangerous
-
-- obj_id: 11
-  name: ResidentialPath
-  description: The path is lined by gardens, now unkempt and wild.
-  state: safe
-  state_descriptions:
-    dangerous: Without a way of navigating you will likely get lost.
-    safe: Now that you have a compass navigating the jungle will be much safer.
-  state_transitions:
-    dangerous: Without a way of navigating you will likely get lost.
-    safe: Now that you have a compass navigating the jungle will be much safer.
-  state_list:
-    - safe
-  target: 
-    kind: location
-    obj_id: 8
-  blocking_states:
-    - dangerous
-
-- obj_id: 12
-  name: ResidentialPath
-  description: The smell of a variety of plants assaults you on your way.
-  state: safe
-  state_descriptions:
-    dangerous: I have to be careful, one wrong move and im a goner.
-    safe: The quiet is unsettling, but I still feel at ease.
-  state_transitions:
-    dangerous: I'm not alone, somethings here, I have a bad feeling. 
-    safe: Little by little i'll make it through this dense flora.
-  state_list:
-    - safe
-  target: 
-    kind: location
-    obj_id: 4
-  blocking_states:
-    - dangerous
-
-- obj_id: 13
-  name: SubmergedTunnel
-  description: You move past wreckage.
-  state: safe
-  state_descriptions:
-    dangerous: Without a way of navigating you will likely get lost.
-    safe: Now that you have a compass navigating the jungle will be much safer.
-  state_transitions:
-    dangerous: Without a way of navigating you will likely get lost.
-    safe: Now that you have a compass navigating the jungle will be much safer.
-  state_list:
-    - safe
-  target: 
-    kind: location
-    obj_id: 6
-  blocking_states:
-    - dangerous
-
-- obj_id: 14
   name: ReactorPasage
-  description: The sound is muffled as you make your way through tight corridors.
-  state: safe
+  description: A heavy sealed bulkhead blocks the way, its reinforced to prevent flooding in the event of a hull breach. Above it is a red light.
+  state: locked
   state_descriptions:
-    dangerous: I have to be careful, one wrong move and im a goner.
-    safe: The quiet is unsettling, but I still feel at ease.
+    locked: It seems to be locked but there is a keycard reader next to the door.
+    unlocked: Above the door the light has turned green.
   state_transitions:
-    dangerous: I'm not alone, somethings here, I have a bad feeling. 
-    safe: Little by little i'll make it through this dense flora.
+    locked: You swipe the keycard again to close the door.
+    unlocked: You swiped the keycard, the door opens slowly, after the sound of complex locking mechanisms is heard from the opposite side.
   state_list:
-    - safe
+    - locked
   target: 
     kind: location
     obj_id: 7
   blocking_states:
-    - dangerous
+    - locked
+  key_info:
+        key:
+          kind: item
+          obj_id: #needs an object for this, a keycard
+        message: The door opens slowly, after the sound of complex locking mechanisms is heard from the opposite side.
+        state: unlocked
 
-- obj_id: 15
-  name: TheExpanse
-  description: little light reaches these depths, you move slowly towards the beach, your not coming back.
-  state: safe
+- obj_id: 11
+  name: emergencyExit
+  description: You see an airlock marked with the words Emergency Exit, beyond it the ocean. To the side you see the dive suits they would of used in an emergency.
+  state: locked # this is the initial state
   state_descriptions:
-    dangerous: Without a way of navigating you will likely get lost.
-    safe: Now that you have a compass navigating the jungle will be much safer.
+    locked: Thankfully this door just has a simple turn wheel for a lock. 
+    unlocked: You hear an automated message saying Emergency Exit unlocked.
   state_transitions:
-    dangerous: Without a way of navigating you will likely get lost.
-    safe: Now that you have a compass navigating the jungle will be much safer.
-  state_list:
-    - safe
+    locked: You turned the wheel to close it.
+    unlocked: You brace yourself as you turn the wheel, it moves easily.  
+  state_list: # the last item in the state list needs to match the initial state.
+    - unlocked
+    - locked
   target: 
     kind: location
     obj_id: 2
   blocking_states:
-    - dangerous
+    - locked
 
  
 

@@ -1,68 +1,112 @@
-# obj_id, location, description,
-- obj_id: 1
+-  obj_id: 1
   name: EscapePod
-  description: "Your thoughts were of fear before settling into a growing sense of elation. The pods' alarms were blaring and the interface before you both told you the same thing: \nyou had crashed. You had lived."
+  description: 'Your thoughts were of fear before settling into a growing sense of
+    elation. The pods'' alarms were blaring and the interface before you both told
+    you the same thing: you had crashed. You had lived.'
   entities:
-    - kind: container
-      obj_id: 1
-    - kind: item
-      obj_id: 2
-    - kind: transition
-      obj_id: 1
-    - kind: journal
-      obj_id: 1
+  - kind: container
+    obj_id: 1
+  - kind: item
+    obj_id: 2
+  - kind: transition
+    obj_id: 1
+  - kind: journal
+   
+  
 - obj_id: 2
-  name: Beach
-  description: The Beach was calm its waves peacefully lapping at the shore as the sun beamed down. Seemed like midday, it was hot,\n your eyes noticed something lay half buried in the sand as you scanned your surroundings. In the distance over the water you could make out some \nmanmade facility, to the right was a jungle leading inland.  
+  name: The Beach
+  description: The Beach was calm its waves peacefully lapping at the shore as the
+    sun beamed down. It seemed to be midday, the sun felt hot on your skin as you
+    began to sweat. Your eyes noticed something lay half\nburied in the sand as you
+    scanned your surroundings. In the distance over the water you could make out some
+    manmade facility, to the right was a jungle leading inland.
   entities:
-    - kind: npc
-      obj_id: 1
-    - kind: transition
-      obj_id: 2
-    - kind: transition
-      obj_id: 3
+  - kind: npc
+    obj_id: 1
+  - kind: transition
+    obj_id: 2
+  - kind: transition
+    obj_id: 3
+  
 - obj_id: 3
-  name: jungle
-  description: Beneath the lush jungle canopy, a welcome shield from the relentless onslaught of the suns' scorching rays, you find solace. The air is filled with the harmonious calls of tropical birds, their melodies as alien as they are enchanting.
+  name: Jungle
+  description: Making your way through the lush jungle canopy, you found a welcome
+    shield from the relentless onslaught of the suns' scorching rays. The jungle is
+    filled with the harmonious calls of tropical\nbirds, their melodies as
+    alien as they are enchanting.
   entities:
-    - kind: transition
-      obj_id: 4
-    - kind: transition
-      obj_id: 5
+  - kind: transition
+    obj_id: 4
+  - kind: transition
+    obj_id: 5
+  
 - obj_id: 4
-  name: main plaza
-  description: You stumble upon a settlement. As you walk into the main plaza, a profound stillness blankets the area. \n The only sound that disturbs this silence is the gentle, soothing sounds of the central fountain gracing the plaza. \n From here is a path back to the jungle. Nearby are signs to various places important to the colony. The one closest is a sign with the words "Arquebus Interplanetary Spaceport" next to a high way\n ramp. Its catapult noticeable from here. Farther away you can see a collapsed bridge with a sign marking it as the "Residential District." \nFinally the last sign of note was in the direction of a large flooded tunnel with the words "Schneider Research Laboratories overhead" 
+  name: Main Plaza
+  description: You stumble upon a settlement. As you enter the main plaza, a profound
+    stillness blankets the area. The only sound that disturbs this silence is the
+    sound of your feet echoing on the pavement and the\ngentle, soothing sounds of
+    the central fountain gracing the plaza. From here is a path back to the jungle.
+    Nearby you notice signs to various places important to the colony. The one closest
+    is a sign\nwith the words "Arquebus Interplanetary Spaceport" leading onto a high
+    way ramp. Its catapult noticeable from here. Farther away in another direction
+    you can see a collapsed bridge with a sign marking\nit as the "Residential District."
+    Finally the last sign of note was in the direction of a large tunnel you can see
+    is flooded with the words "Schneider Research Laboratories overhead."
   entities:
-    - kind: transition
-      obj_id: 6
-    - kind: transition
-      obj_id: 7
-    - kind: transition
-      obj_id: 9
-    - kind: transition
-      obj_id: 11
+  - kind: transition
+    obj_id: 6
+  - kind: transition
+    obj_id: 7
+  - kind: transition
+    obj_id: 8
+  
 - obj_id: 5
-  name: arquebus planetary spaceport
-  description: Approaching the spaceport, the imposing Arquebus magnetic catapult, from which the Arquebus corporation derives its name, towers above you like a\ncolossal sentinel. As you delve further into the facility, you discover a well-maintained shuttle bay housing an intact "Bolt" class shuttle,\nready for action. Within the hangar, you also spot charging outlets designed for rejuvenating shuttle power supplies and a series of storage lockers,\n their contents perhaps holding valuable equipment or tools for maintenance. Looking out of the hangar door, you see the road \nleading back to the nearby town.
+  name: ArquebusPlanetarySpaceport
+  description: Approaching the spaceport, the imposing Arquebus magnetic catapult,
+    from which the Arquebus corporation derives its name, towers above you like a
+    colossal sentinel. As you delve further into the\nfacility, you discover a well-maintained
+    shuttle bay housing an intact "Bolt" class shuttle, ready for action. Within the
+    hangar, you also spot charging outlets designed for rejuvenating shuttle power\nsupplies
+    and a series of storage lockers, their contents perhaps holding valuable equipment
+    or tools for maintenance. Looking out of the hangar door, you see the road leading
+    back to the colony plaza.
   entities:
-    - kind: transition
-      obj_id: 8
+  - kind: transition
+    obj_id: 9
+ 
 - obj_id: 6
-  name: cargo bay
-  description:  As you navigate through the murky waters, past a haunting array of derelict vehicles, the tunnel around you trembles and starts to collapse,\n likely due to a volcanic eruption! With quick thinking, you swim towards the tunnel's end, where a massive airlock leads you into a cargo loading bay.\nThe cargo bay is a cavernous expanse filled with a diverse assortment of crates and containers, some still tightly sealed, while others have been broken open,\nrevealing their contents. Amidst the crates, you spot various pieces of equipment, perhaps remnants of scientific experiments or valuable cargo.\nWithin this chamber, you find three sealed bulkheads. The bulkhead to the north is labeled "External Maintenance Hatch." To the east is the airlock\n leading back to the collapsed tunnel, now in ruins. The south bulkhead bears the label "Reactor Core." Finally, the eastern bulkhead is marked as the "Laboratory Complex," its red warning light signaling a hull breach in that section.\n
+  name: Cargo Bay
+  description: As you navigate through the murky waters, past a haunting array of
+    derelict vehicles, the tunnel around you trembles and starts to collapse, likely
+    due to a volcanic eruption! With quick thinking, you\nswim towards the tunnel's
+    end, where a massive airlock leads you into a cargo loading bay. The cargo bay
+    is a cavernous expanse filled with a diverse assortment of crates and containers,
+    some still\ntightly sealed, while others have been broken open, revealing their
+    contents. Amidst the crates, you spot various pieces of equipment, perhaps remnants
+    of scientific experiments or valuable cargo.\nWithin this chamber, you find three
+    sealed bulkheads. The bulkhead to the north is labeled "External Maintenance Hatch."
+    To the east is the airlock leading back to the collapsed tunnel, now in ruins.\nThe
+    south bulkhead bears the label "Reactor Core." Finally, the eastern bulkhead is
+    marked as the "Laboratory Complex," its red warning light signaling a hull breach
+    in that section.
   entities:
-    - kind: transition
-      obj_id: 14
-- obj_id: 7
-  name: reactor core
-  description: You find yourself in the reactor room, a vast cylindrical chamber with towering ceilings. \nDominating the center of the chamber is a colossal geothermal generator, an imposing structure that reaches at least three stories into the air. \nAbove, in the upper portion of the chamber, you can discern the control room, where intricate panels and displays likely manage the\n complex machinery below. As you move your gaze downward, you spot rows of energy capacitors and backup reactors, neatly arranged \nin the middle layers of the chamber. Towards the bottom of the chamber, you see a storage and maintenance area, \npotentially housing tools and spare parts for the intricate machinery surrounding you. Along the eastern wall, \n there's a sealed bulkhead leading back to the cargo bay. The room hums with the subdued energy of the reactor, and the air is warm with the machinery's constant activity.
-  entities:
-    - kind: transition
-      obj_id: 15
+  - kind: transition
+    obj_id: 10
 
-- obj_id: 8
-  name: Residential district
-  description: Up close its clear, the bridge was destroyed intentionally, but by who, the colonists or the machines?
+- obj_id: 7
+  name: Reactor Core
+  description: You find yourself in the reactor room, a vast cylindrical chamber with
+    a towering ceiling and multiple floors with railing surrounding the center. Dominating
+    the center of the chamber is a large\ngeothermal generator, an imposing structure
+    that reaches at least three stories into the air. Above, in the upper portion
+    of the chamber, you can discern the control room opposite of you, where\nintricate
+    panels and displays likely manage the complex machinery below. As you move your
+    gaze downward, you spot rows of energy capacitors and backup reactors, every few
+    layers below. Towards the\nbottom of the chamber, you see a storage and maintenance
+    area, potentially housing tools and spare parts for the intricate machinery surrounding
+    you. Along the eastern wall, there's a sealed bulkhead\nleading back to the cargo
+    bay. The room hums with the subdued energy of the reactor, and the air is warm
+    with the machinery's constant activity. 
   entities:
-    - kind: transition
-      obj_id: 12
+  - kind: transition
+    obj_id: 11
