@@ -1,5 +1,7 @@
 [
     {
+        "obj_id": 1,
+        "name": "escape pod",
         "description": "this is your pod",
         "entities": [
             {
@@ -22,11 +24,11 @@
                 "kind": "journal",
                 "obj_id": 1
             }
-        ],
-        "name": "escape pod",
-        "obj_id": 1
+        ]
     },
     {
+        "obj_id": 2,
+        "name": "beach",
         "description": "its a beach",
         "entities": [
             {
@@ -37,19 +39,17 @@
                 "kind": "transition",
                 "obj_id": 3
             }
-        ],
-        "name": "beach",
-        "obj_id": 2
+        ]
     },
     {
-        "description": "Beneath the lush jungle canopy, a welcome shield from the relentless onslaught of the suns' scorching rays, you find solace. The air is filled with the harmonious calls of tropical birds, their\\nmelodies as alien as they are enchanting.",
+        "obj_id": 3,
+        "name": "jungle",
+        "description": "Beneath the lush jungle canopy, a welcome shield from the relentless onslaught of the suns' scorching rays, you find solace. The air is filled with the harmonious calls of tropical birds, their melodies as alien as they are enchanting.",
         "entities": [
             {
                 "kind": "transition",
                 "obj_id": 4
             }
-        ],
-        "name": "jungle",
-        "obj_id": 3
+        ]
     }
 ]
