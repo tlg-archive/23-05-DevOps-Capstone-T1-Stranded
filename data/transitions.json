@@ -62,14 +62,6 @@
         "state_list": [
             "dangerous"
         ],
-        "key_info": {
-            "key": {
-                "kind": "item",
-                "obj_id": 1
-            },
-            "message": "Using the compass you get your bearings.",
-            "state": "safe"
-        },
         "target": {
             "kind": "location",
             "obj_id": 3

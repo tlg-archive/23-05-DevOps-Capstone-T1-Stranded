@@ -213,6 +213,7 @@ def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, dict[str, G
     obj_id = game_state["current_location"]
     location = game_objs["locations"][obj_id]
     text = generate_location_text(location, game_objs)
+    event_txt = ''
     command = game_state.get('user_command', '')
     event_handler = EventHandler(game_objs)
     processor = ActionProcessor()
@@ -221,23 +222,27 @@ def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, dict[str, G
         events = game_objs['events']
         for obj_id in events.keys():
             if events[obj_id].state == 'active':
-                event_result = event_handler.process_event(events[obj_id])  # Use event_handler to process events
-                if event_result and game_state.get('god_mode', False):
-                    text = f'{text}\n{event_result}'
+                event_result = event_handler.process_event(events[obj_id], game_state['current_location'], game_state['god_mode'])  # Use event_handler to process events
+                if event_result:
+                    event_txt = f'\n{event_result}'
+                    text += event_txt
 
     if command and command != '':
         result = processor.process(command[0],location, game_objs, game_state, *command[1:])
         if isinstance(result, str):
             text = generate_location_text(location, game_objs)
             text = f'{text}\n\n {result}'
+            text += event_txt
         elif isinstance(result, tuple):
             kind, target_obj_id = result
             if kind == 'location':
                 game_state['current_location'] = target_obj_id
                 location = game_objs["locations"][target_obj_id]
                 text = generate_location_text(location, game_objs)
+                text += event_txt
         game_state['previous_text'] = text
     if not command:
+        text += event_txt
         text = game_state.get('previous_text', text)
 
 
@@ -279,6 +284,7 @@ def main(stdscr):
     game_state["current_scene"] = "title"
     game_state["current_location"] = 1
     game_state["location_name"] = ''
+    game_state['god_mode'] = False
     
     pygame.mixer.init()
     game_state["music_mixer"] = pygame.mixer

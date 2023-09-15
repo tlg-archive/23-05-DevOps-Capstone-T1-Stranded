@@ -6,11 +6,11 @@
         "entities": [
             {
                 "kind": "container",
-                "obj_id": 1
+                "obj_id": 101
             },
             {
                 "kind": "item",
-                "obj_id": 2
+                "obj_id": 102
             },
             {
                 "kind": "transition",
@@ -25,6 +25,10 @@
         "entities": [
             {
                 "kind": "npc",
+                "obj_id": 201
+            },
+            {
+                "kind": "journal",
                 "obj_id": 1
             },
             {
@@ -34,10 +38,6 @@
             {
                 "kind": "transition",
                 "obj_id": 3
-            },
-            {
-                "kind": "journal",
-                "obj_id": 1
             }
         ]
     },
@@ -90,7 +90,7 @@
             },
             {
                 "kind": "journal",
-                "obj_id": 1
+                "obj_id": 3
             }
         ]
     },
