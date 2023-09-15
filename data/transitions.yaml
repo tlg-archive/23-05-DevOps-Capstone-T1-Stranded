@@ -1,5 +1,5 @@
 - obj_id: 1
-  name: Hatch
+  name: hatch
   description: The exit hatch of the pod.
   state: locked
   state_descriptions:
@@ -34,7 +34,7 @@
     - dangerous
 
 - obj_id: 3
-  name: Trail
+  name: trail
   description: A winding trail that leads into the jungle.
   state: dangerous
   state_descriptions:
@@ -58,7 +58,7 @@
     - dangerous 
 
 - obj_id: 4
-  name: Trail
+  name: trail
   description: A winding trail that leads west back to the beach.
   state: safe
   state_descriptions:
@@ -76,7 +76,7 @@
     - dangerous
 
 - obj_id: 5
-  name: JungleTrail
+  name: jungleTrail
   description: You walk deeper into the Jungles thick foliage, large trees flank your sides seeming to guide you onto a path. In certain places their are openings leading in other directions of the forest.
   state: safe
   state_descriptions:
@@ -92,11 +92,11 @@
     - dangerous
 
 - obj_id: 6
-  name: JungleTrail
+  name: jungleTrail
   description: From this side the jungle seems less dense, the colony clearly visible as you look back before moving forward. Soon the jungle envelops you once more with its beauty and birdcalls.
   state: safe
   state_descriptions:
-    safe: Despite the silence, you dont feel on edge.
+    safe: Despite the silence, you don''t feel on edge.
   state_transitions:
     safe: ""
   state_list:
@@ -108,8 +108,8 @@
     - dangerous
 
 - obj_id: 7
-  name: Highway
-  description: You pass by derelict vehicles, all of them bearing the marks of some kind of attack. The occupants inside are the same, or at least whats left them. You note some of them are marked by deep gashes, others remind of you of impacts on par with what youve seen space debris due to ships.
+  name: highway
+  description: You pass by derelict vehicles, all of them bearing the marks of some kind of attack. The occupants inside are the same, or at least whats left them. You note some of them are marked by deep gashes, others remind of you of impacts on par with what you've seen space debris due to ships.
   state: safe
   state_descriptions:
     dangerous: ""
@@ -126,7 +126,7 @@
     - dangerous
 
 - obj_id: 9
-  name: Highway
+  name: highway
   description: You walk at a brisk pace as you pass your eyes over the vehicles briefly. You try not to think of what caused these damages, instead training your eyes for anything amiss.
   state: safe
   state_descriptions:
@@ -144,8 +144,8 @@
     - dangerous
 
 - obj_id: 8
-  name: SubmergedTunnel
-  description: You see a tunnel leading into the depths, hlaf submerged vehicles jut from the waters edge.
+  name: submergedTunnel
+  description: You see a tunnel leading into the depths, half submerged vehicles jut from the waters edge.
   state: flooded
   state_descriptions:
     flooded: Without a source of oxygen I wont survive going down there.
@@ -153,6 +153,7 @@
   state_transitions:
     flooded: ""
     safe: ""
+  state_list:
     - flooded
   target: 
     kind: location
@@ -161,7 +162,7 @@
     - flooded
 
 - obj_id: 10
-  name: ReactorPasage
+  name: reactorPassage
   description: A heavy sealed bulkhead blocks the way, its reinforced to prevent flooding in the event of a hull breach. Above it is a red light.
   state: locked
   state_descriptions:
@@ -202,7 +203,4 @@
     obj_id: 2
   blocking_states:
     - locked
-
- 
-
   

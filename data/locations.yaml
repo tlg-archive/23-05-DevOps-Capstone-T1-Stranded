@@ -1,5 +1,5 @@
--  obj_id: 1
-  name: EscapePod
+- obj_id: 1
+  name: Escape Pod
   description: 'Your thoughts were of fear before settling into a growing sense of
     elation. The pods'' alarms were blaring and the interface before you both told
     you the same thing: you had crashed. You had lived.'
@@ -61,7 +61,7 @@
     obj_id: 8
   
 - obj_id: 5
-  name: ArquebusPlanetarySpaceport
+  name: Arquebus Planetary Spaceport
   description: Approaching the spaceport, the imposing Arquebus magnetic catapult,
     from which the Arquebus corporation derives its name, towers above you like a
     colossal sentinel. As you delve further into the\nfacility, you discover a well-maintained
