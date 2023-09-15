@@ -218,7 +218,6 @@ def generate_location_text(location: Location, game_objs: dict[str, GameObject])
     if location.entities:
         text = f'{text}\nAround you, you can see:'
         for kind, obj_id in location.entities:
-            
             entity = game_objs[f'{kind}s'][obj_id]
             text = f"{text}\n\t{entity.name}"
     return text
