@@ -18,6 +18,8 @@ from app.transition import Transition
 from app.player import Player
 from app.container import Container
 from app.journal import Journal
+from app.event_handler import EventHandler
+
 
 def load_data() -> dict[str, any]:
     data = {}
@@ -71,34 +73,24 @@ def load_game_objects(data: dict[str, any]):
 
     objects['npcs'] = {}
     for npc in data['npcs']:
-        items = []
-        if "inventory" in npc.keys():
-            for item in npc['inventory']:
-                items.append((item['kind'], item['obj_id']))
-        if "dialogue" in npc.keys():
-            for npc in data["npcs"]: 
-                npc_obj = Npc(npc['obj_id'],
-                            npc['name'],
-                            npc['description'],
-                            npc['state'],
-                            items,
-                            npc['dialogue']
-                            )
-                objects['npcs'][npc_obj.obj_id] = npc_obj
+        npc_obj = Npc(npc['obj_id'],
+                    npc['name'],
+                    npc['description'],
+                    npc['state'],
+                    npc.get('inventory', []),
+                    npc.get('dialogue', [])
+                    )
+        objects['npcs'][npc_obj.obj_id] = npc_obj
 
     objects['locations'] = {}
     for location in data['locations']:
-        entities = []
-        if 'entities' in location.keys():
-            for entity in location['entities']:
-                entities.append((entity['kind'], entity['obj_id']))
         location_obj = Location(location['obj_id'],
                                 location['name'],
                                 location['description'],
-                                entities
+                                location.get('entities', [])
                                 )
         objects['locations'][location_obj.obj_id] = location_obj
-    
+
     objects['journals'] = {}
     for journal in data['journals']:
         journal_obj = Journal(journal['obj_id'],
@@ -111,16 +103,11 @@ def load_game_objects(data: dict[str, any]):
 
     objects['items'] = {}
     for item in data['items']:
-
         item_obj = Item(item['obj_id'], item['name'], item['description'], None)
-
         objects['items'][item_obj.obj_id] = item_obj
+
     objects['transitions'] = {}
     for transition in data['transitions']:
-        target = (transition['target']['kind'], transition['target']['obj_id'])
-        key_info = transition.get('key_info', {})
-        if key_info:
-            key_info['key'] = (key_info['key']['kind'], key_info['key']['obj_id'])
         transition_obj = Transition(transition['obj_id'],
                                     transition['name'],
                                     transition['description'],
@@ -128,8 +115,8 @@ def load_game_objects(data: dict[str, any]):
                                     transition['state_descriptions'],
                                     transition['state_transitions'],
                                     transition['state_list'],
-                                    key_info,
-                                    target,
+                                    transition.get('key_info', {}),
+                                    transition['target'],
                                     transition['blocking_states']
                                     )
         objects['transitions'][transition_obj.obj_id] = transition_obj
@@ -144,7 +131,7 @@ def load_game_objects(data: dict[str, any]):
                             player['name'],
                             player['description'],
                             player['state'],
-                            inventory
+                            player.get('inventory', [])
                             )
         objects['players'][player_obj.obj_id] = player_obj
 
@@ -158,7 +145,7 @@ def load_game_objects(data: dict[str, any]):
                                   container['name'],
                                   container['description'],
                                   container['state'],
-                                  inventory
+                                  container.get('inventory', [])
                                   )
         objects['containers'][container_obj.obj_id] = container_obj
 
@@ -215,77 +202,28 @@ def map_func(stdscr, data: str):
 
 def generate_location_text(location: Location, game_objs: dict[str, GameObject]) -> str:
     text = location.description
-    if location.entities:
+    if 0 < len(location.entities):
         text = f'{text}\nAround you, you can see:'
         for kind, obj_id in location.entities:
             entity = game_objs[f'{kind}s'][obj_id]
             text = f"{text}\n\t{entity.name}"
     return text
 
-from app.container import Container
-
-def process_event(event, game_objs):
-    for trigger_data in event.triggers:
-        trigger_object_kind, trigger_object_id = trigger_data.object
-        trigger_obj = game_objs[f'{trigger_object_kind}s'][trigger_object_id]
-        
-        # Check if the trigger change condition for state is met
-        if trigger_data.conditions.get('state', False):
-            state_conditions = trigger_data.conditions['state']
-            if 'is' in state_conditions and trigger_obj.state != state_conditions['is']:
-                return f'{event.name} failed state is'
-            if 'is_not' in state_conditions and trigger_obj.state == state_conditions['is_not']:
-                return f'{event.name} failed state is not'  # Return empty string if state condition is not met
-
-        # Check if the trigger change condition for inventory is met
-        if trigger_data.conditions.get('inventory', False) and isinstance(trigger_obj, Container):
-            inventory_conditions = trigger_data.conditions['inventory']
-            if 'item' in inventory_conditions:
-                items = inventory_conditions['item']
-                if not all(item in trigger_obj.inventory for item in items):
-                    return f'{event.name} failed has {items}'  # Return empty string if not all items are in inventory
-            if 'no_item' in inventory_conditions:
-                no_items = inventory_conditions['no_item']
-                if any(item in trigger_obj.inventory for item in no_items):
-                    return f'{event.name} failed does not have {items}'  # Return empty string if some items are in inventory
-
-    trigger_event(event, game_objs)
-    return event.description  # Return event description after triggering the event
-
-def trigger_event(event, game_objs):
-    # Check if there are affected objects and apply changes to them
-    if event.affected_objects:
-        for affected_kind, affected_id in event.affected_objects:
-            affected = game_objs[f'{affected_kind}s'][affected_id]
-
-            # Apply state change logic to affected objects
-            if event.change.state:
-                affected.state = event.change.state
-
-            # Apply inventory change logic to affected objects if it's a Container
-            if event.change.inventory and isinstance(affected, Container):
-                inventory_change = event.change.inventory
-                for add_item in inventory_change.add:
-                    affected.inventory.append(add_item)
-                for remove_item in inventory_change.remove:
-                    if remove_item in affected.inventory:
-                        affected.inventory.remove(remove_item)
-
-
-
 def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, dict[str, GameObject]]) -> dict[str, any]:
     obj_id = game_state["current_location"]
     location = game_objs["locations"][obj_id]
     text = generate_location_text(location, game_objs)
     command = game_state.get('user_command', '')
+    event_handler = EventHandler(game_objs)
     processor = ActionProcessor()
 
     if 'events' in game_objs:
         events = game_objs['events']
         for obj_id in events.keys():
             if events[obj_id].state == 'active':
-                #text = f'{text}\n{events[key].description}'
-                text = f'{text}\n{process_event(events[obj_id], game_objs)}'
+                event_result = event_handler.process_event(events[obj_id])  # Use event_handler to process events
+                if event_result and game_state.get('god_mode', False):
+                    text = f'{text}\n{event_result}'
 
     if command and command != '':
         result = processor.process(command[0],location, game_objs, game_state, *command[1:])

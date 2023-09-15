@@ -12,7 +12,7 @@ class Intractable(Entity):
                  state_descriptions: dict[str, str],
                  state_transitions: dict[str, str],
                  state_list: list[str],
-                 key_info: dict[str, tuple[str, int] or str]
+                 key_info: dict[str, dict[str, int or str] or str]
                  ):
         super().__init__(obj_id, name, description, state)
         self.state_descriptions = state_descriptions
@@ -20,6 +20,8 @@ class Intractable(Entity):
         self.state_list = state_list
         if not key_info:
             key_info = {'key': '', 'message': '', 'state': ''}
+        else:
+            key_info['key'] = (key_info['key']['kind'], key_info['key']['obj_id'])
         self.key = key_info['key']
         self.key_message = key_info['message']
         self.key_state = key_info['state']
