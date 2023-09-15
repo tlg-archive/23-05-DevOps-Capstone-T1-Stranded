@@ -8,9 +8,10 @@ class Container(Entity):
                  name: str,
                  description: str,
                  state: bool,
-                 inventory: list[tuple[str, int]]
+                 inventory: list[dict[str, int or str]]
                  ):
         super().__init__(obj_id, name, description, state)
-        if not inventory:
-            inventory = []
-        self.inventory = inventory
+        self.inventory = []
+        if inventory:
+            for item in inventory:
+                self.inventory.append((item['kind'], item['obj_id']))
