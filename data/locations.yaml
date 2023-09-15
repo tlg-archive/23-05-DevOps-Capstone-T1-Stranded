@@ -77,6 +77,8 @@
     obj_id: 9
   - kind: journal
     obj_id: 3
+  - kind: item
+    obj_id: 501
  
 - obj_id: 6
   name: Cargo Bay
@@ -114,3 +116,5 @@
   entities:
   - kind: transition
     obj_id: 11
+  - kind: item
+    obj_id: 701
