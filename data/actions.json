@@ -17,7 +17,8 @@
     "take": [
         "grab",
         "steal",
-        "loot"
+        "loot",
+        "get"
     ],
     "drop": [
         "leave",

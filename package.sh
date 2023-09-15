@@ -18,6 +18,7 @@ cp -r "$app_directory"/* "$deploy_directory/app"
 # Copy .txt and .json files from ./data directory
 cp -r "$data_directory"/*.txt "$deploy_directory/data"
 cp -r "$data_directory"/*.json "$deploy_directory/data"
+cp -r "$data_directory"/*.mp3 "$deploy_directory/data"
 
 # Copy stranded.py and stranded.sh from the current directory
 cp "$stranded_file" "$deploy_directory"

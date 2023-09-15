@@ -6,6 +6,8 @@ import curses
 import os
 import platform
 import json
+import pygame
+from app.event import Event
 from app.npc import Npc
 from app.parser import Parser
 from app.location import Location
@@ -52,7 +54,7 @@ def load_data() -> dict[str, any]:
               ) as map_file:
         data['map'] = map_file.read()
 
-    object_types = ['locations', 'items', 'transitions', 'players', 'containers', 'npcs', "journals"]
+    object_types = ['locations', 'items', 'transitions', 'players', 'containers', 'npcs', "journals", 'events']
 
     for object_type in object_types:
         with open(
@@ -73,14 +75,16 @@ def load_game_objects(data: dict[str, any]):
         if "inventory" in npc.keys():
             for item in npc['inventory']:
                 items.append((item['kind'], item['obj_id']))
-        npc_obj = Npc(npc['obj_id'],
-                      npc['name'],
-                      npc['description'],
-                      npc['state'],
-                      items,
-                      npc['dialogue']
-                      )
-        objects['npcs'][npc_obj.obj_id] = npc_obj
+        if "dialogue" in npc.keys():
+            for npc in data["npcs"]: 
+                npc_obj = Npc(npc['obj_id'],
+                            npc['name'],
+                            npc['description'],
+                            npc['state'],
+                            items,
+                            npc['dialogue']
+                            )
+                objects['npcs'][npc_obj.obj_id] = npc_obj
 
     objects['locations'] = {}
     for location in data['locations']:
@@ -158,6 +162,20 @@ def load_game_objects(data: dict[str, any]):
                                   )
         objects['containers'][container_obj.obj_id] = container_obj
 
+    objects['events'] = {}
+    for event_data in data['events']:
+        # Convert event_data to Event object
+        event = Event(
+            event_data['obj_id'],
+            event_data['name'],
+            event_data['description'],
+            event_data['state'],
+            event_data['triggers'],
+            event_data['affected_objects'],
+            event_data['change']
+        )
+        objects['events'][event.obj_id] = event
+
     return objects
 
 def resize_terminal(desired_height: int, desired_width: int):
@@ -204,15 +222,73 @@ def generate_location_text(location: Location, game_objs: dict[str, GameObject])
             text = f"{text}\n\t{entity.name}"
     return text
 
-def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, GameObject]) -> dict[str, any]:
+from app.container import Container
+
+def process_event(event, game_objs):
+    for trigger_data in event.triggers:
+        trigger_object_kind, trigger_object_id = trigger_data.object
+        trigger_obj = game_objs[f'{trigger_object_kind}s'][trigger_object_id]
+        
+        # Check if the trigger change condition for state is met
+        if trigger_data.conditions.get('state', False):
+            state_conditions = trigger_data.conditions['state']
+            if 'is' in state_conditions and trigger_obj.state != state_conditions['is']:
+                return f'{event.name} failed state is'
+            if 'is_not' in state_conditions and trigger_obj.state == state_conditions['is_not']:
+                return f'{event.name} failed state is not'  # Return empty string if state condition is not met
+
+        # Check if the trigger change condition for inventory is met
+        if trigger_data.conditions.get('inventory', False) and isinstance(trigger_obj, Container):
+            inventory_conditions = trigger_data.conditions['inventory']
+            if 'item' in inventory_conditions:
+                items = inventory_conditions['item']
+                if not all(item in trigger_obj.inventory for item in items):
+                    return f'{event.name} failed has {items}'  # Return empty string if not all items are in inventory
+            if 'no_item' in inventory_conditions:
+                no_items = inventory_conditions['no_item']
+                if any(item in trigger_obj.inventory for item in no_items):
+                    return f'{event.name} failed does not have {items}'  # Return empty string if some items are in inventory
+
+    trigger_event(event, game_objs)
+    return event.description  # Return event description after triggering the event
+
+def trigger_event(event, game_objs):
+    # Check if there are affected objects and apply changes to them
+    if event.affected_objects:
+        for affected_kind, affected_id in event.affected_objects:
+            affected = game_objs[f'{affected_kind}s'][affected_id]
+
+            # Apply state change logic to affected objects
+            if event.change.state:
+                affected.state = event.change.state
+
+            # Apply inventory change logic to affected objects if it's a Container
+            if event.change.inventory and isinstance(affected, Container):
+                inventory_change = event.change.inventory
+                for add_item in inventory_change.add:
+                    affected.inventory.append(add_item)
+                for remove_item in inventory_change.remove:
+                    if remove_item in affected.inventory:
+                        affected.inventory.remove(remove_item)
+
+
+
+def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, dict[str, GameObject]]) -> dict[str, any]:
     obj_id = game_state["current_location"]
     location = game_objs["locations"][obj_id]
     text = generate_location_text(location, game_objs)
     command = game_state.get('user_command', '')
     processor = ActionProcessor()
 
+    if 'events' in game_objs:
+        events = game_objs['events']
+        for obj_id in events.keys():
+            if events[obj_id].state == 'active':
+                #text = f'{text}\n{events[key].description}'
+                text = f'{text}\n{process_event(events[obj_id], game_objs)}'
+
     if command and command != '':
-        result = processor.process(command[0],location, game_objs, *command[1:])
+        result = processor.process(command[0],location, game_objs, game_state, *command[1:])
         if isinstance(result, str):
             text = generate_location_text(location, game_objs)
             text = f'{text}\n\n {result}'
@@ -265,7 +341,18 @@ def main(stdscr):
     game_state["current_scene"] = "title"
     game_state["current_location"] = 1
     game_state["location_name"] = ''
-   
+    
+    pygame.mixer.init()
+    game_state["music_mixer"] = pygame.mixer
+    game_state['songs'] = f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/echoes-of-time-v2-by-kevin-macleod-from-filmmusic-io.mp3"
+    game_state['music_mixer'].music.load(game_state['songs'])
+    game_state['music_volume'] = 0.5
+    game_state['music_mixer'].music.set_volume(0.5)
+    game_state['music_playing'] = False
+    # Inside the main function, before entering the game loop
+    if not game_state['music_playing']:
+        game_state['music_mixer'].music.play(-1)  # Play the music indefinitely (-1)
+        game_state['music_playing'] = True
 
     while True:
         if game_state["current_scene"] == "playing":
@@ -318,7 +405,10 @@ def main(stdscr):
                                 game_state['god_mode'] = True
                             else:
                                 game_state['god_mode'] = False
-
+                        elif "music" == parsed_text[0] and game_state["current_scene"] != "playing":
+                            processor = ActionProcessor()
+                            result = processor.process(parsed_text[0],None, None, game_state, *parsed_text[1:])
+                            stdscr.addstr(height - 4,0, f'{result}')
                         else:
                             game_state['user_command'] = parsed_text
                 input_text = ''
