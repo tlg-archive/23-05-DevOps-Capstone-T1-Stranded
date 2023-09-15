@@ -10,7 +10,7 @@ class Transition(Intractable):
                  state_descriptions: dict[str,str],
                  state_transitions: dict[str,str],
                  state_list: list[str],
-                 key_info: dict[str, tuple[str, int] or str],
+                 key_info: dict[str, dict[str, int or str] or str],
                  target: tuple[str, int],
                  blocking_states: list[str]
                  ):
@@ -24,7 +24,7 @@ class Transition(Intractable):
             state_list,
             key_info
         )
-        self.target = target
+        self.target = (target['kind'], target['obj_id'])
         if not blocking_states:
             blocking_states = []
         self.blocking_states = blocking_states
