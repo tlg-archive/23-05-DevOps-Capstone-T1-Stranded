@@ -44,11 +44,13 @@ class EventHandler:
                 affected.state = event.change.state
             if event.change.inventory and isinstance(affected, Container):
                 inventory_change = event.change.inventory
-                for add_item in inventory_change.add:
-                    affected.inventory.append(add_item)
-                for remove_item in inventory_change.remove:
-                    if remove_item in affected.inventory:
-                        affected.inventory.remove(remove_item)
+                if 'item' in inventory_change.keys():
+                    for add_item in inventory_change['item']:
+                        affected.inventory.append(add_item)
+                if 'no_item' in inventory_change.keys():
+                    for remove_item in inventory_change['no_item']:
+                        if remove_item in affected.inventory:
+                            affected.inventory.remove(remove_item)
 
     def process_event(self, event: Event, current_location: int, god_mode: bool) -> str:
         passed = True
@@ -59,8 +61,10 @@ class EventHandler:
             passed, message = self.validate_event_trigger(trigger_data, trigger_obj, current_location)
             if not passed:
                 if god_mode:
-                    return f'{event.name}, failed because {message}'
+                    return f'\n{event.name}|{event.obj_id}, failed because {message}'
                 return ''
         
         self.apply_event_changes(event)
-        return f'{event.name}, {event.description}'
+        if god_mode:
+            return f'\n{event.name}, {event.description}'
+        return f'\n{event.description}'

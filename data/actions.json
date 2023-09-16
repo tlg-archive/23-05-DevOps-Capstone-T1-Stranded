@@ -12,7 +12,9 @@
     "use": [
         "activate",
         "interact",
-        "touch"
+        "touch",
+        "open",
+        "close"
     ],
     "take": [
         "grab",
@@ -23,7 +25,8 @@
     "drop": [
         "leave",
         "give",
-        "discard"
+        "discard",
+        "throw"
     ],
     "talk": [
         "speak",

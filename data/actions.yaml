@@ -10,6 +10,8 @@ use:
   - activate
   - interact
   - touch
+  - open
+  - close
 take:
   - grab
   - steal
@@ -19,6 +21,7 @@ drop:
   - leave
   - give
   - discard
+  - throw
 talk:
   - speak
   - read

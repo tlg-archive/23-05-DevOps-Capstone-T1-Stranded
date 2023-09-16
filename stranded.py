@@ -98,6 +98,10 @@ def load_game_objects(data: dict[str, any]):
 
     objects['locations'] = {}
     for location in data['locations']:
+        entities = []
+        if 'entities' in location.keys():
+            for entity in location['entities']:
+               entities.append((entity['kind'], entity['obj_id']))
         location_obj = Location(location['obj_id'],
                                 location['name'],
                                 location['description'],
@@ -249,8 +253,7 @@ def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, dict[str, G
             for event_id in events.keys():
                 if events[event_id].state == 'active':
                     event_result = event_handler.process_event(events[event_id], location.obj_id, game_state['god_mode'])  # Use event_handler to process events
-                    if event_result:
-                        event_txt += f'{event_result}'
+                    event_txt += f'{event_result}'
             text += f'\n{event_txt}'
         game_state['previous_text'] = text
     if not command:
@@ -262,16 +265,10 @@ def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, dict[str, G
     return game_state
 
 def victory(stdscr, data: str):
-   stdscr.addstr(1,0, f'{data}')
+    stdscr.addstr(1,0, f'{data}')
 
 def defeat(stdscr, data: str):
-   stdscr.addstr(1,0, f'{data}')
-            
-
-
-
-    
-    
+    stdscr.addstr(1,0, f'{data}')
 
 def main(stdscr):
     # Set up the screen
@@ -301,8 +298,8 @@ def main(stdscr):
         "map" : map_func,
         "playing": playing,
         "victory":victory,
-        "victory":defeat
-            }
+        "defeat":defeat
+    }
 
     game_state = {}
 
@@ -334,7 +331,10 @@ def main(stdscr):
             scenes[game_state["current_scene"]](stdscr, data[game_state["current_scene"]])
         if not input_text:
             input_text = ''
-        input_window.addstr(0, 0, f"{game_objects['players'][0].state}@{game_state.get('location_name', '')}>{input_text}")
+        if game_state['god_mode']:
+            input_window.addstr(0, 0, f"[god mode enabled]{game_objects['players'][0].state}@{game_state.get('location_name', '')}>{input_text}")
+        else:
+            input_window.addstr(0, 0, f"{game_objects['players'][0].state}@{game_state.get('location_name', '')}>{input_text}")
         if game_state.get('user_command', ''):
             stdscr.addstr(height - 2 , 0, ' '.join(game_state['user_command']))
         stdscr.refresh()
@@ -377,6 +377,28 @@ def main(stdscr):
                                 game_state['god_mode'] = True
                             else:
                                 game_state['god_mode'] = False
+                        elif "disable" == parsed_text[0] and game_state['god_mode']:
+                            if len(parsed_text) > 1 and parsed_text[1].isdigit():
+                                if len(parsed_text) == 3 and parsed_text[2].isdigit():
+                                    start = int(parsed_text[1])
+                                    end = int(parsed_text[2])
+                                    for event_id in range(start, end + 1):
+                                        if event_id in game_objects['events'].keys(): 
+                                            game_objects['events'][event_id].state = 'inactive'
+                                else:
+                                    target_event = int(parsed_text[1])
+                                    game_objects['events'][target_event].state = 'inactive'
+                        elif "disable" == parsed_text[0] and game_state['god_mode']:
+                            if len(parsed_text) > 1 and parsed_text[1].isdigit():
+                                if len(parsed_text) == 3 and parsed_text[2].isdigit():
+                                    start = int(parsed_text[1])
+                                    end = int(parsed_text[2])
+                                    for event_id in range(start, end + 1):
+                                        if event_id in game_objects['events'].keys(): 
+                                            game_objects['events'][event_id].state = 'active'
+                                else:
+                                    target_event = int(parsed_text[1])
+                                    game_objects['events'][target_event].state = 'active'
                         elif "music" == parsed_text[0] and game_state["current_scene"] != "playing":
                             processor = ActionProcessor()
                             result = processor.process(parsed_text[0],None, None, game_state, *parsed_text[1:])
