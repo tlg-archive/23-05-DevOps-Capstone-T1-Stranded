@@ -116,6 +116,17 @@
                         "is": "unaware"
                     }
                 }
+            },
+            {
+                "object": {
+                    "kind": "npc",
+                    "obj_id": 201
+                },
+                "conditions": {
+                    "state": {
+                        "is_not": "disabled"
+                    }
+                }
             }
         ],
         "affected_objects": [
@@ -145,6 +156,28 @@
                     },
                     "state": {
                         "is": "aware"
+                    }
+                }
+            },
+            {
+                "object": {
+                    "kind": "npc",
+                    "obj_id": 201
+                },
+                "conditions": {
+                    "state": {
+                        "is_not": "disabled"
+                    }
+                }
+            },
+            {
+                "object": {
+                    "kind": "player",
+                    "obj_id": 0
+                },
+                "conditions": {
+                    "state": {
+                        "is": "spotted"
                     }
                 }
             }
@@ -178,6 +211,17 @@
                         "is_not": "unaware"
                     }
                 }
+            },
+            {
+                "object": {
+                    "kind": "npc",
+                    "obj_id": 201
+                },
+                "conditions": {
+                    "state": {
+                        "is_not": "disabled"
+                    }
+                }
             }
         ],
         "affected_objects": [
@@ -204,6 +248,17 @@
                 "conditions": {
                     "state": {
                         "is": "disabled"
+                    }
+                }
+            },
+            {
+                "object": {
+                    "kind": "player",
+                    "obj_id": 0
+                },
+                "conditions": {
+                    "state": {
+                        "is": "safe"
                     }
                 }
             }
@@ -390,7 +445,38 @@
                 },
                 "conditions": {
                     "state": {
-                        "is_not": "unaware"
+                        "is": "unaware"
+                    },
+                    "current_location": {
+                        "is_not": 2
+                    }
+                }
+            }
+        ],
+        "affected_objects": [
+            {
+                "kind": "player",
+                "obj_id": 0
+            }
+        ],
+        "change": {
+            "state": "safe"
+        }
+    },
+    {
+        "obj_id": 211,
+        "name": "The Boar is looses sight of you, player",
+        "description": "You feel safer now that it's no longer focused on you.",
+        "state": "active",
+        "triggers": [
+            {
+                "object": {
+                    "kind": "npc",
+                    "obj_id": 201
+                },
+                "conditions": {
+                    "state": {
+                        "is": "disabled"
                     },
                     "current_location": {
                         "is_not": 2
