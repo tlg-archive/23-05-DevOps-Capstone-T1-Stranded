@@ -542,128 +542,36 @@
         }
     },
     {
-        "obj_id": 504,
-        "name": "A Scorpion attacks you",
-        "description": "It's servos whine as it's stinger prepared to strike",
+        "obj_id": 501,
+        "name": "A Scorpion events are enabled",
+        "description": "You almost miss it as you walk into the shuttle bay, but out of the corner of your eye you see a scorpiode security bot powering up in the corner of the hanger",
         "state": "active",
         "triggers": [
-            {
-                "object": {
-                    "kind": "npc",
-                    "obj_id": 502
-                },
-                "conditions": {
-                    "current_location": {
-                        "is": 5
-                    },
-                    "state": {
-                        "is": "unaware"
-                    }
-                }
-            }
-        ],
-        "affected_objects": [
-            {
-                "kind": "player",
-                "obj_id": 0
-            }
-        ],
-        "change": {
-            "state": "scared"
-        }
-    },
-    {
-        "obj_id": 504,
-        "name": "A Scorpion attacks you",
-        "description": "It's servos whine as it's stinger prepared to strike",
-        "state": "active",
-        "triggers": [
-            {
-                "object": {
-                    "kind": "npc",
-                    "obj_id": 502
-                },
-                "conditions": {
-                    "current_location": {
-                        "is": 5
-                    },
-                    "state": {
-                        "is": "unaware"
-                    }
-                }
-            }
-        ],
-        "affected_objects": [
-            {
-                "kind": "npc",
-                "obj_id": 502
-            }
-        ],
-        "change": {
-            "state": "aware"
-        }
-    },
-    {
-        "obj_id": 505,
-        "name": "A Scorpion attacks you",
-        "description": "It's servos whine as it's stinger prepared to strike",
-        "state": "active",
-        "triggers": [
-            {
-                "object": {
-                    "kind": "npc",
-                    "obj_id": 502
-                },
-                "conditions": {
-                    "current_location": {
-                        "is": 5
-                    },
-                    "state": {
-                        "is": "aware"
-                    }
-                }
-            }
-        ],
-        "affected_objects": [
-            {
-                "kind": "npc",
-                "obj_id": 502
-            }
-        ],
-        "change": {
-            "state": "aggressive"
-        }
-    },
-    {
-        "obj_id": 506,
-        "name": "The scorpion is disabled",
-        "description": "Its legs give out from under its body as it shuts down.",
-        "state": "active",
-        "triggers": [
-            {
-                "object": {
-                    "kind": "npc",
-                    "obj_id": 502
-                },
-                "conditions": {
-                    "state": {
-                        "is": "disabled"
-                    }
-                }
-            },
             {
                 "object": {
                     "kind": "player",
                     "obj_id": 0
                 },
                 "conditions": {
-                    "state": {
-                        "is": "safe"
+                    "current_location": {
+                        "is": 5
                     }
                 }
             }
         ],
         "affected_objects": [
+            {
+                "kind": "event",
+                "obj_id": 501
+            },
+            {
+                "kind": "event",
+                "obj_id": 502
+            },
+            {
+                "kind": "event",
+                "obj_id": 503
+            },
             {
                 "kind": "event",
                 "obj_id": 504
@@ -675,17 +583,29 @@
             {
                 "kind": "event",
                 "obj_id": 506
+            },
+            {
+                "kind": "event",
+                "obj_id": 507
+            },
+            {
+                "kind": "event",
+                "obj_id": 508
+            },
+            {
+                "kind": "event",
+                "obj_id": 509
             }
         ],
         "change": {
-            "state": "inactive"
+            "state": "active"
         }
     },
     {
-        "obj_id": 507,
-        "name": "The scorpion has gone inert",
+        "obj_id": 502,
+        "name": "The scorpion becomes disabled",
         "description": "As the emp hit its target, you could see it power down as sparks flew from its joints",
-        "state": "active",
+        "state": "inactive",
         "triggers": [
             {
                 "object": {
@@ -693,6 +613,9 @@
                     "obj_id": 502
                 },
                 "conditions": {
+                    "current_location": {
+                        "is": 5
+                    },
                     "inventory": {
                         "item": [
                             {
@@ -720,6 +643,343 @@
                     }
                 ]
             }
+        }
+    },
+    {
+        "obj_id": 503,
+        "name": "A Scorpion attacks",
+        "description": "The stinger cannon emits a heat ray and you try to get behind cover but are too slow",
+        "state": "inactive",
+        "triggers": [
+            {
+                "object": {
+                    "kind": "npc",
+                    "obj_id": 502
+                },
+                "conditions": {
+                    "current_location": {
+                        "is": 5
+                    },
+                    "state": {
+                        "is_not": "disabled"
+                    }
+                }
+            },
+            {
+                "object": {
+                    "kind": "npc",
+                    "obj_id": 502
+                },
+                "conditions": {
+                    "current_location": {
+                        "is": 5
+                    },
+                    "state": {
+                        "is": "aggressive"
+                    }
+                }
+            }
+        ],
+        "affected_objects": [
+            {
+                "kind": "npc",
+                "obj_id": 502
+            }
+        ],
+        "change": {
+            "state": "firing"
+        }
+    },
+    {
+        "obj_id": 504,
+        "name": "A Scorpion becomes aggressive",
+        "description": "It clacks it's claws menacingly as it aims it's stinger cannon at you",
+        "state": "inactive",
+        "triggers": [
+            {
+                "object": {
+                    "kind": "npc",
+                    "obj_id": 502
+                },
+                "conditions": {
+                    "current_location": {
+                        "is": 5
+                    },
+                    "state": {
+                        "is_not": "disabled"
+                    }
+                }
+            },
+            {
+                "object": {
+                    "kind": "npc",
+                    "obj_id": 502
+                },
+                "conditions": {
+                    "current_location": {
+                        "is": 5
+                    },
+                    "state": {
+                        "is": "aware"
+                    }
+                }
+            }
+        ],
+        "affected_objects": [
+            {
+                "kind": "npc",
+                "obj_id": 502
+            }
+        ],
+        "change": {
+            "state": "aggressive"
+        }
+    },
+    {
+        "obj_id": 505,
+        "name": "A Scorpion becomes aware",
+        "description": "It's servos whine as it's stinger cannon powers up",
+        "state": "inactive",
+        "triggers": [
+            {
+                "object": {
+                    "kind": "npc",
+                    "obj_id": 502
+                },
+                "conditions": {
+                    "current_location": {
+                        "is": 5
+                    },
+                    "state": {
+                        "is_not": "disabled"
+                    }
+                }
+            },
+            {
+                "object": {
+                    "kind": "npc",
+                    "obj_id": 502
+                },
+                "conditions": {
+                    "current_location": {
+                        "is": 5
+                    },
+                    "state": {
+                        "is": "unaware"
+                    }
+                }
+            }
+        ],
+        "affected_objects": [
+            {
+                "kind": "npc",
+                "obj_id": 502
+            }
+        ],
+        "change": {
+            "state": "aware"
+        }
+    },
+    {
+        "obj_id": 506,
+        "name": "The player becomes spotted",
+        "description": "You feel a sense of dread wash over you as you realize that it is still operational",
+        "state": "inactive",
+        "triggers": [
+            {
+                "object": {
+                    "kind": "npc",
+                    "obj_id": 502
+                },
+                "conditions": {
+                    "current_location": {
+                        "is": 5
+                    },
+                    "state": {
+                        "is": "aware"
+                    }
+                }
+            }
+        ],
+        "affected_objects": [
+            {
+                "kind": "player",
+                "obj_id": 0
+            }
+        ],
+        "change": {
+            "state": "spotted"
+        }
+    },
+    {
+        "obj_id": 507,
+        "name": "The player becomes threatened",
+        "description": "You focus as adrenalin pumps through your veins. It's do or die",
+        "state": "inactive",
+        "triggers": [
+            {
+                "object": {
+                    "kind": "npc",
+                    "obj_id": 502
+                },
+                "conditions": {
+                    "current_location": {
+                        "is": 5
+                    },
+                    "state": {
+                        "is": "aggressive"
+                    }
+                }
+            }
+        ],
+        "affected_objects": [
+            {
+                "kind": "player",
+                "obj_id": 0
+            }
+        ],
+        "change": {
+            "state": "threatened"
+        }
+    },
+    {
+        "obj_id": 508,
+        "name": "The player becomes safe",
+        "description": "You fall to your knees in relief as the lights on the scorpiode flicker and go out",
+        "state": "inactive",
+        "triggers": [
+            {
+                "object": {
+                    "kind": "npc",
+                    "obj_id": 502
+                },
+                "conditions": {
+                    "current_location": {
+                        "is": 5
+                    },
+                    "state": {
+                        "is": "disabled"
+                    }
+                }
+            }
+        ],
+        "affected_objects": [
+            {
+                "kind": "player",
+                "obj_id": 0
+            }
+        ],
+        "change": {
+            "state": "safe"
+        }
+    },
+    {
+        "obj_id": 509,
+        "name": "The player becomes safe",
+        "description": "Your final thoughts are of you family and how you wish you could see them one last time",
+        "state": "inactive",
+        "triggers": [
+            {
+                "object": {
+                    "kind": "npc",
+                    "obj_id": 502
+                },
+                "conditions": {
+                    "current_location": {
+                        "is": 5
+                    },
+                    "state": {
+                        "is": "firing"
+                    }
+                }
+            }
+        ],
+        "affected_objects": [
+            {
+                "kind": "player",
+                "obj_id": 0
+            }
+        ],
+        "change": {
+            "state": "dead"
+        }
+    },
+    {
+        "obj_id": 5010,
+        "name": "The scorpion is disabled",
+        "description": "Its legs give out from under its body as it shuts down.",
+        "state": "inactive",
+        "triggers": [
+            {
+                "object": {
+                    "kind": "npc",
+                    "obj_id": 502
+                },
+                "conditions": {
+                    "current_location": {
+                        "is": 5
+                    },
+                    "state": {
+                        "is": "disabled"
+                    }
+                }
+            },
+            {
+                "object": {
+                    "kind": "player",
+                    "obj_id": 0
+                },
+                "conditions": {
+                    "state": {
+                        "is": "safe"
+                    }
+                }
+            }
+        ],
+        "affected_objects": [
+            {
+                "kind": "event",
+                "obj_id": 501
+            },
+            {
+                "kind": "event",
+                "obj_id": 502
+            },
+            {
+                "kind": "event",
+                "obj_id": 503
+            },
+            {
+                "kind": "event",
+                "obj_id": 504
+            },
+            {
+                "kind": "event",
+                "obj_id": 505
+            },
+            {
+                "kind": "event",
+                "obj_id": 506
+            },
+            {
+                "kind": "event",
+                "obj_id": 507
+            },
+            {
+                "kind": "event",
+                "obj_id": 508
+            },
+            {
+                "kind": "event",
+                "obj_id": 509
+            },
+            {
+                "kind": "event",
+                "obj_id": 510
+            }
+        ],
+        "change": {
+            "state": "inactive"
         }
     }
 ]

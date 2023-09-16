@@ -63,4 +63,6 @@ class EventHandler:
                 return ''
         
         self.apply_event_changes(event)
-        return f'{event.name}, {event.description}'
+        if god_mode:
+            return f'\n{event.name}, {event.description}'
+        return f'\n{event.description}'
