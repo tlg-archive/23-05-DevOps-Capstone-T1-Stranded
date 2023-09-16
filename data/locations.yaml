@@ -41,6 +41,8 @@
     obj_id: 4
   - kind: transition
     obj_id: 5
+  - kind: item
+    obj_id: 300
   
 - obj_id: 4
   name: Main Plaza

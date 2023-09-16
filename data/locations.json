@@ -57,6 +57,10 @@
             {
                 "kind": "transition",
                 "obj_id": 5
+            },
+            {
+                "kind": "item",
+                "obj_id": 300
             }
         ]
     },
@@ -111,6 +115,10 @@
             {
                 "kind": "npc",
                 "obj_id": 502
+            },
+            {
+                "kind": "transition",
+                "obj_id": 12
             }
         ]
     },
