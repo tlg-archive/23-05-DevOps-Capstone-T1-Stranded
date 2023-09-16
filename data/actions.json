@@ -12,16 +12,25 @@
     "use": [
         "activate",
         "interact",
-        "touch"
+        "touch",
+        "open",
+        "close"
     ],
     "take": [
         "grab",
         "steal",
-        "loot"
+        "loot",
+        "get"
     ],
     "drop": [
         "leave",
         "give",
-        "dicard"
+        "discard",
+        "throw"
+    ],
+    "talk": [
+        "speak",
+        "read",
+        "yell"
     ]
 }

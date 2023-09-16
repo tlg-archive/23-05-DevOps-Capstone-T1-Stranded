@@ -1,16 +1,39 @@
-# obj_id, location, description,
- 
-- obj_id: 1
+- description: A rugged survival tool used to navigate since ancient times
   name: compass
+  obj_id: 101
   state: active
-  description: A rugged survival tool used to navigate since ancient times
-
-- obj_id: 2
-  name: flare_gun
+- description: A flare gun, the design is the same as when it was first invented,
+    just made out of stronger material to withstand the stronger payload its shells
+    have.
+  name: flaregun
+  obj_id: 102
+  state: loaded
+- description: A small improvised electro magnetic pulse device that you found embedded
+    in a robotic boar.
+  name: grenade
+  obj_id: 201
   state: active
-  description: A flare gun, the design is the same as when it was first invented, just made out of stronger material to withstand the stronger payload its shells have.
-
-- obj_id: 3
-  name: power_core
+- description: A space suit, it seems to have been modified, reinforced with composite
+    synthetic materials to withstand the pressure exerted on the human body by the
+    ocean.
+  name: spacesuit
+  obj_id: 501
   state: active
-  description: Yanked out of the robots you've disabled. 
+- description: "\u201CThis is an Ursa Generator. Built to last, compact, and able\
+    \ to generate enough energy to get you off planet and through the expanse.\u201D"
+  name: generator
+  obj_id: 701
+  state: active
+- description: A flare that was on the plaza floor, why is it here? Did someone try
+    to signal for help?
+  name: flare
+  obj_id: 400
+  state: active
+- description: A rock found in a satchel, who would carry a rock?
+  name: rock
+  obj_id: 402
+  state: active
+- description: A keycard, found near what appears to be blood, whats it doing here?
+  name: keycard
+  obj_id: 300
+  state: active

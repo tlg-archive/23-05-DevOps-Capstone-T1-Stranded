@@ -1,8 +1,21 @@
-- obj_id: 1
-  name: boar
-  description: It was covered in dried blood, eyes cold and lifeless
-  state: unaware
-  dialogue: beep boop 
+- description: It was covered in dried blood, eyes cold and lifeless
+  dialogue:
+  - beep boop
+  - deep doop
+  - peep poop
   inventory:
-    - obj_id: 3
-      kind: item
+  - kind: item
+    obj_id: 201
+  name: boar
+  obj_id: 201
+  state: unaware
+- description: It's claws snapped with a clanging sound as it skittered towards you
+    on metal legs. The ends making a sharp pinging noise as they made contact with
+    the floor.
+  dialogue:
+  - chittering (angrily)
+  - snaps claw (menacingly)
+  - beep boop (murderous intent)
+  name: scorpion
+  obj_id: 502
+  state: unaware

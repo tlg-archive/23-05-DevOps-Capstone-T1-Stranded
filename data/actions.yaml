@@ -10,11 +10,20 @@ use:
   - activate
   - interact
   - touch
+  - open
+  - close
 take:
   - grab
   - steal
   - loot
+  - get
 drop:
   - leave
   - give
-  - dicard
+  - discard
+  - throw
+talk:
+  - speak
+  - read
+  - yell
+  
