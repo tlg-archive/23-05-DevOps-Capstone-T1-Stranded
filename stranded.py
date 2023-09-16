@@ -331,7 +331,10 @@ def main(stdscr):
             scenes[game_state["current_scene"]](stdscr, data[game_state["current_scene"]])
         if not input_text:
             input_text = ''
-        input_window.addstr(0, 0, f"{game_objects['players'][0].state}@{game_state.get('location_name', '')}>{input_text}")
+        if game_state['god_mode']:
+            input_window.addstr(0, 0, f"[god mode enabled]{game_objects['players'][0].state}@{game_state.get('location_name', '')}>{input_text}")
+        else:
+            input_window.addstr(0, 0, f"{game_objects['players'][0].state}@{game_state.get('location_name', '')}>{input_text}")
         if game_state.get('user_command', ''):
             stdscr.addstr(height - 2 , 0, ' '.join(game_state['user_command']))
         stdscr.refresh()

@@ -1,649 +1,660 @@
-# example event
-- obj_id: 0
-  name: "Event 1"
-  description: "Description of Event 1"
-  state: inactive
-  triggers:
-    - object:
-        kind: "npc"  # Define the kind of object to listen to (e.g., npc, location, item)
-        obj_id: 1  # ID of the object to listen to
-      conditions:
-        current_location:
-          is: 1
-          is_not: 2
-        state:
-          is: 'state'
-          is_not: 'not_state'
-        inventory:
-          item: #trigger event when all the following items are in the trigger_object's inventory
-            - kind: "item"  
-              obj_id: 2
-          no_item: #trigger event when none the following items are in the trigger_object's inventory
-            - kind: "item"
-              obj_id: 3
-  affected_objects:
-    - kind: "npc"  # Define the kind of objects to affect (e.g., npc, item, location)
-      obj_id: 2  # ID of the object to affect
-  change: 
-    state: 'new_state'
+- affected_objects:
+  - kind: npc
+    obj_id: 2
+  change:
     inventory:
       add:
-        - kind: 'item'
-          obj_id: 4
+      - kind: item
+        obj_id: 4
       remove:
-        - kind: 'item'
-          obj_id: 5
-
-- obj_id: 201
-  name: "The Boar is disabled"
-  description: ""
-  state: active
-  triggers:
-    - object:
-        kind: "npc"
-        obj_id: 201
-      conditions:
-        state:
-          is: 'disabled'
-    - object:
-        kind: "player"
-        obj_id: 0
-      conditions:
-        state:
-          is: 'safe'
-  affected_objects:
-    - kind: "event"
-      obj_id: 201
-    - kind: "event"
-      obj_id: 202
-    - kind: "event"
-      obj_id: 203
-    - kind: "event"
-      obj_id: 204
-    - kind: "event"
-      obj_id: 205
-    - kind: "event"
-      obj_id: 206
-    - kind: "event"
-      obj_id: 207
-    - kind: "event"
-      obj_id: 208
-    - kind: "event"
-      obj_id: 209
-  change:
-    state: "inactive"
-
-- obj_id: 202
-  name: "The Boar is looses sight of the player"
-  description: "The boar lies back down."
-  state: active
-  triggers:
-    - object:
-        kind: "npc"
-        obj_id: 201
-      conditions:
-        current_location:
-          is_not: 2
-        state:
-          is_not: 'unaware'
-    - object:
-        kind: "npc"
-        obj_id: 201
-      conditions:
-        state:
-          is_not: 'disabled'
-  affected_objects:
-    - kind: "npc"
-      obj_id: 201
-  change:
-    state: "unaware"
-
-- obj_id: 203
-  name: "The Boar gains sight of the player"
-  description: "The boar looks in your direction."
-  state: active
-  triggers:
-    - object:
-        kind: "npc"
-        obj_id: 201
-      conditions:
-        current_location:
-          is: 2
-        state:
-          is: 'unaware'
-    - object:
-        kind: "npc"
-        obj_id: 201
-      conditions:
-        state:
-          is_not: 'disabled'
-  affected_objects:
-    - kind: "npc"
-      obj_id: 201
-  change:
-    state: "aware"
-
-- obj_id: 204
-  name: "The Boar becomes disabled"
-  description: "As you remove the emp grenade from the boar it begins stuttering and sparking before going limp."
-  state: active
-  triggers:
-    - object:
-        kind: "npc"
-        obj_id: 201
-      conditions:
-        inventory:
-          no_item:
-            - kind: "item"
-              obj_id: 201
-  affected_objects:
-    - kind: "npc"
-      obj_id: 201
-  change:
-    state: "disabled"
-
-- obj_id: 205
-  name: "The Boar becomes aggressive towards the player"
-  description: "The boar squeals loudly sparks fly from it's damaged legs."
-  state: active
-  triggers:
-    - object:
-        kind: "npc"
-        obj_id: 201
-      conditions:
-        current_location:
-          is: 2
-        state:
-          is: 'aware'
-    - object:
-        kind: "npc"
-        obj_id: 201
-      conditions:
-        state:
-          is_not: 'disabled'
-    - object:
-        kind: "player"
-        obj_id: 0
-      conditions:
-        state:
-          is: 'spotted'
-  affected_objects:
-    - kind: "npc"
-      obj_id: 201
-  change:
-    state: "aggressive"
-
-- obj_id: 206
-  name: "player has disabled the boar"
-  description: "You feel safer now that it's no longer focused on you."
-  state: active
-  triggers:
-    - object:
-        kind: "npc"
-        obj_id: 201
-      conditions:
-        state:
-          is: "disabled"
-  affected_objects:
-    - kind: "player"
-      obj_id: 0
-  change:
-    state: "safe"
-
-- obj_id: 207
-  name: "The Boar is looses sight of you, player"
-  description: "You feel safer now that it's no longer focused on you."
-  state: active
-  triggers:
-    - object:
-        kind: "npc"
-        obj_id: 201
-      conditions:
-        state:
-          is: "unaware"
-        current_location:
-          is_not: 2
-    - object:
-        kind: "npc"
-        obj_id: 201
-      conditions:
-        state:
-          is_not: "disabled"
-    - object:
-        kind: "player"
-        obj_id: 0
-      conditions:
-        state:
-          is_not: "safe"
-  affected_objects:
-    - kind: "player"
-      obj_id: 0
-  change:
-    state: "safe"
-
-- obj_id: 208
-  name: "The Boar spots the player"
-  description: "You feel it's eyes lock onto you."
-  state: active
-  triggers:
-    - object:
-        kind: "npc"
-        obj_id: 201
-      conditions:
-        current_location:
-          is: 2
-        state:
-          is: 'aware'
-    - object:
-        kind: "npc"
-        obj_id: 201
-      conditions:
-        state:
-          is_not: "disabled"
-  affected_objects:
-    - kind: "player"
-      obj_id: 0
-  change:
-    state: "spotted"
-  
-- obj_id: 209
-  name: "The Boar threatens the player"
-  description: "It's open hostility is unnerving. Thank fully it can't reach you."
-  state: active
-  triggers:
-    - object:
-        kind: "npc"
-        obj_id: 201
-      conditions:
-        current_location:
-          is: 2
-        state:
-          is: 'aggressive'
-  affected_objects:
-    - kind: "player"
-      obj_id: 0
-  change:
-    state: "threatened"
-
-- obj_id: 210
-  name: "Player does not have a Compass"
-  description: "With out your compass you could get lost..."
-  state: active
-  triggers:
-    - object:
-        kind: "player"
-        obj_id: 0
-      conditions:
-        current_location:
-          is_not: 1
-        state:
-          is: 'safe'
-        inventory:
-          no_item:
-            - kind: "item"
-              obj_id: 101
-  affected_objects:
-    - kind: "transition"
-      obj_id: 3
-    - kind: "transition"
-      obj_id: 4
-  change:
-    state: "dangerous"
-
-- obj_id: 211
-  name: "Player Has a Compass"
-  description: "With this compass you should be able to navigate in any environment."
-  state: active
-  triggers:
-    - object:
-        kind: "player"
-        obj_id: 0
-      conditions:
-        current_location:
-          is: 1
-        state:
-          is: 'safe'
-        inventory:
-          item:
-            - kind: "item"
-              obj_id: 101
-  affected_objects:
-    - kind: "transition"
-      obj_id: 3
-    - kind: "transition"
-      obj_id: 4
-  change:
-    state: "safe"
-
-- obj_id: 401
-  name: "Player does not have suit"
-  description: "With out your spacesuit you won't survive the swim to the research lab..."
-  state: active
-  triggers:
-    - object:
-        kind: "player"
-        obj_id: 0
-      conditions:
-        current_location:
-          is_not: 5
-        state:
-          is: 'safe'
-        inventory:
-          no_item:
-            - kind: "item"
-              obj_id: 501
-  affected_objects:
-    - kind: "transition"
-      obj_id: 8
-  change:
-    state: "flooded"
-
-- obj_id: 402
-  name: "Player Has a suit"
-  description: "Your new spacesuit has a built in CO2 scrubber, and can be used continuously for over eight hours before needing a new filter."
-  state: active
-  triggers:
-    - object:
-        kind: "player"
-        obj_id: 0
-      conditions:
-        current_location:
-          is: 5
-        state:
-          is: 'safe'
-        inventory:
-          item:
-            - kind: "item"
-              obj_id: 501
-  affected_objects:
-    - kind: "transition"
-      obj_id: 8
-  change:
-    state: "safe"
-
-- obj_id: 403
-  name: "Player Has a suit, silent"
-  description: ""
-  state: active
-  triggers:
-    - object:
-        kind: "player"
-        obj_id: 0
-      conditions:
-        current_location:
-          is_not: 5
-        state:
-          is: 'safe'
-        inventory:
-          item:
-            - kind: "item"
-              obj_id: 501
-  affected_objects:
-    - kind: "transition"
-      obj_id: 8
-  change:
-    state: "safe"
-
-- obj_id: 501
-  name: "A Scorpion events are enabled"
-  description: "You almost miss it as you walk into the shuttle bay, but out of the corner of your eye you see a scorpiode security bot powering up in the corner of the hanger"
-  state: active
-  triggers:
-    - object: 
-        kind: "player" 
-        obj_id: 0
-      conditions:
-        current_location:
-          is: 5
-    - object:
-        kind: "npc"
-        obj_id: 502
-      conditions:
-        state:
-          is: 'unaware'
-  affected_objects:
-    - kind: "event"
-      obj_id: 501
-    - kind: "event"
-      obj_id: 502
-    - kind: "event"
-      obj_id: 503
-    - kind: "event"
-      obj_id: 504
-    - kind: "event"
-      obj_id: 505
-    - kind: "event"
-      obj_id: 506
-    - kind: "event"
-      obj_id: 507
-    - kind: "event"
-      obj_id: 508
-    - kind: "event"
-      obj_id: 509
-  change: 
-    state: "active"
-
-- obj_id: 502
-  name: "The scorpion becomes disabled"
-  description: "As the emp hit its target, you could see it power down as sparks flew from its joints"
+      - kind: item
+        obj_id: 5
+    state: new_state
+  description: Description of Event 1
+  name: Event 1
+  obj_id: 0
   state: inactive
   triggers:
-    - object:
-        kind: "npc"
-        obj_id: 502
-      conditions:
-        current_location:
-          is: 5
-        inventory:
-          item:
-            - kind: "item"
-              obj_id: 201
-  affected_objects:
-    - kind: "npc"
-      obj_id: 502
-  change:
-    state: "disabled"
-    inventory:
-      remove:
-        - kind: "item"
-          obj_id: 201
-
-- obj_id: 503
-  name: "A Scorpion attacks"
-  description: "The stinger cannon emits a heat ray and you try to get behind cover but are too slow"
-  state: inactive
-  triggers:
-    - object: 
-        kind: "npc" 
-        obj_id: 502
-      conditions:
-        current_location:
-          is: 5
-        state:
-          is_not: 'disabled'
-    - object: 
-        kind: "npc" 
-        obj_id: 502
-      conditions:
-        current_location:
-          is: 5
-        state:
-          is: 'aggressive' 
-  affected_objects:
-    - kind: "npc"
-      obj_id: 502
-  change: 
-    state: "firing"
-
-- obj_id: 504
-  name: "A Scorpion becomes aggressive"
-  description: "It clacks it's claws menacingly as it aims it's stinger cannon at you"
-  state: inactive
-  triggers:
-    - object: 
-        kind: "npc" 
-        obj_id: 502
-      conditions:
-        current_location:
-          is: 5
-        state:
-          is_not: 'disabled'
-    - object: 
-        kind: "npc" 
-        obj_id: 502
-      conditions:
-        current_location:
-          is: 5
-        state:
-          is: 'aware' 
-  affected_objects:
-    - kind: "npc"
-      obj_id: 502
-  change: 
-    state: "aggressive"
-
-- obj_id: 505
-  name: "A Scorpion becomes aware"
-  description: "It's servos whine as it's stinger cannon powers up"
-  state: inactive
-  triggers:
-    - object: 
-        kind: "npc" 
-        obj_id: 502
-      conditions:
-        current_location:
-          is: 5
-        state:
-          is_not: 'disabled'
-    - object: 
-        kind: "npc" 
-        obj_id: 502
-      conditions:
-        current_location:
-          is: 5
-        state:
-          is: 'unaware'  
-  affected_objects:
-    - kind: "npc"
-      obj_id: 502
-  change: 
-    state: "aware"
-
-- obj_id: 506
-  name: "The player becomes spotted"
-  description: "You feel a sense of dread wash over you as you realize that it is still operational"
-  state: inactive
-  triggers:
-    - object:
-        kind: "npc"
-        obj_id: 502
-      conditions:
-        current_location:
-          is: 5
-        state:
-          is: 'aware'
-  affected_objects:
-    - kind: "player"
-      obj_id: 0
-  change:
-    state: "spotted"
-
-- obj_id: 507
-  name: "The player becomes threatened"
-  description: "You focus as adrenalin pumps through your veins. It's do or die"
-  state: inactive
-  triggers:
-    - object:
-        kind: "npc"
-        obj_id: 502
-      conditions:
-        current_location:
-          is: 5
-        state:
-          is: 'aggressive'
-  affected_objects:
-    - kind: "player"
-      obj_id: 0
-  change:
-    state: "threatened"
-
-- obj_id: 508
-  name: "The player becomes safe"
-  description: "You fall to your knees in relief as the lights on the scorpiode flicker and go out"
-  state: inactive
-  triggers:
-    - object:
-        kind: "npc"
-        obj_id: 502
-      conditions:
-        current_location:
-          is: 5
-        state:
-          is: 'disabled'
-  affected_objects:
-    - kind: "player"
-      obj_id: 0
-  change:
-    state: "safe"   
-
-- obj_id: 509
-  name: "The player becomes safe"
-  description: "Your final thoughts are of you family and how you wish you could see them one last time"
-  state: inactive
-  triggers:
-    - object:
-        kind: "npc"
-        obj_id: 502
-      conditions:
-        current_location:
-          is: 5
-        state:
-          is: 'firing'
-  affected_objects:
-    - kind: "player"
-      obj_id: 0
-  change:
-    state: "dead"   
-
-- obj_id: 5010
-  name: "The scorpion is disabled"
-  description: "Its legs give out from under its body as it shuts down."
-  state: inactive
-  triggers:
-    - object:
-        kind: "npc"
-        obj_id: 502
-      conditions:
-        current_location:
-          is: 5
-        state:
-          is: 'disabled'
-    - object:
-        kind: "player"
-        obj_id: 0
-      conditions:
-        state:
-          is: safe
-  affected_objects:
-    - kind: 'event'
-      obj_id: 501
-    - kind: 'event'
-      obj_id: 502
-    - kind: 'event'
-      obj_id: 503
-    - kind: 'event'
-      obj_id: 504
-    - kind: 'event'
-      obj_id: 505
-    - kind: 'event'
-      obj_id: 506
-    - kind: 'event'
-      obj_id: 507
-    - kind: 'event'
-      obj_id: 508
-    - kind: 'event'
-      obj_id: 509
-    - kind: 'event'
-      obj_id: 510
+  - conditions:
+      current_location:
+        is: 1
+        is_not: 2
+      inventory:
+        item:
+        - kind: item
+          obj_id: 2
+        no_item:
+        - kind: item
+          obj_id: 3
+      state:
+        is: state
+        is_not: not_state
+    object:
+      kind: npc
+      obj_id: 1
+- affected_objects:
+  - kind: event
+    obj_id: 201
+  - kind: event
+    obj_id: 202
+  - kind: event
+    obj_id: 203
+  - kind: event
+    obj_id: 204
+  - kind: event
+    obj_id: 205
+  - kind: event
+    obj_id: 206
+  - kind: event
+    obj_id: 207
+  - kind: event
+    obj_id: 208
+  - kind: event
+    obj_id: 209
   change:
     state: inactive
+  description: ''
+  name: The Boar is disabled
+  obj_id: 201
+  state: active
+  triggers:
+  - conditions:
+      state:
+        is: disabled
+    object:
+      kind: npc
+      obj_id: 201
+  - conditions:
+      state:
+        is: safe
+    object:
+      kind: player
+      obj_id: 0
+- affected_objects:
+  - kind: npc
+    obj_id: 201
+  change:
+    state: unaware
+  description: The boar lies back down.
+  name: The Boar is looses sight of the player
+  obj_id: 202
+  state: active
+  triggers:
+  - conditions:
+      current_location:
+        is_not: 2
+      state:
+        is_not: unaware
+    object:
+      kind: npc
+      obj_id: 201
+  - conditions:
+      state:
+        is_not: disabled
+    object:
+      kind: npc
+      obj_id: 201
+- affected_objects:
+  - kind: npc
+    obj_id: 201
+  change:
+    state: aware
+  description: The boar looks in your direction.
+  name: The Boar gains sight of the player
+  obj_id: 203
+  state: active
+  triggers:
+  - conditions:
+      current_location:
+        is: 2
+      state:
+        is: unaware
+    object:
+      kind: npc
+      obj_id: 201
+  - conditions:
+      state:
+        is_not: disabled
+    object:
+      kind: npc
+      obj_id: 201
+- affected_objects:
+  - kind: npc
+    obj_id: 201
+  change:
+    state: disabled
+  description: As you remove the emp grenade from the boar it begins stuttering and
+    sparking before going limp.
+  name: The Boar becomes disabled
+  obj_id: 204
+  state: active
+  triggers:
+  - conditions:
+      inventory:
+        no_item:
+        - kind: item
+          obj_id: 201
+    object:
+      kind: npc
+      obj_id: 201
+- affected_objects:
+  - kind: npc
+    obj_id: 201
+  change:
+    state: aggressive
+  description: The boar squeals loudly sparks fly from it's damaged legs.
+  name: The Boar becomes aggressive towards the player
+  obj_id: 205
+  state: active
+  triggers:
+  - conditions:
+      current_location:
+        is: 2
+      state:
+        is: aware
+    object:
+      kind: npc
+      obj_id: 201
+  - conditions:
+      state:
+        is_not: disabled
+    object:
+      kind: npc
+      obj_id: 201
+  - conditions:
+      state:
+        is: spotted
+    object:
+      kind: player
+      obj_id: 0
+- affected_objects:
+  - kind: player
+    obj_id: 0
+  change:
+    state: safe
+  description: You feel safer now that it's no longer focused on you.
+  name: player has disabled the boar
+  obj_id: 206
+  state: active
+  triggers:
+  - conditions:
+      state:
+        is: disabled
+    object:
+      kind: npc
+      obj_id: 201
+- affected_objects:
+  - kind: player
+    obj_id: 0
+  change:
+    state: safe
+  description: You feel safer now that it's no longer focused on you.
+  name: The Boar is looses sight of you, player
+  obj_id: 207
+  state: active
+  triggers:
+  - conditions:
+      current_location:
+        is_not: 2
+      state:
+        is: unaware
+    object:
+      kind: npc
+      obj_id: 201
+  - conditions:
+      state:
+        is_not: disabled
+    object:
+      kind: npc
+      obj_id: 201
+  - conditions:
+      state:
+        is_not: safe
+    object:
+      kind: player
+      obj_id: 0
+- affected_objects:
+  - kind: player
+    obj_id: 0
+  change:
+    state: spotted
+  description: You feel it's eyes lock onto you.
+  name: The Boar spots the player
+  obj_id: 208
+  state: active
+  triggers:
+  - conditions:
+      current_location:
+        is: 2
+      state:
+        is: aware
+    object:
+      kind: npc
+      obj_id: 201
+  - conditions:
+      state:
+        is_not: disabled
+    object:
+      kind: npc
+      obj_id: 201
+- affected_objects:
+  - kind: player
+    obj_id: 0
+  change:
+    state: threatened
+  description: It's open hostility is unnerving. Thank fully it can't reach you.
+  name: The Boar threatens the player
+  obj_id: 209
+  state: active
+  triggers:
+  - conditions:
+      current_location:
+        is: 2
+      state:
+        is: aggressive
+    object:
+      kind: npc
+      obj_id: 201
+- affected_objects:
+  - kind: transition
+    obj_id: 3
+  - kind: transition
+    obj_id: 4
+  change:
+    state: dangerous
+  description: With out your compass you could get lost...
+  name: Player does not have a Compass
+  obj_id: 210
+  state: inactive
+  triggers:
+  - conditions:
+      current_location:
+        is_not: 1
+      inventory:
+        no_item:
+        - kind: item
+          obj_id: 101
+      state:
+        is: safe
+    object:
+      kind: player
+      obj_id: 0
+- affected_objects:
+  - kind: event
+    obj_id: 210
+  - kind: event
+    obj_id: 212
+  change:
+    state: active
+  description: With this compass you should be able to navigate in any environment.
+  name: Player Has a Compass
+  obj_id: 211
+  state: active
+  triggers:
+  - conditions:
+      current_location:
+        is: 1
+      inventory:
+        item:
+        - kind: item
+          obj_id: 101
+      state:
+        is: safe
+    object:
+      kind: player
+      obj_id: 0
+- affected_objects:
+  - kind: transition
+    obj_id: 3
+  - kind: transition
+    obj_id: 4
+  change:
+    state: safe
+  description: With this compass you should be able to navigate in any environment.
+  name: Player Has a Compass, silent
+  obj_id: 212
+  state: inactive
+  triggers:
+  - conditions:
+      current_location:
+        is: 1
+      inventory:
+        item:
+        - kind: item
+          obj_id: 101
+      state:
+        is: safe
+    object:
+      kind: player
+      obj_id: 0
+- affected_objects:
+  - kind: transition
+    obj_id: 8
+  change:
+    state: flooded
+  description: With out your spacesuit you won't survive the swim to the research
+    lab...
+  name: Player does not have suit
+  obj_id: 401
+  state: inactive
+  triggers:
+  - conditions:
+      current_location:
+        is_not: 5
+      inventory:
+        no_item:
+        - kind: item
+          obj_id: 501
+      state:
+        is: safe
+    object:
+      kind: player
+      obj_id: 0
+- affected_objects:
+  - kind: event
+    obj_id: 401
+  - kind: event
+    obj_id: 403
+  change:
+    state: active
+  description: Your new spacesuit has a built in CO2 scrubber, and can be used continuously
+    for over eight hours before needing a new filter.
+  name: Player Has a suit
+  obj_id: 402
+  state: active
+  triggers:
+  - conditions:
+      current_location:
+        is: 5
+      inventory:
+        item:
+        - kind: item
+          obj_id: 501
+      state:
+        is: safe
+    object:
+      kind: player
+      obj_id: 0
+- affected_objects:
+  - kind: transition
+    obj_id: 8
+  change:
+    state: safe
+  description: ''
+  name: Player Has a suit, silent
+  obj_id: 403
+  state: inactive
+  triggers:
+  - conditions:
+      current_location:
+        is_not: 5
+      inventory:
+        item:
+        - kind: item
+          obj_id: 501
+      state:
+        is: safe
+    object:
+      kind: player
+      obj_id: 0
+- affected_objects:
+  - kind: event
+    obj_id: 501
+  - kind: event
+    obj_id: 502
+  - kind: event
+    obj_id: 503
+  - kind: event
+    obj_id: 504
+  - kind: event
+    obj_id: 505
+  - kind: event
+    obj_id: 506
+  - kind: event
+    obj_id: 507
+  - kind: event
+    obj_id: 508
+  - kind: event
+    obj_id: 509
+  change:
+    state: active
+  description: You almost miss it as you walk into the shuttle bay, but out of the
+    corner of your eye you see a scorpiode security bot powering up in the corner
+    of the hanger
+  name: A Scorpion events are enabled
+  obj_id: 501
+  state: active
+  triggers:
+  - conditions:
+      current_location:
+        is: 5
+    object:
+      kind: player
+      obj_id: 0
+  - conditions:
+      state:
+        is: unaware
+    object:
+      kind: npc
+      obj_id: 502
+- affected_objects:
+  - kind: npc
+    obj_id: 502
+  change:
+    inventory:
+      remove:
+      - kind: item
+        obj_id: 201
+    state: disabled
+  description: As the emp hit its target, you could see it power down as sparks flew
+    from its joints
+  name: The scorpion becomes disabled
+  obj_id: 502
+  state: inactive
+  triggers:
+  - conditions:
+      current_location:
+        is: 5
+      inventory:
+        item:
+        - kind: item
+          obj_id: 201
+    object:
+      kind: npc
+      obj_id: 502
+- affected_objects:
+  - kind: npc
+    obj_id: 502
+  change:
+    state: firing
+  description: The stinger cannon emits a heat ray and you try to get behind cover
+    but are too slow
+  name: A Scorpion attacks
+  obj_id: 503
+  state: inactive
+  triggers:
+  - conditions:
+      current_location:
+        is: 5
+      state:
+        is_not: disabled
+    object:
+      kind: npc
+      obj_id: 502
+  - conditions:
+      current_location:
+        is: 5
+      state:
+        is: aggressive
+    object:
+      kind: npc
+      obj_id: 502
+- affected_objects:
+  - kind: npc
+    obj_id: 502
+  change:
+    state: aggressive
+  description: It clacks it's claws menacingly as it aims it's stinger cannon at you
+  name: A Scorpion becomes aggressive
+  obj_id: 504
+  state: inactive
+  triggers:
+  - conditions:
+      current_location:
+        is: 5
+      state:
+        is_not: disabled
+    object:
+      kind: npc
+      obj_id: 502
+  - conditions:
+      current_location:
+        is: 5
+      state:
+        is: aware
+    object:
+      kind: npc
+      obj_id: 502
+- affected_objects:
+  - kind: npc
+    obj_id: 502
+  change:
+    state: aware
+  description: It's servos whine as it's stinger cannon powers up
+  name: A Scorpion becomes aware
+  obj_id: 505
+  state: inactive
+  triggers:
+  - conditions:
+      current_location:
+        is: 5
+      state:
+        is_not: disabled
+    object:
+      kind: npc
+      obj_id: 502
+  - conditions:
+      current_location:
+        is: 5
+      state:
+        is: unaware
+    object:
+      kind: npc
+      obj_id: 502
+- affected_objects:
+  - kind: player
+    obj_id: 0
+  change:
+    state: spotted
+  description: You feel a sense of dread wash over you as you realize that it is still
+    operational
+  name: The player becomes spotted
+  obj_id: 506
+  state: inactive
+  triggers:
+  - conditions:
+      current_location:
+        is: 5
+      state:
+        is: aware
+    object:
+      kind: npc
+      obj_id: 502
+- affected_objects:
+  - kind: player
+    obj_id: 0
+  change:
+    state: threatened
+  description: You focus as adrenalin pumps through your veins. It's do or die
+  name: The player becomes threatened
+  obj_id: 507
+  state: inactive
+  triggers:
+  - conditions:
+      current_location:
+        is: 5
+      state:
+        is: aggressive
+    object:
+      kind: npc
+      obj_id: 502
+- affected_objects:
+  - kind: player
+    obj_id: 0
+  change:
+    state: safe
+  description: You fall to your knees in relief as the lights on the scorpiode flicker
+    and go out
+  name: The player becomes safe
+  obj_id: 508
+  state: inactive
+  triggers:
+  - conditions:
+      current_location:
+        is: 5
+      state:
+        is: disabled
+    object:
+      kind: npc
+      obj_id: 502
+- affected_objects:
+  - kind: player
+    obj_id: 0
+  change:
+    state: dead
+  description: Your final thoughts are of you family and how you wish you could see
+    them one last time
+  name: The player becomes safe
+  obj_id: 509
+  state: inactive
+  triggers:
+  - conditions:
+      current_location:
+        is: 5
+      state:
+        is: firing
+    object:
+      kind: npc
+      obj_id: 502
+- affected_objects:
+  - kind: event
+    obj_id: 501
+  - kind: event
+    obj_id: 502
+  - kind: event
+    obj_id: 503
+  - kind: event
+    obj_id: 504
+  - kind: event
+    obj_id: 505
+  - kind: event
+    obj_id: 506
+  - kind: event
+    obj_id: 507
+  - kind: event
+    obj_id: 508
+  - kind: event
+    obj_id: 509
+  - kind: event
+    obj_id: 510
+  change:
+    state: inactive
+  description: Its legs give out from under its body as it shuts down.
+  name: The scorpion is disabled
+  obj_id: 5010
+  state: inactive
+  triggers:
+  - conditions:
+      current_location:
+        is: 5
+      state:
+        is: disabled
+    object:
+      kind: npc
+      obj_id: 502
+  - conditions:
+      state:
+        is: safe
+    object:
+      kind: player
+      obj_id: 0

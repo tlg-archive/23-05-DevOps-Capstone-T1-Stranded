@@ -10,6 +10,8 @@ use:
   - activate
   - interact
   - touch
+  - open
+  - close
 take:
   - grab
   - steal

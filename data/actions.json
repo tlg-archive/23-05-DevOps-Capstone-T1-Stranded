@@ -12,7 +12,9 @@
     "use": [
         "activate",
         "interact",
-        "touch"
+        "touch",
+        "open",
+        "close"
     ],
     "take": [
         "grab",

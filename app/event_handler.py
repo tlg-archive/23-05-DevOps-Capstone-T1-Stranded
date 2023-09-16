@@ -44,11 +44,13 @@ class EventHandler:
                 affected.state = event.change.state
             if event.change.inventory and isinstance(affected, Container):
                 inventory_change = event.change.inventory
-                for add_item in inventory_change.add:
-                    affected.inventory.append(add_item)
-                for remove_item in inventory_change.remove:
-                    if remove_item in affected.inventory:
-                        affected.inventory.remove(remove_item)
+                if 'item' in inventory_change.keys():
+                    for add_item in inventory_change['item']:
+                        affected.inventory.append(add_item)
+                if 'no_item' in inventory_change.keys():
+                    for remove_item in inventory_change['no_item']:
+                        if remove_item in affected.inventory:
+                            affected.inventory.remove(remove_item)
 
     def process_event(self, event: Event, current_location: int, god_mode: bool) -> str:
         passed = True
