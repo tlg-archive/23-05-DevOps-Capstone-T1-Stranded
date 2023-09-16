@@ -197,4 +197,27 @@
     obj_id: 2
   blocking_states:
     - locked
-  
+
+- obj_id: 12
+  name: ship
+  description: The evacuation ship, even though, scarred and battered its potential for flight remained. It was missing a crucial component—the generator
+  state: locked # this is the initial state
+  state_descriptions:
+    locked: pending the replacement of the essential power source 
+    unlocked: The ship is ready for flight
+  state_transitions:
+    locked: "" 
+    unlocked: ""
+  state_list: # the last item in the state list needs to match the initial state.
+    - locked
+  target: 
+    kind: location
+    obj_id: 8
+  blocking_states:
+    - locked
+  key_info:
+        key:
+          kind: item
+          obj_id: 701
+        message: The door opens slowly, after the sound of complex locking mechanisms is heard from the opposite side.
+        state: unlocked
