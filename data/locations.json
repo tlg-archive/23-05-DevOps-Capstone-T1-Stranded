@@ -95,6 +95,10 @@
             {
                 "kind": "item",
                 "obj_id": 501
+            },
+            {
+                "kind": "transition",
+                "obj_id": 12
             }
         ]
     },
@@ -123,5 +127,10 @@
                 "obj_id": 701
             }
         ]
+    },
+    {
+        "obj_id": 8,
+        "name": "Victory",
+        "description": "You made it out alive!!!!\n VICTORY\nQuit and start the game to play again"
     }
 ]
