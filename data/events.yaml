@@ -314,3 +314,113 @@
       obj_id: 4
   change:
     state: "safe"
+
+- obj_id: 504
+  name: "A Scorpion attacks you"
+  description: "It's servos whine as it's stinger prepared to strike"
+  state: active
+  triggers:
+    - object: 
+        kind: "npc" 
+        obj_id: 502
+      conditions:
+        current_location:
+          is: 5
+        state:
+          is: 'unaware' 
+  affected_objects:
+    - kind: "player"
+      obj_id: 0
+  change: 
+    state: "scared"
+
+- obj_id: 504
+  name: "A Scorpion attacks you"
+  description: "It's servos whine as it's stinger prepared to strike"
+  state: active
+  triggers:
+    - object: 
+        kind: "npc" 
+        obj_id: 502
+      conditions:
+        current_location:
+          is: 5
+        state:
+          is: 'unaware' 
+  affected_objects:
+    - kind: "npc"
+      obj_id: 502
+  change: 
+    state: "aware"
+
+- obj_id: 505
+  name: "A Scorpion attacks you"
+  description: "It's servos whine as it's stinger prepared to strike"
+  state: active
+  triggers:
+    - object: 
+        kind: "npc" 
+        obj_id: 502
+      conditions:
+        current_location:
+          is: 5
+        state:
+          is: 'aware' 
+  affected_objects:
+    - kind: "npc"
+      obj_id: 502
+  change: 
+    state: "aggressive"
+
+
+- obj_id: 506
+  name: "The scorpion is disabled"
+  description: "Its legs give out from under its body as it shuts down."
+  state: active
+  triggers:
+    - object:
+        kind: "npc"
+        obj_id: 502
+      conditions:
+        state:
+          is: 'disabled'
+    - object:
+        kind: "player"
+        obj_id: 0
+      conditions:
+        state:
+          is: safe
+  affected_objects:
+    - kind: 'event'
+      obj_id: 504
+    - kind: 'event'
+      obj_id: 505
+    - kind: 'event'
+      obj_id: 506
+  change:
+    state: inactive
+
+- obj_id: 507
+  name: "The scorpion has gone inert"
+  description: "As the emp hit its target, you could see it power down as sparks flew from its joints"
+  state: active
+  triggers:
+    - object:
+        kind: "npc"
+        obj_id: 502
+      conditions:
+        inventory:
+          item:
+            - kind: "item"
+              obj_id: 201
+  affected_objects:
+    - kind: "npc"
+      obj_id: 502
+  change:
+    state: "disabled"
+    inventory:
+      remove:
+        - kind: "item"
+          obj_id: 201
+    
+    

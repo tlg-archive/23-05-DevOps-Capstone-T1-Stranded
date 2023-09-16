@@ -10,7 +10,9 @@
     obj_id: 102
   - kind: transition
     obj_id: 1
-  
+  - kind: journal
+    obj_id: 1
+   
 - obj_id: 2
   name: The Beach
   description: The Beach was calm its waves peacefully lapping at the shore as the
@@ -61,6 +63,10 @@
     obj_id: 8
   - kind: journal
     obj_id: 2
+  - kind: item
+    obj_id: 400
+  - kind: container
+    obj_id: 401
   
 - obj_id: 5
   name: Arquebus Planetary Spaceport
@@ -79,9 +85,10 @@
     obj_id: 3
   - kind: item
     obj_id: 501
+  - kind: npc
+    obj_id: 502
   - kind: transition
     obj_id: 12
-    
  
 - obj_id: 6
   name: Cargo Bay

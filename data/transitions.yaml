@@ -71,7 +71,7 @@
 
 - obj_id: 5
   name: jungleTrail
-  description: You walk deeper into the Jungles thick foliage, large trees flank your sides seeming to guide you onto a path. In certain places their are openings leading in other directions of the forest.
+  description: Large trees flank the sides of a path. In certain places their are openings leading in other directions of the forest.
   state: safe
   state_descriptions:
     safe: Despite the rough landing, you find yourself feeling a bit more at ease.
@@ -87,7 +87,7 @@
 
 - obj_id: 6
   name: jungleTrail
-  description: From this side the jungle seems less dense, the colony clearly visible as you look back before moving forward. Soon the jungle envelops you once more with its beauty and birdcalls.
+  description: The jungle swallows you once more.
   state: safe
   state_descriptions:
     safe: Despite the silence, you don''t feel on edge.
@@ -103,7 +103,7 @@
 
 - obj_id: 7
   name: highway
-  description: You pass by derelict vehicles, all of them bearing the marks of some kind of attack. The occupants inside are the same, or at least whats left them. You note some of them are marked by deep gashes, others remind of you of impacts on par with what you've seen space debris due to ships.
+  description: You see derelict vehicles, all of them bearing the marks of some kind of attack. The occupants inside are the same, or at least whats left them.
   state: safe
   state_descriptions:
     dangerous: ""
@@ -121,7 +121,7 @@
 
 - obj_id: 9
   name: highway
-  description: You walk at a brisk pace as you pass your eyes over the vehicles briefly. You try not to think of what caused these damages, instead training your eyes for anything amiss.
+  description: Your eyes gaze over the vehicles briefly before walking.
   state: safe
   state_descriptions:
     dangerous: ""

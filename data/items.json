@@ -28,5 +28,23 @@
         "name": "generator",
         "state": "active",
         "description": "\u201cThis is an Ursa Generator. Built to last, compact, and able to generate enough energy to get you off planet and through the expanse.\u201d"
+    },
+    {
+        "obj_id": 400,
+        "name": "flare",
+        "state": "active",
+        "description": "A flare that was on the plaza floor, why is it here? Did someone try to signal for help?"
+    },
+    {
+        "obj_id": 402,
+        "name": "rock",
+        "state": "active",
+        "description": "A rock found in a satchel, who would carry a rock?"
+    },
+    {
+        "obj_id": 503,
+        "name": "empGrenade",
+        "state": "active",
+        "description": "Pulled from its metallic carapace. Funny how the same things that power them also disable them if they get hit with it."
     }
 ]

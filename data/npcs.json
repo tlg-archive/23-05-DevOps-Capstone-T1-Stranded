@@ -15,5 +15,16 @@
                 "kind": "item"
             }
         ]
+    },
+    {
+        "obj_id": 502,
+        "name": "scorpion",
+        "description": "It snapped its claws, skittering across the metallic floor.",
+        "state": "unaware",
+        "dialogue": [
+            "chittering (angrily)",
+            "snaps claw (menacingly)",
+            "beep boop (murderous intent)"
+        ]
     }
 ]
