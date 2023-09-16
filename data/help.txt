@@ -15,10 +15,17 @@ use - interact objects and use them on each other
     synonyms: activate, interact, touch
 take - get an item from world or container and adds it to inventory
     usage: take { item } optional[{ container }]
-    synonyms: grab, steal, loot
+    synonyms: grab, steal, loot, get
 drop - put an item into the environment or in a container
-    usage: drop  item } optional[{ container }]
+    usage: drop { item } optional[{ container }]
     synonyms: leave, give, discard
+talk - get dialogue from journals and robots
+    usage: talk { npc }
+    synonyms: speak, read, yell
+music - control music in game
+    usage: music up, music down 
+    usage: music play, music pause
+
 
 Reserved Key Words:
 inventory - opens inventory or looks at an item in your inventory

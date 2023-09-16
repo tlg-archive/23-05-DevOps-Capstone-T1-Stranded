@@ -1,7 +1,7 @@
 - obj_id: 1
   name: journal1
   description: small tablet that has important info
-  story: "Amidst the chaos of Nova Haven's fall, a faint message cut through the panic, urging us to head for the main plaza's shelter.\n\tHope and fear intertwined as we rushed towards the promise of safety, if you find this message get to the colony's main plaza past the jungle."
+  story: "Amidst the chaos of Nova Haven's fall, a faint message cut through the panic, urging us to head for the MAIN PLAZA's shelter.\n\tHope and fear intertwined as we rushed towards the promise of safety, if you find this message get to the colony's main plaza past the jungle."
   dialogue:
    - "Entry 1/3
      \n\tOur colony Nova Haven had been a testament to human ingenuity, nestled on the barren moon of a distant gas giant. 
@@ -21,7 +21,7 @@
 - obj_id: 2
   name: journal2
   description: small tablet that has important info
-  story: "Generator Retrieval Mission Research Wing.\n\tThe problem?\n\t Three technicians, Sal, James, and Deshawn, were assigned to retrieve a crucial generator from the flooded Research Facility.\n\t However, they couldn't agree on who should do it.\n\t James argued his experience made him the best choice, Deshawn claimed knowledge of the area, and Sal cited physical strength.\n\t Their disagreement had turned into a feud, risking our colony's power supply during a critical time.\n\t I sent a message urging them to put aside their differences and make a quick decision.\n\tSomeone needs to use the space suit and get to that generator. Our survival depends on it"
+  story: "Generator Retrieval Mission Research Wing.\n\tThe problem?\n\t Three technicians, Sal, James, and Deshawn, were assigned to retrieve a crucial generator from the flooded Research Facility.\n\t However, they couldn't agree on who should do it.\n\t James argued his experience made him the best choice, Deshawn claimed knowledge of the area, and Sal cited physical strength.\n\t Their disagreement had turned into a feud, risking our colony's power supply during a critical time.\n\t I sent a message urging them to put aside their differences and make a quick decision.\n\tSomeone needs to use the space suit in the SHUTTLE BAY and get to that generator in the REACTOR CORE.\n\tOur survival depends on it"
   dialogue:
    - "Entry 1/3\n\tHuddled in this makeshift shelter, the distant echoes of battles and explosions tear through the night, a haunting symphony of war. 
     \n\tFear clutches my heart, and I'm consumed by the relentless dread that gnaws at my thoughts. 
@@ -44,7 +44,7 @@
 - obj_id: 3
   name: journal3
   description: small tablet that has important info
-  story:  "assessing the damage.\n\tDespite its sorry state, hope flickered as I noted that we primarily need to load a new generator.\n\tWith these fixes, we could load the ship onto the railgun and escape"
+  story:  "assessing the damage.\n\tDespite its sorry state, hope flickered as I noted that we primarily need to load a new generator.\n\tWith these fixes, we could load the ship in the SHUTTLE BAY onto the railgun and escape"
   dialogue:
    - "Entry 1/3
     \n\tIn our small space colony, we had grown dependent on robots for expansion and maintenance. 
