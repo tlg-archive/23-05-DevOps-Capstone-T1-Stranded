@@ -217,29 +217,27 @@ def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, dict[str, G
     command = game_state.get('user_command', '')
     event_handler = EventHandler(game_objs)
     processor = ActionProcessor()
-    if 'events' in game_objs:
-        events = game_objs['events']
-        for event_id in events.keys():
-            if events[event_id].state == 'active':
-                event_result = event_handler.process_event(events[event_id], location_id, game_state['god_mode'])  # Use event_handler to process events
-                if event_result:
-                    event_txt += f'\n{event_result}'
-        text += event_txt
 
     if command and command != '':
-
         result = processor.process(command[0],location, game_objs, game_state, *command[1:])
         if isinstance(result, str):
             text = generate_location_text(location, game_objs)
             text = f'{text}\n\n {result}'
-            text += event_txt
         elif isinstance(result, tuple):
             kind, target_obj_id = result
             if kind == 'location':
                 game_state['current_location'] = target_obj_id
                 location = game_objs["locations"][target_obj_id]
                 text = generate_location_text(location, game_objs)
-                text += event_txt
+
+        if 'events' in game_objs:
+            events = game_objs['events']
+            for event_id in events.keys():
+                if events[event_id].state == 'active':
+                    event_result = event_handler.process_event(events[event_id], location.obj_id, game_state['god_mode'])  # Use event_handler to process events
+                    if event_result:
+                        event_txt += f'{event_result}'
+            text += f'\n{event_txt}'
         game_state['previous_text'] = text
     if not command:
         text = game_state.get('previous_text', text)
@@ -300,7 +298,6 @@ def main(stdscr):
     while True:
         if game_state["current_scene"] == "playing":
             game_state = scenes[game_state["current_scene"]](stdscr, game_state, game_objects)
-
         else:
             scenes[game_state["current_scene"]](stdscr, data[game_state["current_scene"]])
         if not input_text:

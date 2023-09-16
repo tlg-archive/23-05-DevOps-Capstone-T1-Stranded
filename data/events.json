@@ -62,44 +62,120 @@
     },
     {
         "obj_id": 201,
-        "name": "Player Has a Compass",
-        "description": "With this compass you should be able to navigate in any environment.",
+        "name": "The Boar is disabled",
+        "description": "",
         "state": "active",
         "triggers": [
+            {
+                "object": {
+                    "kind": "npc",
+                    "obj_id": 201
+                },
+                "conditions": {
+                    "state": {
+                        "is": "disabled"
+                    }
+                }
+            },
             {
                 "object": {
                     "kind": "player",
                     "obj_id": 0
                 },
                 "conditions": {
-                    "inventory": {
-                        "item": [
-                            {
-                                "kind": "item",
-                                "obj_id": 101
-                            }
-                        ]
+                    "state": {
+                        "is": "safe"
                     }
                 }
             }
         ],
         "affected_objects": [
             {
-                "kind": "transition",
-                "obj_id": 3
+                "kind": "event",
+                "obj_id": 201
             },
             {
-                "kind": "transition",
-                "obj_id": 4
+                "kind": "event",
+                "obj_id": 202
+            },
+            {
+                "kind": "event",
+                "obj_id": 203
+            },
+            {
+                "kind": "event",
+                "obj_id": 204
+            },
+            {
+                "kind": "event",
+                "obj_id": 205
+            },
+            {
+                "kind": "event",
+                "obj_id": 206
+            },
+            {
+                "kind": "event",
+                "obj_id": 207
+            },
+            {
+                "kind": "event",
+                "obj_id": 208
+            },
+            {
+                "kind": "event",
+                "obj_id": 209
             }
         ],
         "change": {
-            "state": "safe"
+            "state": "inactive"
         }
     },
     {
         "obj_id": 202,
-        "name": "The Boar is aware of you",
+        "name": "The Boar is looses sight of the player",
+        "description": "The boar lies back down.",
+        "state": "active",
+        "triggers": [
+            {
+                "object": {
+                    "kind": "npc",
+                    "obj_id": 201
+                },
+                "conditions": {
+                    "current_location": {
+                        "is_not": 2
+                    },
+                    "state": {
+                        "is_not": "unaware"
+                    }
+                }
+            },
+            {
+                "object": {
+                    "kind": "npc",
+                    "obj_id": 201
+                },
+                "conditions": {
+                    "state": {
+                        "is_not": "disabled"
+                    }
+                }
+            }
+        ],
+        "affected_objects": [
+            {
+                "kind": "npc",
+                "obj_id": 201
+            }
+        ],
+        "change": {
+            "state": "unaware"
+        }
+    },
+    {
+        "obj_id": 203,
+        "name": "The Boar gains sight of the player",
         "description": "The boar looks in your direction.",
         "state": "active",
         "triggers": [
@@ -140,8 +216,41 @@
         }
     },
     {
-        "obj_id": 203,
-        "name": "The Boar is aggressive towards you",
+        "obj_id": 204,
+        "name": "The Boar becomes disabled",
+        "description": "As you remove the emp grenade from the boar it begins stuttering and sparking before going limp.",
+        "state": "active",
+        "triggers": [
+            {
+                "object": {
+                    "kind": "npc",
+                    "obj_id": 201
+                },
+                "conditions": {
+                    "inventory": {
+                        "no_item": [
+                            {
+                                "kind": "item",
+                                "obj_id": 201
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "affected_objects": [
+            {
+                "kind": "npc",
+                "obj_id": 201
+            }
+        ],
+        "change": {
+            "state": "disabled"
+        }
+    },
+    {
+        "obj_id": 205,
+        "name": "The Boar becomes aggressive towards the player",
         "description": "The boar squeals loudly sparks fly from it's damaged legs.",
         "state": "active",
         "triggers": [
@@ -193,9 +302,90 @@
         }
     },
     {
-        "obj_id": 204,
-        "name": "The Boar is looses sight of you, boar",
-        "description": "The boar lies back down.",
+        "obj_id": 206,
+        "name": "player has disabled the boar",
+        "description": "You feel safer now that it's no longer focused on you.",
+        "state": "active",
+        "triggers": [
+            {
+                "object": {
+                    "kind": "npc",
+                    "obj_id": 201
+                },
+                "conditions": {
+                    "state": {
+                        "is": "disabled"
+                    }
+                }
+            }
+        ],
+        "affected_objects": [
+            {
+                "kind": "player",
+                "obj_id": 0
+            }
+        ],
+        "change": {
+            "state": "safe"
+        }
+    },
+    {
+        "obj_id": 207,
+        "name": "The Boar is looses sight of you, player",
+        "description": "You feel safer now that it's no longer focused on you.",
+        "state": "active",
+        "triggers": [
+            {
+                "object": {
+                    "kind": "npc",
+                    "obj_id": 201
+                },
+                "conditions": {
+                    "state": {
+                        "is": "unaware"
+                    },
+                    "current_location": {
+                        "is_not": 2
+                    }
+                }
+            },
+            {
+                "object": {
+                    "kind": "npc",
+                    "obj_id": 201
+                },
+                "conditions": {
+                    "state": {
+                        "is_not": "disabled"
+                    }
+                }
+            },
+            {
+                "object": {
+                    "kind": "player",
+                    "obj_id": 0
+                },
+                "conditions": {
+                    "state": {
+                        "is_not": "safe"
+                    }
+                }
+            }
+        ],
+        "affected_objects": [
+            {
+                "kind": "player",
+                "obj_id": 0
+            }
+        ],
+        "change": {
+            "state": "safe"
+        }
+    },
+    {
+        "obj_id": 208,
+        "name": "The Boar spots the player",
+        "description": "You feel it's eyes lock onto you.",
         "state": "active",
         "triggers": [
             {
@@ -205,10 +395,10 @@
                 },
                 "conditions": {
                     "current_location": {
-                        "is_not": 2
+                        "is": 2
                     },
                     "state": {
-                        "is_not": "unaware"
+                        "is": "aware"
                     }
                 }
             },
@@ -226,173 +416,6 @@
         ],
         "affected_objects": [
             {
-                "kind": "npc",
-                "obj_id": 201
-            }
-        ],
-        "change": {
-            "state": "unaware"
-        }
-    },
-    {
-        "obj_id": 205,
-        "name": "The Boar is disabled",
-        "description": "",
-        "state": "active",
-        "triggers": [
-            {
-                "object": {
-                    "kind": "npc",
-                    "obj_id": 201
-                },
-                "conditions": {
-                    "state": {
-                        "is": "disabled"
-                    }
-                }
-            },
-            {
-                "object": {
-                    "kind": "player",
-                    "obj_id": 0
-                },
-                "conditions": {
-                    "state": {
-                        "is": "safe"
-                    }
-                }
-            }
-        ],
-        "affected_objects": [
-            {
-                "kind": "event",
-                "obj_id": 202
-            },
-            {
-                "kind": "event",
-                "obj_id": 203
-            },
-            {
-                "kind": "event",
-                "obj_id": 204
-            },
-            {
-                "kind": "event",
-                "obj_id": 205
-            },
-            {
-                "kind": "event",
-                "obj_id": 208
-            },
-            {
-                "kind": "event",
-                "obj_id": 209
-            },
-            {
-                "kind": "event",
-                "obj_id": 210
-            }
-        ],
-        "change": {
-            "state": "inactive"
-        }
-    },
-    {
-        "obj_id": 206,
-        "name": "Player does not have a Compass",
-        "description": "With out your compass you could get lost...",
-        "state": "active",
-        "triggers": [
-            {
-                "object": {
-                    "kind": "player",
-                    "obj_id": 0
-                },
-                "conditions": {
-                    "current_location": {
-                        "is_not": 1
-                    },
-                    "inventory": {
-                        "no_item": [
-                            {
-                                "kind": "item",
-                                "obj_id": 101
-                            }
-                        ]
-                    }
-                }
-            }
-        ],
-        "affected_objects": [
-            {
-                "kind": "transition",
-                "obj_id": 3
-            },
-            {
-                "kind": "transition",
-                "obj_id": 4
-            }
-        ],
-        "change": {
-            "state": "dangerous"
-        }
-    },
-    {
-        "obj_id": 207,
-        "name": "The player disables the boar",
-        "description": "As you remove the emp grenade from the boar it begins stuttering and sparking before going limp.",
-        "state": "active",
-        "triggers": [
-            {
-                "object": {
-                    "kind": "npc",
-                    "obj_id": 201
-                },
-                "conditions": {
-                    "inventory": {
-                        "no_item": [
-                            {
-                                "kind": "item",
-                                "obj_id": 201
-                            }
-                        ]
-                    }
-                }
-            }
-        ],
-        "affected_objects": [
-            {
-                "kind": "npc",
-                "obj_id": 201
-            }
-        ],
-        "change": {
-            "state": "disabled"
-        }
-    },
-    {
-        "obj_id": 208,
-        "name": "The Boar is aware of you",
-        "description": "You feel it's eyes lock onto you.",
-        "state": "active",
-        "triggers": [
-            {
-                "object": {
-                    "kind": "npc",
-                    "obj_id": 201
-                },
-                "conditions": {
-                    "current_location": {
-                        "is": 2
-                    },
-                    "state": {
-                        "is_not": "unaware"
-                    }
-                }
-            }
-        ],
-        "affected_objects": [
-            {
                 "kind": "player",
                 "obj_id": 0
             }
@@ -403,7 +426,7 @@
     },
     {
         "obj_id": 209,
-        "name": "The Boar is aggressive towards you",
+        "name": "The Boar threatens the player",
         "description": "It's open hostility is unnerving. Thank fully it can't reach you.",
         "state": "active",
         "triggers": [
@@ -434,60 +457,84 @@
     },
     {
         "obj_id": 210,
-        "name": "The Boar is looses sight of you, player",
-        "description": "You feel safer now that it's no longer focused on you.",
+        "name": "Player does not have a Compass",
+        "description": "With out your compass you could get lost...",
         "state": "active",
         "triggers": [
             {
                 "object": {
-                    "kind": "npc",
-                    "obj_id": 201
+                    "kind": "player",
+                    "obj_id": 0
                 },
                 "conditions": {
-                    "state": {
-                        "is": "unaware"
-                    },
                     "current_location": {
-                        "is_not": 2
+                        "is_not": 1
+                    },
+                    "state": {
+                        "is": "safe"
+                    },
+                    "inventory": {
+                        "no_item": [
+                            {
+                                "kind": "item",
+                                "obj_id": 101
+                            }
+                        ]
                     }
                 }
             }
         ],
         "affected_objects": [
             {
-                "kind": "player",
-                "obj_id": 0
+                "kind": "transition",
+                "obj_id": 3
+            },
+            {
+                "kind": "transition",
+                "obj_id": 4
             }
         ],
         "change": {
-            "state": "safe"
+            "state": "dangerous"
         }
     },
     {
         "obj_id": 211,
-        "name": "The Boar is looses sight of you, player",
-        "description": "You feel safer now that it's no longer focused on you.",
+        "name": "Player Has a Compass",
+        "description": "With this compass you should be able to navigate in any environment.",
         "state": "active",
         "triggers": [
             {
                 "object": {
-                    "kind": "npc",
-                    "obj_id": 201
+                    "kind": "player",
+                    "obj_id": 0
                 },
                 "conditions": {
-                    "state": {
-                        "is": "disabled"
-                    },
                     "current_location": {
-                        "is_not": 2
+                        "is": 1
+                    },
+                    "state": {
+                        "is": "safe"
+                    },
+                    "inventory": {
+                        "item": [
+                            {
+                                "kind": "item",
+                                "obj_id": 101
+                            }
+                        ]
                     }
                 }
             }
         ],
         "affected_objects": [
             {
-                "kind": "player",
-                "obj_id": 0
+                "kind": "transition",
+                "obj_id": 3
+            },
+            {
+                "kind": "transition",
+                "obj_id": 4
             }
         ],
         "change": {
