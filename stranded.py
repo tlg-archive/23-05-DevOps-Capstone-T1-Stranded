@@ -318,9 +318,9 @@ def main(stdscr):
 
     while True:
         if game_state["current_scene"] == "playing":
-            if game_state["current_location"] == 8:
-                game_state["current_scene"] = "victory"
             game_state = scenes[game_state["current_scene"]](stdscr, game_state, game_objects)
+        elif game_state["current_location"] == 8:
+                game_state["current_scene"] = "victory"
         else:
             scenes[game_state["current_scene"]](stdscr, data[game_state["current_scene"]])
         if not input_text:
