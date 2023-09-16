@@ -29,7 +29,7 @@
     - open
   target: 
     kind: location
-    obj_id: 2
+    obj_id: 1
   blocking_states:
     - dangerous
 

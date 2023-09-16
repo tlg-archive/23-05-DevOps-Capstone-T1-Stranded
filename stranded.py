@@ -214,24 +214,24 @@ def generate_location_text(location: Location, game_objs: dict[str, GameObject])
     return text
 
 def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, dict[str, GameObject]]) -> dict[str, any]:
-    obj_id = game_state["current_location"]
-    location = game_objs["locations"][obj_id]
+    location_id = game_state["current_location"]
+    location = game_objs["locations"][location_id]
     text = generate_location_text(location, game_objs)
     event_txt = ''
     command = game_state.get('user_command', '')
     event_handler = EventHandler(game_objs)
     processor = ActionProcessor()
-
     if 'events' in game_objs:
         events = game_objs['events']
-        for obj_id in events.keys():
-            if events[obj_id].state == 'active':
-                event_result = event_handler.process_event(events[obj_id], game_state['current_location'], game_state['god_mode'])  # Use event_handler to process events
+        for event_id in events.keys():
+            if events[event_id].state == 'active':
+                event_result = event_handler.process_event(events[event_id], location_id, game_state['god_mode'])  # Use event_handler to process events
                 if event_result:
-                    event_txt = f'\n{event_result}'
-                    text += event_txt
+                    event_txt += f'\n{event_result}'
+        text += event_txt
 
     if command and command != '':
+
         result = processor.process(command[0],location, game_objs, game_state, *command[1:])
         if isinstance(result, str):
             text = generate_location_text(location, game_objs)
@@ -246,7 +246,6 @@ def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, dict[str, G
                 text += event_txt
         game_state['previous_text'] = text
     if not command:
-        text += event_txt
         text = game_state.get('previous_text', text)
 
 
