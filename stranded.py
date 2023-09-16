@@ -71,7 +71,14 @@ def load_data() -> dict[str, any]:
         'r',
         encoding="utf-8"
         ) as victory_file:
-        data['victory'] = victory_file.readlines()
+        data['victory'] = victory_file.read()
+    
+    with open(
+        f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/defeat.txt", 
+        'r',
+        encoding="utf-8"
+        ) as defeat_file:
+        data['defeat'] = defeat_file.read()
 
     return data
 
@@ -251,16 +258,12 @@ def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, dict[str, G
     stdscr.addstr(1,0, f'{text}')
     game_state["location_name"] = location.name
     return game_state
-def victory(stdscr, game_state: dict[str, any], game_objs: dict[str, dict[str, GameObject]]) -> dict[str, any]:
-    obj_id = game_state["current_location"]
-    location = game_objs["locations"][obj_id]
-    if location == 8:
-        with open(
-            f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/victory.txt", 
-            'r',
-            encoding="utf-8"
-            ) as victory_file:
-            stdscr.addstr(1,0, victory_file)
+
+def victory(stdscr, data: str):
+   stdscr.addstr(1,0, f'{data}')
+
+def defeat(stdscr, data: str):
+   stdscr.addstr(1,0, f'{data}')
             
 
 
@@ -295,7 +298,8 @@ def main(stdscr):
         'help': help_func,
         "map" : map_func,
         "playing": playing,
-        "victory":victory
+        "victory":victory,
+        "victory":defeat
             }
 
     game_state = {}
@@ -319,8 +323,11 @@ def main(stdscr):
     while True:
         if game_state["current_scene"] == "playing":
             game_state = scenes[game_state["current_scene"]](stdscr, game_state, game_objects)
-        elif game_state["current_location"] == 8:
+            if game_state["current_location"] == 8:
                 game_state["current_scene"] = "victory"
+            elif game_objects["players"][0].state == "dead":
+                game_state["current_scene"] = "defeat"
+
         else:
             scenes[game_state["current_scene"]](stdscr, data[game_state["current_scene"]])
         if not input_text:
