@@ -65,6 +65,13 @@ def load_data() -> dict[str, any]:
             encoding="utf-8"
             ) as loading:
             data[object_type] = json.load(loading)
+    
+    with open(
+        f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/victory.txt", 
+        'r',
+        encoding="utf-8"
+        ) as victory_file:
+        data['victory'] = victory_file.readlines()
 
     return data
 
@@ -244,6 +251,22 @@ def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, dict[str, G
     stdscr.addstr(1,0, f'{text}')
     game_state["location_name"] = location.name
     return game_state
+def victory(stdscr, game_state: dict[str, any], game_objs: dict[str, dict[str, GameObject]]) -> dict[str, any]:
+    obj_id = game_state["current_location"]
+    location = game_objs["locations"][obj_id]
+    if location == 8:
+        with open(
+            f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/victory.txt", 
+            'r',
+            encoding="utf-8"
+            ) as victory_file:
+            stdscr.addstr(1,0, victory_file)
+            
+
+
+
+    
+    
 
 def main(stdscr):
     # Set up the screen
@@ -271,7 +294,8 @@ def main(stdscr):
         'opening': opening,
         'help': help_func,
         "map" : map_func,
-        "playing": playing
+        "playing": playing,
+        "victory":victory
             }
 
     game_state = {}
@@ -294,8 +318,9 @@ def main(stdscr):
 
     while True:
         if game_state["current_scene"] == "playing":
+            if game_state["current_location"] == 8:
+                game_state["current_scene"] = "victory"
             game_state = scenes[game_state["current_scene"]](stdscr, game_state, game_objects)
-
         else:
             scenes[game_state["current_scene"]](stdscr, data[game_state["current_scene"]])
         if not input_text:
