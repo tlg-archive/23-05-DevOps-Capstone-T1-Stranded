@@ -5,7 +5,6 @@
   inventory:
     - kind: item
       obj_id: 101
-      obj_id: 1
 
 - obj_id : 401
   name: satchel

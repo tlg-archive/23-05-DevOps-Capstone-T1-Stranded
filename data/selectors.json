@@ -9,7 +9,7 @@
         "owned"
     ],
     "from": [
-        true,
+        "on",
         "inside",
         "ontop",
         "in"

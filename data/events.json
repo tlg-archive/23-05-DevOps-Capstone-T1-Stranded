@@ -555,6 +555,9 @@
                 "conditions": {
                     "current_location": {
                         "is": 5
+                    },
+                    "state": {
+                        "is": "unaware"
                     }
                 }
             }

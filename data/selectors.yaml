@@ -6,7 +6,7 @@ my:
   - this
   - owned
 from:
-  - on
+  - 'on'
   - inside
   - ontop
   - in

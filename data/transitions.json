@@ -236,7 +236,7 @@
         "key_info": {
             "key": {
                 "kind": "item",
-                "obj_id": 711
+                "obj_id": 300
             },
             "message": "The door opens slowly, after the sound of complex locking mechanisms is heard from the opposite side.",
             "state": "unlocked"
