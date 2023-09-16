@@ -253,8 +253,7 @@ def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, dict[str, G
             for event_id in events.keys():
                 if events[event_id].state == 'active':
                     event_result = event_handler.process_event(events[event_id], location.obj_id, game_state['god_mode'])  # Use event_handler to process events
-                    if event_result:
-                        event_txt += f'{event_result}'
+                    event_txt += f'{event_result}'
             text += f'\n{event_txt}'
         game_state['previous_text'] = text
     if not command:
@@ -266,16 +265,10 @@ def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, dict[str, G
     return game_state
 
 def victory(stdscr, data: str):
-   stdscr.addstr(1,0, f'{data}')
+    stdscr.addstr(1,0, f'{data}')
 
 def defeat(stdscr, data: str):
-   stdscr.addstr(1,0, f'{data}')
-            
-
-
-
-    
-    
+    stdscr.addstr(1,0, f'{data}')
 
 def main(stdscr):
     # Set up the screen
@@ -305,8 +298,8 @@ def main(stdscr):
         "map" : map_func,
         "playing": playing,
         "victory":victory,
-        "victory":defeat
-            }
+        "defeat":defeat
+    }
 
     game_state = {}
 
