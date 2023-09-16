@@ -173,11 +173,11 @@
   blocking_states:
     - locked
   key_info:
-        key:
-          kind: item
-          obj_id: 711
-        message: The door opens slowly, after the sound of complex locking mechanisms is heard from the opposite side.
-        state: unlocked
+    key:
+      kind: item
+      obj_id: 300
+    message: The door opens slowly, after the sound of complex locking mechanisms is heard from the opposite side.
+    state: unlocked
 
 - obj_id: 11
   name: emergencyExit
