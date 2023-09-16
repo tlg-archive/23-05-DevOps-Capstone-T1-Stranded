@@ -59,7 +59,7 @@ class EventHandler:
             passed, message = self.validate_event_trigger(trigger_data, trigger_obj, current_location)
             if not passed:
                 if god_mode:
-                    return f'\n{event.name}, failed because {message}'
+                    return f'\n{event.name}|{event.obj_id}, failed because {message}'
                 return ''
         
         self.apply_event_changes(event)

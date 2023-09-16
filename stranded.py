@@ -374,6 +374,28 @@ def main(stdscr):
                                 game_state['god_mode'] = True
                             else:
                                 game_state['god_mode'] = False
+                        elif "disable" == parsed_text[0] and game_state['god_mode']:
+                            if len(parsed_text) > 1 and parsed_text[1].isdigit():
+                                if len(parsed_text) == 3 and parsed_text[2].isdigit():
+                                    start = int(parsed_text[1])
+                                    end = int(parsed_text[2])
+                                    for event_id in range(start, end + 1):
+                                        if event_id in game_objects['events'].keys(): 
+                                            game_objects['events'][event_id].state = 'inactive'
+                                else:
+                                    target_event = int(parsed_text[1])
+                                    game_objects['events'][target_event].state = 'inactive'
+                        elif "disable" == parsed_text[0] and game_state['god_mode']:
+                            if len(parsed_text) > 1 and parsed_text[1].isdigit():
+                                if len(parsed_text) == 3 and parsed_text[2].isdigit():
+                                    start = int(parsed_text[1])
+                                    end = int(parsed_text[2])
+                                    for event_id in range(start, end + 1):
+                                        if event_id in game_objects['events'].keys(): 
+                                            game_objects['events'][event_id].state = 'active'
+                                else:
+                                    target_event = int(parsed_text[1])
+                                    game_objects['events'][target_event].state = 'active'
                         elif "music" == parsed_text[0] and game_state["current_scene"] != "playing":
                             processor = ActionProcessor()
                             result = processor.process(parsed_text[0],None, None, game_state, *parsed_text[1:])
