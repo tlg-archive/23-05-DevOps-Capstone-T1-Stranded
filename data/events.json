@@ -542,6 +542,123 @@
         }
     },
     {
+        "obj_id": 401,
+        "name": "Player does not have suit",
+        "description": "With out your spacesuit you won't survive the swim to the research lab...",
+        "state": "active",
+        "triggers": [
+            {
+                "object": {
+                    "kind": "player",
+                    "obj_id": 0
+                },
+                "conditions": {
+                    "current_location": {
+                        "is_not": 5
+                    },
+                    "state": {
+                        "is": "safe"
+                    },
+                    "inventory": {
+                        "no_item": [
+                            {
+                                "kind": "item",
+                                "obj_id": 501
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "affected_objects": [
+            {
+                "kind": "transition",
+                "obj_id": 8
+            }
+        ],
+        "change": {
+            "state": "flooded"
+        }
+    },
+    {
+        "obj_id": 402,
+        "name": "Player Has a suit",
+        "description": "Your new spacesuit has a built in CO2 scrubber, and can be used continuously for over eight hours before needing a new filter.",
+        "state": "active",
+        "triggers": [
+            {
+                "object": {
+                    "kind": "player",
+                    "obj_id": 0
+                },
+                "conditions": {
+                    "current_location": {
+                        "is": 5
+                    },
+                    "state": {
+                        "is": "safe"
+                    },
+                    "inventory": {
+                        "item": [
+                            {
+                                "kind": "item",
+                                "obj_id": 501
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "affected_objects": [
+            {
+                "kind": "transition",
+                "obj_id": 8
+            }
+        ],
+        "change": {
+            "state": "safe"
+        }
+    },
+    {
+        "obj_id": 403,
+        "name": "Player Has a suit, silent",
+        "description": "",
+        "state": "active",
+        "triggers": [
+            {
+                "object": {
+                    "kind": "player",
+                    "obj_id": 0
+                },
+                "conditions": {
+                    "current_location": {
+                        "is_not": 5
+                    },
+                    "state": {
+                        "is": "safe"
+                    },
+                    "inventory": {
+                        "item": [
+                            {
+                                "kind": "item",
+                                "obj_id": 501
+                            }
+                        ]
+                    }
+                }
+            }
+        ],
+        "affected_objects": [
+            {
+                "kind": "transition",
+                "obj_id": 8
+            }
+        ],
+        "change": {
+            "state": "safe"
+        }
+    },
+    {
         "obj_id": 501,
         "name": "A Scorpion events are enabled",
         "description": "You almost miss it as you walk into the shuttle bay, but out of the corner of your eye you see a scorpiode security bot powering up in the corner of the hanger",
@@ -555,6 +672,9 @@
                 "conditions": {
                     "current_location": {
                         "is": 5
+                    },
+                    "state": {
+                        "is": "unaware"
                     }
                 }
             }

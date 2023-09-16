@@ -94,8 +94,8 @@ class ActionProcessor:
                 transition: Transition = transitions[0] 
                 if not transition.blocked:
                     return transition.target
-                return f"You can't go that way because the {transition.name} is {transition.state}"
-            return f"You can't move to the {transitions}, try using the help command."
+                return f"You can't go that way because the {moving} is {transition.state}"
+            return f"You can't move to the {moving}, try using the help command."
 
     def wrong(self):
         return "command not found please use the help command to see valid commands and examples"

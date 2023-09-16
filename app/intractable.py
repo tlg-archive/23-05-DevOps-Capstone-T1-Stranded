@@ -42,6 +42,6 @@ class Intractable(Entity):
             if key == self.key:
                 self.state = self.key_state
                 return self.key_message
-            return f"The {name} seem to work here..."
+            return f"The {name} doesn't seem to work here..."
         return f"I don't think I can use anything on the {self.name}"
     

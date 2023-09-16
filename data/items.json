@@ -7,19 +7,19 @@
     },
     {
         "obj_id": 102,
-        "name": "flareGun",
+        "name": "flaregun",
         "state": "loaded",
         "description": "A flare gun, the design is the same as when it was first invented, just made out of stronger material to withstand the stronger payload its shells have."
     },
     {
         "obj_id": 201,
-        "name": "empGrenade",
+        "name": "grenade",
         "state": "active",
         "description": "A small improvised electro magnetic pulse device that you found embedded in a robotic boar."
     },
     {
         "obj_id": 501,
-        "name": "spaceSuit",
+        "name": "spacesuit",
         "state": "active",
         "description": "A space suit, it seems to have been modified, reinforced with composite synthetic materials to withstand the pressure exerted on the human body by the ocean."
     },

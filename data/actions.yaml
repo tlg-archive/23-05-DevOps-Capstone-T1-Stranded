@@ -19,6 +19,7 @@ drop:
   - leave
   - give
   - discard
+  - throw
 talk:
   - speak
   - read

@@ -23,7 +23,8 @@
     "drop": [
         "leave",
         "give",
-        "discard"
+        "discard",
+        "throw"
     ],
     "talk": [
         "speak",
