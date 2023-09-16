@@ -224,20 +224,13 @@ def generate_location_text(location: Location, game_objs: dict[str, GameObject])
     return text
 
 def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, dict[str, GameObject]]) -> dict[str, any]:
-    obj_id = game_state["current_location"]
-    location = game_objs["locations"][obj_id]
+    location_id = game_state["current_location"]
+    location = game_objs["locations"][location_id]
     text = generate_location_text(location, game_objs)
+    event_txt = ''
     command = game_state.get('user_command', '')
     event_handler = EventHandler(game_objs)
     processor = ActionProcessor()
-
-    if 'events' in game_objs:
-        events = game_objs['events']
-        for obj_id in events.keys():
-            if events[obj_id].state == 'active':
-                event_result = event_handler.process_event(events[obj_id])  # Use event_handler to process events
-                if event_result and game_state.get('god_mode', False):
-                    text = f'{text}\n{event_result}'
 
     if command and command != '':
         result = processor.process(command[0],location, game_objs, game_state, *command[1:])
@@ -250,6 +243,15 @@ def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, dict[str, G
                 game_state['current_location'] = target_obj_id
                 location = game_objs["locations"][target_obj_id]
                 text = generate_location_text(location, game_objs)
+
+        if 'events' in game_objs:
+            events = game_objs['events']
+            for event_id in events.keys():
+                if events[event_id].state == 'active':
+                    event_result = event_handler.process_event(events[event_id], location.obj_id, game_state['god_mode'])  # Use event_handler to process events
+                    if event_result:
+                        event_txt += f'{event_result}'
+            text += f'\n{event_txt}'
         game_state['previous_text'] = text
     if not command:
         text = game_state.get('previous_text', text)
@@ -307,6 +309,7 @@ def main(stdscr):
     game_state["current_scene"] = "title"
     game_state["current_location"] = 1
     game_state["location_name"] = ''
+    game_state['god_mode'] = False
     
     pygame.mixer.init()
     game_state["music_mixer"] = pygame.mixer
@@ -327,7 +330,6 @@ def main(stdscr):
                 game_state["current_scene"] = "victory"
             elif game_objects["players"][0].state == "dead":
                 game_state["current_scene"] = "defeat"
-
         else:
             scenes[game_state["current_scene"]](stdscr, data[game_state["current_scene"]])
         if not input_text:

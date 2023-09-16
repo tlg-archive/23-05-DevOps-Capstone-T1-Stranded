@@ -5,13 +5,11 @@
     you the same thing: you had crashed. You had lived.'
   entities:
   - kind: container
-    obj_id: 1
+    obj_id: 101
   - kind: item
-    obj_id: 2
+    obj_id: 102
   - kind: transition
     obj_id: 1
-  
-   
   
 - obj_id: 2
   name: The Beach
@@ -22,13 +20,13 @@
     manmade facility, to the right was a jungle leading inland.
   entities:
   - kind: npc
+    obj_id: 201
+  - kind: journal
     obj_id: 1
   - kind: transition
     obj_id: 2
   - kind: transition
     obj_id: 3
-  - kind: journal
-    obj_id: 1
   
 - obj_id: 3
   name: Jungle
