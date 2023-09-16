@@ -84,6 +84,10 @@ def load_game_objects(data: dict[str, any]):
 
     objects['locations'] = {}
     for location in data['locations']:
+        entities = []
+        if 'entities' in location.keys():
+            for entity in location['entities']:
+               entities.append((entity['kind'], entity['obj_id']))
         location_obj = Location(location['obj_id'],
                                 location['name'],
                                 location['description'],

@@ -4,4 +4,16 @@
   description: A small box of essential survival supplies welded to the underside of the pilot's seat.
   inventory:
     - kind: item
+<<<<<<< Updated upstream
       obj_id: 101
+=======
+      obj_id: 1
+
+- obj_id : 401
+  name: satchel
+  state: open 
+  description: A ragged satchel found near the plaza fountain. The fabric is weak and judging by its shape something pointy is inside.
+  inventory:
+    - kind: item
+      obj_id: 402 
+>>>>>>> Stashed changes

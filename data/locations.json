@@ -15,6 +15,9 @@
             {
                 "kind": "transition",
                 "obj_id": 1
+            },
+            {
+                "kind": "journal"
             }
         ]
     },
@@ -72,10 +75,6 @@
             {
                 "kind": "transition",
                 "obj_id": 8
-            },
-            {
-                "kind": "journal",
-                "obj_id": 2
             }
         ]
     },

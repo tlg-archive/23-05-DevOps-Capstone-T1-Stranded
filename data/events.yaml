@@ -239,3 +239,68 @@
       obj_id: 0
   change:
     state: "safe"
+
+- obj_id: 504
+  name: "Scorpion attacks player"
+  description: "It's servos whined as it stinger prepared to strike""
+  state: active
+  triggers:
+    - object: 
+        kind: "npc"  # Define the kind of object to listen to (e.g., npc, location, item)
+        obj_id: 502
+      conditions:
+        current_location:
+          is: 5
+          #is_not: 
+        state:
+          is: 'aggressive'        
+
+- obj_id: 505
+  name: "The scorpion is disabled"
+  description: "Its legs give out from under it as it shuts down."
+  state: active
+  triggers:
+    - object:
+        kind: "npc"
+        obj_id: 502
+      conditions:
+        current_location:
+          is: 2
+        state:
+          is: 'disabled'
+  affected_objects:
+    - kind: "npc"
+      obj_id: 502
+  change:
+    state: "disabled"
+
+- obj_id: 506
+  name: "The scorpion is disabled"
+  description: "Its legs give out from under it as it shuts down."
+  state: active
+  triggers:
+    - object:
+        kind: "npc"
+        obj_id: 502
+      conditions:
+        current_location:
+          is: 2
+        state:
+          is: 'disabled'
+  affected_objects:
+    - kind: "npc"
+      obj_id: 502
+  change:
+    state: "disabled"
+  affected_objects:
+    - kind: 'event'
+      obj_id: 504
+    - kind: 'event'
+      obj_id: 505
+    - kind: 'event'
+      obj_id: 506
+
+
+
+- 
+    
