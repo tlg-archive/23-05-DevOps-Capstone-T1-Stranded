@@ -36,8 +36,8 @@
   description: A rock found in a satchel, who would carry a rock?
 
 - obj_id: 503
-  name: powerCore
-  state: aggressive
+  name: empGrenade
+  state: active
   description: Pulled from its metallic carapace. Funny how the same things that power them also disable them if they get hit with it.
 
 #- obj_id:

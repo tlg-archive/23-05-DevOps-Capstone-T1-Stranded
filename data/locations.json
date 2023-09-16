@@ -17,7 +17,8 @@
                 "obj_id": 1
             },
             {
-                "kind": "journal"
+                "kind": "journal",
+                "obj_id": 1
             }
         ]
     },
@@ -75,6 +76,18 @@
             {
                 "kind": "transition",
                 "obj_id": 8
+            },
+            {
+                "kind": "journal",
+                "obj_id": 2
+            },
+            {
+                "kind": "item",
+                "obj_id": 400
+            },
+            {
+                "kind": "container",
+                "obj_id": 401
             }
         ]
     },
@@ -94,6 +107,10 @@
             {
                 "kind": "item",
                 "obj_id": 501
+            },
+            {
+                "kind": "npc",
+                "obj_id": 502
             }
         ]
     },

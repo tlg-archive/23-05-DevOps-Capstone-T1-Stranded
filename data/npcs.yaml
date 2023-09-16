@@ -13,12 +13,9 @@
 - obj_id: 502
   name: scorpion
   description: It snapped its claws, skittering across the metallic floor.
-  state: aggressive
+  state: unaware
   dialogue: 
     - chittering (angrily)
     - snaps claw (menacingly)
     - beep boop (murderous intent)
-  inventory:
-    - obj_id: 501
-      kind: item
-      
+  
