@@ -111,6 +111,7 @@ class ActionProcessor:
                     if game_objects[f'{kind}s'][obj_id].name == looking_for
                     and not isinstance(game_objects[f'{kind}s'][obj_id], Transition)
                     and not isinstance(game_objects[f'{kind}s'][obj_id], Npc)
+                    and not isinstance(game_objects[f'{kind}s'][obj_id], Container)
                 ]
                 player = game_objects['players'][0]
                 if items:
@@ -120,7 +121,7 @@ class ActionProcessor:
                     )
                     kind, obj_id = item
                     return f"You pickup the {game_objects[f'{kind}s'][obj_id].name}."
-                return f"You can't pick up the {looking_for}."
+                return f"You can't pick up the {looking_for}. If {looking_for} is a container, try looking inside..."
             if len(args) == 2:
                 looking_for = args[0]
                 container = args[1]
