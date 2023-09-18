@@ -43,11 +43,11 @@ class ActionProcessor:
                     game_state["music_mixer"].music.unpause()
                     return 'music is playing'
             elif "up" == args[0]:  # Up arrow to increase music volume
-                game_state['music_volume'] = min(1.0, game_state['music_volume'] + .5)
+                game_state['music_volume'] = min(1.0, game_state['music_volume'] + .2)
                 game_state["music_mixer"].music.set_volume(game_state['music_volume'])
 
             elif "down" == args[0]:  # Down arrow to decrease music volume
-                game_state['music_volume'] = max(0.0, game_state['music_volume'] - .5)
+                game_state['music_volume'] = max(0.0, game_state['music_volume'] - .2)
                 game_state["music_mixer"].music.set_volume(game_state['music_volume'])
                 return f"volume: {game_state['music_volume']}"
     

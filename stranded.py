@@ -312,8 +312,8 @@ def main(stdscr):
     game_state["music_mixer"] = pygame.mixer
     game_state['songs'] = f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/echoes-of-time-v2-by-kevin-macleod-from-filmmusic-io.mp3"
     game_state['music_mixer'].music.load(game_state['songs'])
-    game_state['music_volume'] = 0.5
-    game_state['music_mixer'].music.set_volume(0.5)
+    game_state['music_volume'] = 0.6
+    game_state['music_mixer'].music.set_volume(0.6)
     game_state['music_playing'] = False
     # Inside the main function, before entering the game loop
     if not game_state['music_playing']:
