@@ -240,6 +240,7 @@ def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, dict[str, G
         result = processor.process(command[0],location, game_objs, game_state, *command[1:])
         if isinstance(result, str):
             text = generate_location_text(location, game_objs)
+            #game_state['previous_text'] = result
             text = f'{text}\n\n {result}'
         elif isinstance(result, tuple):
             kind, target_obj_id = result
@@ -258,6 +259,8 @@ def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, dict[str, G
         game_state['previous_text'] = text
     if not command:
         text = game_state.get('previous_text', text)
+        #text = generate_location_text(location, game_objs)
+        #text += f'\n{event_txt}'
 
 
     stdscr.addstr(1,0, f'{text}')

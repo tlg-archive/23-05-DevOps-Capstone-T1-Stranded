@@ -95,36 +95,21 @@
 - obj_id: 6
   name: Cargo Bay
   description: As you navigate through the murky waters, past a haunting array of
-    derelict vehicles, the tunnel around you trembles and starts to collapse, likely
-    due to a volcanic eruption! With quick thinking, you\nswim towards the tunnel's
-    end, where a massive airlock leads you into a cargo loading bay. The cargo bay
-    is a cavernous expanse filled with a diverse assortment of crates and containers,
-    some still\ntightly sealed, while others have been broken open, revealing their
-    contents. Amidst the crates, you spot various pieces of equipment, perhaps remnants
-    of scientific experiments or valuable cargo.\nWithin this chamber, you find three
+    derelict vehicles. With quick thinking, you\nswim towards the tunnel's
+    end, where a massive airlock leads you into a cargo loading bay. Within this chamber, you find two
     sealed bulkheads. The bulkhead to the north is labeled "External Maintenance Hatch."
     To the east is the airlock leading back to the collapsed tunnel, now in ruins.\nThe
-    south bulkhead bears the label "Reactor Core." Finally, the eastern bulkhead is
-    marked as the "Laboratory Complex," its red warning light signaling a hull breach
-    in that section.
+    south bulkhead bears the label "Reactor Core." 
   entities:
   - kind: transition
     obj_id: 10
 
 - obj_id: 7
   name: Reactor Core
-  description: You find yourself in the reactor room, a vast cylindrical chamber with
-    a towering ceiling and multiple floors with railing surrounding the center. Dominating
-    the center of the chamber is a large\ngeothermal generator, an imposing structure
-    that reaches at least three stories into the air. Above, in the upper portion
-    of the chamber, you can discern the control room opposite of you, where\nintricate
-    panels and displays likely manage the complex machinery below. As you move your
-    gaze downward, you spot rows of energy capacitors and backup reactors, every few
-    layers below. Towards the\nbottom of the chamber, you see a storage and maintenance
-    area, potentially housing tools and spare parts for the intricate machinery surrounding
-    you. Along the eastern wall, there's a sealed bulkhead\nleading back to the cargo
-    bay. The room hums with the subdued energy of the reactor, and the air is warm
-    with the machinery's constant activity. 
+  description: You find yourself in the reactor room. In
+    the center of the chamber is a small\ngeothermal generator. As you move your
+    gaze downward, you spot rows of energy capacitors and backup reactors every few
+    layers below. 
   entities:
   - kind: transition
     obj_id: 11
