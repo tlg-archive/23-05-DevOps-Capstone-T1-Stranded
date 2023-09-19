@@ -221,7 +221,7 @@ def map_func(stdscr, data: str):
 def generate_location_text(location: Location, game_objs: dict[str, GameObject]) -> str:
     text = location.description
     if 0 < len(location.entities):
-        text = f'{text}\nAround you, you can see:'
+        text = f'{text}\nAround you, you can see:\n\n'
         for kind, obj_id in location.entities:
             entity = game_objs[f'{kind}s'][obj_id]
             text = f"{text}\n\t{entity.name}"
