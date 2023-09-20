@@ -221,7 +221,7 @@ def map_func(stdscr, data: str):
 def generate_location_text(location: Location, game_objs: dict[str, GameObject]) -> str:
     text = location.description
     if 0 < len(location.entities):
-        text = f'{text}\nAround you, you can see:'
+        text = f'{text}\nAround you, you can see:\n\n'
         for kind, obj_id in location.entities:
             entity = game_objs[f'{kind}s'][obj_id]
             text = f"{text}\n\t{entity.name}"
@@ -240,6 +240,7 @@ def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, dict[str, G
         result = processor.process(command[0],location, game_objs, game_state, *command[1:])
         if isinstance(result, str):
             text = generate_location_text(location, game_objs)
+            #game_state['previous_text'] = result
             text = f'{text}\n\n {result}'
         elif isinstance(result, tuple):
             kind, target_obj_id = result
@@ -258,6 +259,8 @@ def playing(stdscr, game_state: dict[str, any], game_objs: dict[str, dict[str, G
         game_state['previous_text'] = text
     if not command:
         text = game_state.get('previous_text', text)
+        #text = generate_location_text(location, game_objs)
+        #text += f'\n{event_txt}'
 
 
     stdscr.addstr(1,0, f'{text}')
@@ -312,8 +315,8 @@ def main(stdscr):
     game_state["music_mixer"] = pygame.mixer
     game_state['songs'] = f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/echoes-of-time-v2-by-kevin-macleod-from-filmmusic-io.mp3"
     game_state['music_mixer'].music.load(game_state['songs'])
-    game_state['music_volume'] = 0.5
-    game_state['music_mixer'].music.set_volume(0.5)
+    game_state['music_volume'] = 0.6
+    game_state['music_mixer'].music.set_volume(0.6)
     game_state['music_playing'] = False
     # Inside the main function, before entering the game loop
     if not game_state['music_playing']:
