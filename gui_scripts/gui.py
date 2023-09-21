@@ -9,4 +9,7 @@ label.pack()
 button = Button(root, text="START", bg="black", height=2, width=10)
 button.pack()
 
+main_entry = Entry(root, width=30)
+main_entry.pack()
+
 root.mainloop()
