@@ -24,3 +24,13 @@ def test_move_to_room_three_without_suit(client):
     client.post('/', data={'action': 'move room 2'})
     response = client.post('/', data={'action': 'move room 3'})
     assert b'you cant board the pod without a space suit' in response.data
+
+def test_pickup_suit(client):
+    response = client.post('/', data={'action': 'pickup suit'})
+    assert b'You are in Room 2. You see a space suit here.' in response.data
+
+
+def test_move_to_room_three_with_suit(client):
+    client.post('/', data={'action': 'pickup suit'})
+    response = client.post('/', data={'action': 'move room 3'})
+    assert b'You are in Room 3 with the space suit' in response.data
