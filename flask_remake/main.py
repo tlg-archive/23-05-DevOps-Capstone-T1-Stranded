@@ -1,9 +1,73 @@
 from flask import Flask, render_template, request, redirect, url_for
+import os
+import json
 
 app = Flask(__name__)
 
 current_room = "Room-one"
 space_suit_picked_up = False
+
+def load_data() -> dict[str, any]:
+    data = {}
+    with open(
+        f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/title.txt", 
+        'r',
+        encoding="utf-8"
+        ) as title_file:
+        data['title'] = title_file.readlines()
+
+    with open(
+        f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/description.txt",
+        "r",
+        encoding="utf-8"
+        ) as plot:
+        plot = plot.read().splitlines()
+    plot_splice = []
+    splice_len = 50
+    for i in range(0, len(plot), splice_len):
+        plot_splice.append(plot[i:i+splice_len])
+    data['opening'] = plot_splice
+
+    with open(
+              f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/help.txt",
+              "r",
+              encoding="utf-8"
+              ) as help_file:
+        data['help'] = help_file.read()
+    
+    with open(
+              f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/map.txt",
+              "r",
+              encoding="utf-8"
+              ) as map_file:
+        data['map'] = map_file.read()
+
+    object_types = ['locations', 'items', 'transitions', 'players', 'containers', 'npcs', "journals", 'events']
+
+    for object_type in object_types:
+        with open(
+            f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/{object_type}.json",
+            "r",
+            encoding="utf-8"
+            ) as loading:
+            data[object_type] = json.load(loading)
+    
+    with open(
+        f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/victory.txt", 
+        'r',
+        encoding="utf-8"
+        ) as victory_file:
+        data['victory'] = victory_file.read()
+    
+    with open(
+        f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}/data/defeat.txt", 
+        'r',
+        encoding="utf-8"
+        ) as defeat_file:
+        data['defeat'] = defeat_file.read()
+
+    return data
+
 message = ""
 
 rooms = {
