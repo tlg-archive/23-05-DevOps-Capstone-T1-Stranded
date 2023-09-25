@@ -11,3 +11,12 @@ def client():
 def test_initial_room(client):
     response = client.get('/')
     assert b'You are in Room 1' in response.data
+
+def test_invalid_action(client):
+    response = client.post('/', data={'action': 'move3 kio'})
+    assert b'Youcantdothat' in response.data
+
+
+def test_move_to_room_two(client):
+    response = client.post('/', data={'action': 'move room 2'})
+    assert b'You are in Room 2. You see a space suit here.' in response.data
