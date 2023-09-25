@@ -1,0 +1,26 @@
+*{
+    font-family: 'Roboto', sans-serif;
+}
+
+.panel{
+    display: flex;
+    margin-top:5vh;
+}
+
+.player_info{
+    width:20%;
+    text-align: center;
+}
+
+.controls{
+    width:20%;
+    text-align: center;
+}
+
+.game{
+    width:60%;
+    text-align: center;
+}
+body{
+    width: 100%;
+}
