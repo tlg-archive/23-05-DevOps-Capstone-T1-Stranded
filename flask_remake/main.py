@@ -1,12 +1,15 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 import os
 import json
+import secrets
+import string
+
 
 app = Flask(__name__)
+app.secret_key = ''.join(secrets.choice(string.ascii_letters + string.digits) for i in range(16))
 
-current_room = "Room-one"
-space_suit_picked_up = False
-message = ""
+
+
 
 def load_data():
     data = {}
@@ -47,42 +50,43 @@ rooms = {
 
 @app.route("/game", methods=["GET", "POST"])
 def game():
-    global current_room
-    global space_suit_picked_up
-    global message
+    if "current_room" not in session:
+        session["current_room"] = "Room-one"
+        session["space_suit_picked_up"] = False
+        session["message"] = ""
     
     if request.method == "POST":
         action = request.form['action'].lower()
         
 
-        if current_room == "Room-one":
+        if session["current_room"] == "Room-one":
             if action == "move room 2":
-                current_room = 'Room-Two'
-                message=''
+                session["current_room"] = 'Room-Two'
+                session["message"] = ''
             elif action == "look":
-                message = rooms[current_room]["item"]
+                session["message"] = rooms[session["current_room"]]["item"]
             else:
-                message = "Youcantdothat"
+                session["message"] = "Youcantdothat"
                 
-        elif current_room == "Room-Two":
+        elif session["current_room"] == "Room-Two":
             if action == "pickup suit":
-                space_suit_picked_up = True
-                message = "Youve picked up the space suit"
+                session['space_suit_picked_up'] = True
+                session["message"] = "Youve picked up the space suit"
             elif action == "look":
-                message = rooms[current_room]["item"]
+                session["message"] = rooms[session["current_room"]]["item"]
             elif action == "move room 3":
-                if space_suit_picked_up:
-                    current_room = "Room-Three"
-                    message = ""
+                if session["space_suit_picked_up"]:
+                    session["current_room"] = "Room-Three"
+                    session["message"] = ""
                 else:
-                    message = "you cant board the pod without a space suit"
+                    session["message"] = "you cant board the pod without a space suit"
             else:
-                message = "invalid action"
+                session["message"] = "invalid action"
                 
-        elif current_room == "Room-Three":
-            message = "you won!"
+        elif session["current_room"] == "Room-Three":
+            session["message"] = "you won!"
 
-    return render_template("index.html", description=rooms[current_room], room=current_room, message=message)
+    return render_template("index.html", description=rooms[session["current_room"]], room=session["current_room"], message=session["message"])
 
 data = load_data()
 
