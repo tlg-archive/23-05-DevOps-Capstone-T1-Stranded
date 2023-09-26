@@ -6,6 +6,7 @@ app = Flask(__name__)
 
 current_room = "Room-one"
 space_suit_picked_up = False
+message = ""
 
 def load_data():
     data = {}
@@ -15,9 +16,16 @@ def load_data():
         encoding="utf-8"
         ) as title_file:
         data['title'] = title_file.read()
+    with open(
+        f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}./data/description.txt",
+        "r",
+        encoding="utf-8"
+        ) as plot:
+        plot = plot.read()
+    data['opening'] = plot
+    
     return data
 
-message = ""
 
 rooms = {
     "Room-one": {
@@ -82,7 +90,7 @@ data = load_data()
 def start():
     if request.method == "POST":
         return redirect(url_for("game"))
-    return render_template("start.html", title=data["title"])
+    return render_template("start.html", title=data["title"], desc=data["opening"])
 
 if __name__ == "__main__":
     app.run(debug=True)
