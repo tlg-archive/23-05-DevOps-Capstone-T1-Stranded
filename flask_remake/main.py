@@ -54,6 +54,7 @@ def game():
         session["current_room"] = "Room-one"
         session["space_suit_picked_up"] = False
         session["message"] = ""
+        session["inventory"] = []
     
     if request.method == "POST":
         action = request.form['action'].lower()
@@ -71,6 +72,7 @@ def game():
         elif session["current_room"] == "Room-Two":
             if action == "pickup suit":
                 session['space_suit_picked_up'] = True
+                session["inventory"].append('space suit')
                 session["message"] = "Youve picked up the space suit"
             elif action == "look":
                 session["message"] = rooms[session["current_room"]]["item"]
@@ -86,7 +88,7 @@ def game():
         elif session["current_room"] == "Room-Three":
             session["message"] = "you won!"
 
-    return render_template("index.html", description=rooms[session["current_room"]], room=session["current_room"], message=session["message"])
+    return render_template("index.html", description=rooms[session["current_room"]], stuff=session)
 
 data = load_data()
 

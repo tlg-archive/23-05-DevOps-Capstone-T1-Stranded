@@ -23,16 +23,15 @@
             <h2> Current Player</h2>
 
             <h3>inventory</h3>
-            <p class="item">item1</p>
-            <p class="item">item2</p>
-            <p class="item">item3</p>
-            <p class="item">item4</p>
+            {% for i in stuff["inventory"] %}
+                <p class="item"> {{i}} </p>
+            {% endfor %}
 
         </div>
         <div class="game">
-            <h1 class="currentroom">{{room}}</h1>
+            <h1 class="currentroom">{{stuff["current_room"]}}</h1>
             <h2 class='description'>{{description['description']}}</h2>
-            <p>{{message}}</p>
+            <p>{{stuff["message"]}}</p>
         </div>
 
 
