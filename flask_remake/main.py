@@ -112,6 +112,7 @@ def game():
         elif current_room == "Room-Two":
             if action == "pickup suit":
                 space_suit_picked_up = True
+                message = ''
             elif action == "look":
                 message = rooms[current_room]["item"]
             elif action == "move room 3":
