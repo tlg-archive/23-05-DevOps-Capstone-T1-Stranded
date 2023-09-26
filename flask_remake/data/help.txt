@@ -1,41 +1,14 @@
-Command Examples:
-"move to exit_hatch"
-"look at the book"
-"get the flare"
 
-Command Key Words:
+Command Key Words: 
 look - gives you a description of an item
     usage: look { target }
-    synonyms: search, examine, describe
+    
 move - how to navigate the world
-    usage: move { target }
-    synonyms: go, walk, run
-use - interact objects and use them on each other
-    usage: use { item } optional[{ target }]
-    synonyms: activate, interact, touch
-take - get an item from world or container and adds it to inventory
+    usage: move { target } 
+    
+pickup - get an item from world or container and adds it to inventory
     usage: take { item } optional[{ container }]
-    synonyms: grab, steal, loot, get
+    
 drop - put an item into the environment or in a container
     usage: drop { item } optional[{ container }]
-    synonyms: leave, give, discard
-talk - get dialogue from journals and robots
-    usage: talk { npc }
-    synonyms: speak, read, yell
-music - control music in game
-    usage: music up, music down 
-    usage: music play, music pause
-
-
-Reserved Key Words:
-inventory - opens inventory or looks at an item in your inventory
-    usage: inventory optional[{ item }]
-    synonyms: ag, backpack, pocket
-me - refers to you
-    synonyms: i, player, myself
-help - your here
-    synonyms: assist, aid, support
-start - starts game
-    synonyms: begin, init, initiate, execute
-quit - quits game
-    synonyms: exit, end, terminate
+    

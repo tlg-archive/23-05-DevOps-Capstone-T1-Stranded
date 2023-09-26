@@ -25,7 +25,14 @@ def load_data():
         encoding="utf-8"
         ) as plot:
         plot = plot.read()
-    data['opening'] = plot
+        data['opening'] = plot
+    with open(
+              f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}./data/help.txt",
+              "r",
+              encoding="utf-8"
+              ) as help_file:
+        data['help'] = help_file.read()
+     
     
     return data
 
@@ -55,6 +62,7 @@ def game():
         session["space_suit_picked_up"] = False
         session["message"] = ""
         session["inventory"] = []
+        session["help"] = data["help"]
     
     if request.method == "POST":
         action = request.form['action'].lower()
