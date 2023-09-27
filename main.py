@@ -13,27 +13,13 @@ app.secret_key = ''.join(secrets.choice(string.ascii_letters + string.digits) fo
 
 def load_data():
     data = {}
-    with open(
-        f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}./data/title.txt", 
-        'r',
-        encoding="utf-8"
-        ) as title_file:
+    with open("./static/data/title.txt", 'r') as title_file:
         data['title'] = title_file.read()
-    with open(
-        f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}./data/description.txt",
-        "r",
-        encoding="utf-8"
-        ) as plot:
+    with open("./static/data/description.txt","r") as plot:
         plot = plot.read()
         data['opening'] = plot
-    with open(
-              f"{'/'.join(os.path.abspath(__file__).split('/')[:-1])}./data/help.txt",
-              "r",
-              encoding="utf-8"
-              ) as help_file:
+    with open("./static/data/help.txt","r") as help_file:
         data['help'] = help_file.read()
-     
-    
     return data
 
 
@@ -109,4 +95,4 @@ def start():
     return render_template("start.html", title=data["title"], desc=data["opening"])
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000)
