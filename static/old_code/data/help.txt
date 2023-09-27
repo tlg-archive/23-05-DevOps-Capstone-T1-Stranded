@@ -1,0 +1,23 @@
+Command Examples:
+"move room 2"
+"looks"
+"pickup suit"
+
+Command Key Words:
+look - gives you a description of an item
+    usage: look { target }
+    synonyms: search, examine, describe
+move - how to navigate the world
+    usage: move { target }
+    synonyms: go, walk, run
+use - interact objects and use them on each other
+    usage: use { item } optional[{ target }]
+    synonyms: activate, interact, touch
+pickup - get an item from world or container and adds it to inventory
+    usage: take { item } optional[{ container }]
+    synonyms: grab, steal, loot, get
+drop - put an item into the environment or in a container
+    usage: drop { item } optional[{ container }]
+    synonyms: leave, give, discard
+
+
