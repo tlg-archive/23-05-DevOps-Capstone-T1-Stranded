@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/static/styles.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    </head>
+    <body>
+
+        <div class="panel">
+
+        <div class="player_info">
+            <h2> Current Player</h2>
+
+            <h3>inventory</h3>
+            <p class="item">item1</p>
+            <p class="item">item2</p>
+            <p class="item">item3</p>
+            <p class="item">item4</p>
+
+        </div>
+
+        <div class="game">
+            <h1 class="currentroom">{{room}}</h1>
+            <h2 class='description'>{{description['description']}}</h2>
+            <p>{{message}}</p>
+        </div>
+
+        <div class="container">
+            <h2> help Menu </h2>
+
+            <h3>Commands</h3>
+            <p class="command">move</p>
+            <p class="command">pickup</p>
+            <p class="command">look</p>
+
+            <form method="POST">
+		        <input type="text" name="action">
+                <input type="submit" name="run">
+		    </form>	
+        </div>
+
+        </div>
+        
+        <script src="./static/jscripts/scripts.js" async defer></script>
+    </body>
+</html>
